@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/FragmentoInicial"
+    android:layout_height="match_parent"
+    tools:context=".FragmentoTelaInicial">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/inicio_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/backgroundv" />
+
+        <ImageView
+            android:id="@+id/inicio_menu_icon"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/menu_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/inicio_logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/logo_apptrimonio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/inicio_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="30sp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toStartOf="@+id/inicio_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/inicio_logo" />
+
+        <TextView
+            android:id="@+id/inicio_desc"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:fontFamily="@font/regular"
+            android:text="@string/appDesc"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/inicio_titulo"
+            app:layout_constraintStart_toStartOf="@+id/inicio_titulo"
+            app:layout_constraintTop_toBottomOf="@+id/inicio_titulo" />
+
+        <TextView
+            android:id="@+id/inicio_swipeup_texto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swipeUp"
+            android:textAllCaps="true"
+            android:textColor="@color/preto"
+            android:fontFamily="@font/bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/inicio_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/inicio_swipe_gif"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/inicio_swipeup_texto"
+            app:layout_constraintEnd_toEndOf="@+id/inicio_swipeup_texto"
+            app:layout_constraintStart_toStartOf="@+id/inicio_swipeup_texto" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

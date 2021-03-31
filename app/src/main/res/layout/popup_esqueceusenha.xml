@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="340dp"
+    android:layout_gravity="center"
+    android:background="@drawable/background_branco"
+    android:padding="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/esqueceusenha_titulo"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="@string/forgotPass"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/esqueceusenha_fechar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/esqueceusenha_titulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/esqueceusenha_titulo"
+            app:layout_constraintTop_toTopOf="@+id/esqueceusenha_titulo"
+            app:srcCompat="@drawable/fechar" />
+
+        <EditText
+            android:id="@+id/esqueceusenha_input_email"
+            android:layout_width="280dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="75dp"
+            android:layout_weight="1"
+            android:background="@drawable/input_shape"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="@string/emailUsed"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/esqueceusenha_titulo" />
+
+        <TextView
+            android:id="@+id/esqueceusenha_input_emailtop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/preto"
+            android:text="@string/email"
+            app:layout_constraintBottom_toTopOf="@+id/esqueceusenha_input_email"
+            app:layout_constraintStart_toStartOf="@+id/esqueceusenha_input_email" />
+
+
+        <Button
+            android:id="@+id/esqueceusenha_botao"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:textColor="@color/branco"
+            android:textSize="20sp"
+            android:fontFamily="@font/regular"
+            android:background="@drawable/button_verde_escuro"
+            android:text="@string/sendEmail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/esqueceusenha_input_email"
+            app:layout_constraintStart_toStartOf="@+id/esqueceusenha_input_email"
+            app:layout_constraintTop_toBottomOf="@+id/esqueceusenha_input_email" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

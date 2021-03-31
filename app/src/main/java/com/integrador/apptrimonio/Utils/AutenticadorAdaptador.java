@@ -5,20 +5,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.integrador.apptrimonio.FragmentoCadastro;
-import com.integrador.apptrimonio.fragmento_login;
+import com.integrador.apptrimonio.FragmentoLogin;
 
 
 public class AutenticadorAdaptador extends FragmentStateAdapter {
 
-    private final Fragment[] mFragments = new Fragment[]{
-            new FragmentoCadastro(),
-            new fragmento_login(),
-    };
+    private Fragment[] mFragments;
 
-    public AutenticadorAdaptador(FragmentActivity fa) {
+    public AutenticadorAdaptador(FragmentActivity fa, ViewPager2 vp) {
         super(fa);
+        mFragments = new Fragment[]{
+                new FragmentoCadastro(vp),
+                new FragmentoLogin(vp),
+        };
     }
 
     @Override

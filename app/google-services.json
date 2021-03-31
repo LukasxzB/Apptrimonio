@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "410454662647",
+    "project_id": "apptrimonio-9844d",
+    "storage_bucket": "apptrimonio-9844d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410454662647:android:a769fb33b7f1da1811a2f2",
+        "android_client_info": {
+          "package_name": "com.integrador.apptrimonio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410454662647-aqphk1lqgksmi6eoorr6jogesahbpikc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2wIs6UFAmFgbf5_lyZ0rPigGEQLilzJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410454662647-aqphk1lqgksmi6eoorr6jogesahbpikc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

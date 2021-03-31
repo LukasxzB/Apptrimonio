@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.integrador.apptrimonio.Utils.BoasVindasAdaptador;
 import com.integrador.apptrimonio.Utils.BoasVindasItem;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.List;
 public class BoasVindas extends AppCompatActivity {
 
     private BoasVindasAdaptador boasVindasAdaptador;
-    private LinearLayout boasVindasLinearLayoutIndicadores;
     private Button botao;
 
     @Override
@@ -30,7 +30,6 @@ public class BoasVindas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boas_vindas);
 
-        boasVindasLinearLayoutIndicadores = findViewById(R.id.boasVindasLinearLayout);
         botao = findViewById(R.id.botaoBoasVindas);
 
         //inicia os itens de boas vindas
@@ -38,13 +37,15 @@ public class BoasVindas extends AppCompatActivity {
         ViewPager2 boasVindasViewPager = findViewById(R.id.boasVindasViewPager);
         boasVindasViewPager.setAdapter(boasVindasAdaptador);
         setupBoasVindasIndicadores();
-        atualizarIndicadores(0);
+
+        //dots indicator
+        DotsIndicator dotsIndicator = findViewById(R.id.inicio_dots);
+        dotsIndicator.setViewPager2(boasVindasViewPager);
 
         boasVindasViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                atualizarIndicadores(position);
             }
         });
 
@@ -103,25 +104,6 @@ public class BoasVindas extends AppCompatActivity {
             indicadores[i] = new ImageView(getApplicationContext());
             indicadores[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.boasvindas_indicador_off));
             indicadores[i].setLayoutParams(layoutParams);
-            boasVindasLinearLayoutIndicadores.addView(indicadores[i]);
-        }
-    }
-
-    private void atualizarIndicadores(int index) {
-        int childCount = boasVindasLinearLayoutIndicadores.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) boasVindasLinearLayoutIndicadores.getChildAt(i);
-            if (i == index) {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.boasvindas_indicador_on));
-            } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.boasvindas_indicador_off));
-            }
-        }
-
-        if(index == boasVindasAdaptador.getItemCount()-1){
-            botao.setText(getResources().getString(R.string.start));
-        }else{
-            botao.setText(getResources().getString(R.string.next));
         }
     }
 }

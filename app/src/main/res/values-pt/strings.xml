@@ -24,10 +24,17 @@
     <string name="forgotPass">Esqueceu sua senha?</string>
     <string name="dontHaveAccount">Você ainda não possui uma conta? Clique aqui para se cadastrar!</string>
     <string name="alreadyHaveAccount">Você já possui uma conta? Clique aqui para entrar!</string>
+    <string name="loginSuccess">Você entrou com sucesso!</string>
+    <string name="loginFail">Ocorreu um erro ao entrar: </string>
+    <string name="registerSucess">Você cadastrou sua conta com sucesso!</string>
+    <string name="registerFail">Ocorreu um erro ao se cadastrar: </string>
     <string name="confirmEmail">Confirmar email</string>
     <string name="confirmEmailDesc">Confirme o seu cadastro clicando no link em seu email!</string>
     <string name="yourEmailSingup">Seu email utilizado no cadastro</string>
     <string name="sendEmail">Enviar email</string>
+    <string name="sendEmailSuccess">E-mail enviado com sucesso!</string>
+    <string name="sendEmailFail">Ocorreu um erro ao enviar o e-mail: </string>
+    <string name="sendEmailWait">Enviando o e-mail...</string>
     <string name="appDesc">Veja quanto custa o seu ensino</string>
     <string name="swipeUp">Arraste para cima</string>
     <string name="hello">Olá!</string>
