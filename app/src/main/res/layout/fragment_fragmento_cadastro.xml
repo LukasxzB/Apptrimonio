@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/fragmento_cadastro"
+    android:layout_height="match_parent"
+    tools:context=".FragmentoCadastro">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/cadastro_top"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/cadastro_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cadastro_icon"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/logo_apptrimonio_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cadastro_titulo"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/singup"
+            android:textAlignment="textStart"
+            android:textColor="@color/branco"
+            android:textSize="38sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cadastro_icon" />
+
+        <TextView
+            android:id="@+id/cadastro_descricao"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:fontFamily="@font/regular"
+            android:text="@string/singupAccess"
+            android:textColor="@color/branco"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@+id/cadastro_titulo"
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_titulo" />
+
+        <EditText
+            android:id="@+id/cadastro_input_email"
+            android:layout_width="310dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/input_shape"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="@string/emailInst"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/preto"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_top" />
+
+        <TextView
+            android:id="@+id/cadastro_input_email_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/email"
+            android:textColor="@color/preto"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/cadastro_input_email"
+            app:layout_constraintStart_toStartOf="@+id/cadastro_input_email" />
+
+        <EditText
+            android:id="@+id/cadastro_input_senha"
+            android:layout_width="310dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="55dp"
+            android:background="@drawable/input_shape"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="***********"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/preto"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/cadastro_input_email"
+            app:layout_constraintStart_toStartOf="@+id/cadastro_input_email"
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_input_email" />
+
+        <TextView
+            android:id="@+id/cadastro_input_senha_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/password"
+            android:textColor="@color/preto"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/cadastro_input_senha"
+            app:layout_constraintStart_toStartOf="@+id/cadastro_input_senha" />
+
+        <Button
+            android:id="@+id/cadastro_botao"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/button_verde_escuro"
+            android:fontFamily="@font/regular"
+            android:text="@string/singup"
+            android:textAllCaps="true"
+            android:textColor="@color/branco"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toTopOf="@+id/cadastro_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_input_senha" />
+
+        <ImageView
+            android:id="@+id/cadastro_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:src="@drawable/registrar_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/cadastro_nao_possui"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dontHaveAccount"
+            android:textSize="15sp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/preto"
+            android:alpha="0.5"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/cadastro_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_botao" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/logo_apptrimonio_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Apptrimônio">
-        <activity android:name=".Cadastro"></activity>
+        <activity android:name=".Autenticar"></activity>
         <activity android:name=".BoasVindas" />
         <activity android:name=".MainActivity">
             <intent-filter>

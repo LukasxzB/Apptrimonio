@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         botaoTelaCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BoasVindas.class));
+                startActivity(new Intent(MainActivity.this, Autenticar.class));
             }
         });
 

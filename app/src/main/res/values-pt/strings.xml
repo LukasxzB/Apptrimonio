@@ -22,9 +22,8 @@
     <string name="emailUsed">Email utilizado no cadastro</string>
     <string name="password">Senha</string>
     <string name="forgotPass">Esqueceu sua senha?</string>
-    <string name="stayConnected">Manter-se conectado</string>
-    <string name="dontHaveAccount">Você ainda não possui uma conta? Cadastre-se!</string>
-    <string name="alreadyHaveAccount">Você já possui uma conta? Entre!</string>
+    <string name="dontHaveAccount">Você ainda não possui uma conta? Clique aqui para se cadastrar!</string>
+    <string name="alreadyHaveAccount">Você já possui uma conta? Clique aqui para entrar!</string>
     <string name="confirmEmail">Confirmar email</string>
     <string name="confirmEmailDesc">Confirme o seu cadastro clicando no link em seu email!</string>
     <string name="yourEmailSingup">Seu email utilizado no cadastro</string>

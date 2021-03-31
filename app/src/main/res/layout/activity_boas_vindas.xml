@@ -16,8 +16,8 @@
 
     <Button
         android:id="@+id/botaoBoasVindas"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_next"
@@ -27,7 +27,7 @@
         android:text="@string/next"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
