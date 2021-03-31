@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="120dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/boasvindas_imagem"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_margin="15dp"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/boasvindas_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:textColor="@color/verde4"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/boasvindas_descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:textColor="@color/preto"
+        android:textSize="16sp" />
+
+
+</LinearLayout>
