@@ -30,6 +30,12 @@ public class BoasVindas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boas_vindas);
 
+        //abre a tela inicial caso ja entrou
+        if (getSharedPreferences("apptrimonio", MODE_PRIVATE).getBoolean("entrou", false)) {
+            startActivity(new Intent(BoasVindas.this, MainActivity.class));
+            finish();
+        }
+
         botao = findViewById(R.id.botaoBoasVindas);
 
         //inicia os itens de boas vindas
@@ -49,12 +55,24 @@ public class BoasVindas extends AppCompatActivity {
             }
         });
 
+        boasVindasViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(position == boasVindasAdaptador.getItemCount() -1){
+                    botao.setText(getResources().getString(R.string.start));
+                }else{
+                    botao.setText(getResources().getString(R.string.next));
+                }
+            }
+        });
+
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (boasVindasViewPager.getCurrentItem() + 1 < boasVindasAdaptador.getItemCount()) {
-                    boasVindasViewPager.setCurrentItem(boasVindasViewPager.getCurrentItem()+1);
-                }else{
+                    boasVindasViewPager.setCurrentItem(boasVindasViewPager.getCurrentItem() + 1);
+                } else {
                     //atualiza o shared pois entrou no app pela primeira vez
                     SharedPreferences sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

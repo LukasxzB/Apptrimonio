@@ -74,62 +74,55 @@ public class FragmentoLogin extends Fragment {
         });
 
         //ao clicar em nao possui uma conta
-        cadastrese.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager2.setCurrentItem(0, true);
-            }
-        });
+        cadastrese.setOnClickListener(v -> viewPager2.setCurrentItem(0, true));
 
         //ao clicar em esqueceu a senha
-        esqueceuSenha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.popup_esqueceusenha);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+        esqueceuSenha.setOnClickListener(v -> {
+            Dialog dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.popup_esqueceusenha);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCancelable(true);
+            dialog.show();
 
-                EditText dialogEmailInput = dialog.findViewById(R.id.esqueceusenha_input_email);
-                TextView dialogEmailInputTop = dialog.findViewById(R.id.esqueceusenha_input_emailtop);
-                Button dialogBotao = dialog.findViewById(R.id.esqueceusenha_botao);
-                ImageView dialogFechar = dialog.findViewById(R.id.esqueceusenha_fechar);
+            EditText dialogEmailInput = dialog.findViewById(R.id.esqueceusenha_input_email);
+            TextView dialogEmailInputTop = dialog.findViewById(R.id.esqueceusenha_input_emailtop);
+            Button dialogBotao = dialog.findViewById(R.id.esqueceusenha_botao);
+            ImageView dialogFechar = dialog.findViewById(R.id.esqueceusenha_fechar);
 
-                //ao clicar em enviar email
-                dialogBotao.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String dialogEmail = dialogEmailInput.getText().toString().trim();
-                        boolean dialogEmailValido = EmailValidator.getInstance().isValid(dialogEmail);
+            //ao clicar em enviar email
+            dialogBotao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String dialogEmail = dialogEmailInput.getText().toString().trim();
+                    boolean dialogEmailValido = EmailValidator.getInstance().isValid(dialogEmail);
 
-                        if(!dialogEmailValido){
-                            dialogEmailInputTop.setTextColor(getResources().getColor(R.color.vermelho));
-                        }else{
-                            Toast.makeText(getContext(), getResources().getString(R.string.sendEmailWait), Toast.LENGTH_SHORT).show();
-                            dialogEmailInputTop.setTextColor(getResources().getColor(R.color.verde4));
-                            FirebaseAuth.getInstance().sendPasswordResetEmail(dialogEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(getContext(), getResources().getString(R.string.sendEmailSuccess), Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                    }else{
-                                        Toast.makeText(getContext(), getResources().getString(R.string.sendEmailFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
+                    if(!dialogEmailValido){
+                        dialogEmailInputTop.setTextColor(getResources().getColor(R.color.vermelho));
+                    }else{
+                        Toast.makeText(getContext(), getResources().getString(R.string.sendEmailWait), Toast.LENGTH_SHORT).show();
+                        dialogEmailInputTop.setTextColor(getResources().getColor(R.color.verde4));
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(dialogEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getContext(), getResources().getString(R.string.sendEmailSuccess), Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }else{
+                                    Toast.makeText(getContext(), getResources().getString(R.string.sendEmailFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
-                });
+                }
+            });
 
-                //ao clicar em fechar
-                dialogFechar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
+            //ao clicar em fechar
+            dialogFechar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
         });
 
         return view;
@@ -137,10 +130,9 @@ public class FragmentoLogin extends Fragment {
 
     private void fazerLogin() {
         String email = inputEmail.getText().toString().trim();
-        String senha = inputEmail.getText().toString().trim();
+        String senha = inputSenha.getText().toString().trim();
 
         boolean emailValido = EmailValidator.getInstance().isValid(email);
-        boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8 && inputSenha.getText().toString() != null;
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
@@ -148,26 +140,17 @@ public class FragmentoLogin extends Fragment {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
-        if (!senhaValida) {
-            inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-        } else {
-            inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
-        }
-
         //faz login
-        if(emailValido && senhaValida){
+        if(emailValido){
             mAuth.signInWithEmailAndPassword(email, senha)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("LOGIN", "signInWithEmail:success");
-                                Toast.makeText(getContext(), getResources().getString(R.string.loginSuccess), Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
-                            } else {
-                                Log.w("LOGIN", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(getContext(), getResources().getString(R.string.loginFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(getActivity(), task -> {
+                        if (task.isSuccessful()) {
+                            Log.d("LOGIN", "signInWithEmail:success");
+                            Toast.makeText(getContext(), getResources().getString(R.string.loginSuccess), Toast.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        } else {
+                            Log.w("LOGIN", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(getContext(), getResources().getString(R.string.loginFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }

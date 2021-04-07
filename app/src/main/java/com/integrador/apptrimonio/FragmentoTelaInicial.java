@@ -14,17 +14,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class FragmentoTelaInicial extends Fragment {
 
-    private ImageView background, swipeUp;
+    private ImageView background, swipeUp, botaoMenuIcon;
     private ViewPager2 viewPager2;
+    private View.OnClickListener aoClicarBotaoMenu;
 
-    public FragmentoTelaInicial(ViewPager2 vp) {
+    public FragmentoTelaInicial(ViewPager2 vp, View.OnClickListener clickListener) {
         viewPager2 = vp;
+        aoClicarBotaoMenu = clickListener;
     }
 
     @Override
@@ -43,16 +47,18 @@ public class FragmentoTelaInicial extends Fragment {
         int backgroundAleatorio = new Random().nextInt(backgrounds.length);
         background.setImageDrawable(backgrounds[backgroundAleatorio]);
         swipeUp = view.findViewById(R.id.inicio_swipe_gif);
+        botaoMenuIcon = view.findViewById(R.id.inicio_menu_icon);
+        botaoMenuIcon.setOnClickListener(aoClicarBotaoMenu);
 
         Glide.with(this).load(R.drawable.swipeup).into(swipeUp);
 
         //muda a cor dos textos para dar contraste com o background
-        TextView titulo,desc,swipe;
+        TextView titulo, desc, swipe;
         titulo = view.findViewById(R.id.inicio_titulo);
         desc = view.findViewById(R.id.inicio_desc);
         swipe = view.findViewById(R.id.inicio_swipeup_texto);
 
-        if(backgroundAleatorio == 1 || backgroundAleatorio == 2){
+        if (backgroundAleatorio == 1 || backgroundAleatorio == 2 || backgroundAleatorio == 3) {
             titulo.setTextColor(getResources().getColor(R.color.branco));
             desc.setTextColor(getResources().getColor(R.color.branco));
             swipe.setTextColor(getResources().getColor(R.color.branco));

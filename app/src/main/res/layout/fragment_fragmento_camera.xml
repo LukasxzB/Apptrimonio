@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FragmentoCamera"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/FragmentoCamera"
     tools:context=".FragmentoCamera">
 
-    <SurfaceView
-        android:id="@+id/camera_surface"
+    <com.journeyapps.barcodescanner.CompoundBarcodeView
+        android:id="@+id/camera_scanner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:zxing_framing_rect_height="280dp"
+        app:zxing_framing_rect_width="280dp">
+
+
+    </com.journeyapps.barcodescanner.CompoundBarcodeView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/camera_top"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/camera_swipe"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/swipeup"
+            app:layout_constraintBottom_toBottomOf="@+id/camera_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/camera_bordas"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:src="@drawable/camera_borders"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/camera_texto"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:fontFamily="@font/bold"
+            android:layout_marginHorizontal="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/zxing_msg_default_status"
+            android:textColor="@color/branco"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/camera_bordas"
+            app:layout_constraintStart_toStartOf="@+id/camera_bordas"
+            app:layout_constraintTop_toBottomOf="@+id/camera_bordas" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </FrameLayout>

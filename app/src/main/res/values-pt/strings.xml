@@ -5,7 +5,7 @@
     <string name="next">Próximo</string>
     <string name="start">Começar</string>
     <string name="wWelcome">Seja bem vindo!</string>
-    <string name="wWelcomeD">Descubra quando custa o seu ensino com Apptrimônio</string>
+    <string name="wWelcomeD">Descubra quanto custa o seu ensino com Apptrimônio</string>
     <string name="wRegister">Cadastro não necessário</string>
     <string name="wRegiterD">Você pode aproveitar todas as funcionalidades sem cadastro</string>
     <string name="wScan">Escaneie os códigos</string>
@@ -13,6 +13,7 @@
     <string name="ok">Ok!</string>
     <string name="login">Entrar</string>
     <string name="logoff">Sair</string>
+    <string name="madeLogoff">Você saiu de sua conta com sucesso!</string>
     <string name="changePass">Trocar senha</string>
     <string name="singup">Cadastrar</string>
     <string name="loginAccess">Acesso apenas a gerenciadores</string>
@@ -65,4 +66,8 @@
     <string name="add">Adicionar</string>
     <string name="objPhoto">Clique aqui para adicionar uma imagem</string>
     <string name="objSuccess">Objeto adicionado!</string>
+    <string name="permRequired">Permissão necessária</string>
+    <string name="permRequiredDesc">Para utilizar algumas das funcionalidades do aplicativo, você deve aceitar as seguintes permissões.</string>
+    <string name="permRequiredAccept">Aceitar permissões</string>
+    <string name="zxing_msg_default_status">Coloque o código dentro do quadro</string>
 </resources>

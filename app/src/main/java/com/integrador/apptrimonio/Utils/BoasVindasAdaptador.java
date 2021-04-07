@@ -21,11 +21,11 @@ public class BoasVindasAdaptador extends RecyclerView.Adapter<BoasVindasAdaptado
         this.itens = itens;
     }
 
-    class BoasVindasViewHolder extends RecyclerView.ViewHolder {
+    static class BoasVindasViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tituloText;
-        private TextView descricaoText;
-        private ImageView imagemBoasVindas;
+        private final TextView tituloText;
+        private final TextView descricaoText;
+        private final ImageView imagemBoasVindas;
 
         BoasVindasViewHolder(@NonNull View itemView) {
             super(itemView);

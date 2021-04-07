@@ -62,42 +62,39 @@ public class FragmentoCadastro extends Fragment {
         });
 
         //ao clicar em cadastrar
-        cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = inputEmail.getText().toString().trim();
-                String senha = inputSenha.getText().toString().trim();
+        cadastrar.setOnClickListener(v -> {
+            String email = inputEmail.getText().toString().trim();
+            String senha = inputSenha.getText().toString().trim();
 
-                boolean emailValido = EmailValidator.getInstance().isValid(email);
-                boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8 && inputSenha.getText().toString() != null;
+            boolean emailValido = EmailValidator.getInstance().isValid(email);
+            boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8 && inputSenha.getText().toString() != null;
 
-                if (!emailValido) {
-                    inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-                } else {
-                    inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
-                }
+            if (!emailValido) {
+                inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
+            } else {
+                inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
+            }
 
-                if (!senhaValida) {
-                    inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-                } else {
-                    inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
-                }
+            if (!senhaValida) {
+                inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
+            } else {
+                inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
+            }
 
-                //faz cadastro
-                if (senhaValida && emailValido) {
-                    mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
-                            } else {
-                                Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
-                                Toast.makeText(getContext(), getResources().getString(R.string.registerFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+            //faz cadastro
+            if (senhaValida && emailValido) {
+                mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        } else {
+                            Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
+                            Toast.makeText(getContext(), getResources().getString(R.string.registerFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+                    }
+                });
             }
         });
 
