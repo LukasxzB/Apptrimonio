@@ -1,11 +1,6 @@
 package com.integrador.apptrimonio;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +10,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.Objects;
+
 public class FragmentoCadastro extends Fragment {
 
-    private ViewPager2 viewPager2;
+    private final ViewPager2 viewPager2;
     private FirebaseAuth mAuth;
 
     private EditText inputEmail, inputSenha;
-    private Button cadastrar;
-    private TextView entrar, inputEmailTop, inputSenhaTop;
+    private TextView inputEmailTop;
+    private TextView inputSenhaTop;
 
     public FragmentoCadastro(ViewPager2 vp) {
         viewPager2 = vp;
@@ -50,16 +47,11 @@ public class FragmentoCadastro extends Fragment {
         inputSenha = view.findViewById(R.id.cadastro_input_senha);
         inputSenhaTop = view.findViewById(R.id.cadastro_input_senha_top);
         inputEmailTop = view.findViewById(R.id.cadastro_input_email_top);
-        cadastrar = view.findViewById(R.id.cadastro_botao);
-        entrar = view.findViewById(R.id.cadastro_ja_possui);
+        Button cadastrar = view.findViewById(R.id.cadastro_botao);
+        TextView entrar = view.findViewById(R.id.cadastro_ja_possui);
 
         //ao clicar em ja possui conta
-        entrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager2.setCurrentItem(1, true);
-            }
-        });
+        entrar.setOnClickListener(v -> viewPager2.setCurrentItem(1, true));
 
         //ao clicar em cadastrar
         cadastrar.setOnClickListener(v -> {
@@ -67,7 +59,7 @@ public class FragmentoCadastro extends Fragment {
             String senha = inputSenha.getText().toString().trim();
 
             boolean emailValido = EmailValidator.getInstance().isValid(email);
-            boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8 && inputSenha.getText().toString() != null;
+            boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8;
 
             if (!emailValido) {
                 inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
@@ -83,16 +75,13 @@ public class FragmentoCadastro extends Fragment {
 
             //faz cadastro
             if (senhaValida && emailValido) {
-                mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
-                            getActivity().finish();
-                        } else {
-                            Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), getResources().getString(R.string.registerFail) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
+                        Objects.requireNonNull(getActivity()).finish();
+                    } else {
+                        Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
+                        Toast.makeText(getContext(), getResources().getString(R.string.registerFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

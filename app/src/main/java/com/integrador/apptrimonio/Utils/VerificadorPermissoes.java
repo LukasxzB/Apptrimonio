@@ -1,20 +1,11 @@
 package com.integrador.apptrimonio.Utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -32,10 +23,10 @@ public class VerificadorPermissoes {
 
         List<String> permissoesNaoAceitas = new ArrayList<>();
 
-        for (int i = 0; i < permissoesNecessarias.length; i++) { //loop em todas as permissoes necessarias
-            int perm = ContextCompat.checkSelfPermission(activity, permissoesNecessarias[i]); //pega o ID da permissao
+        for (String permissoesNecessaria : permissoesNecessarias) { //loop em todas as permissoes necessarias
+            int perm = ContextCompat.checkSelfPermission(activity, permissoesNecessaria); //pega o ID da permissao
             if (perm != PackageManager.PERMISSION_GRANTED) { //caso a permissao nao estiver concedida
-                permissoesNaoAceitas.add(permissoesNecessarias[i]); //adiciona na lista de permissoes nao aceitas
+                permissoesNaoAceitas.add(permissoesNecessaria); //adiciona na lista de permissoes nao aceitas
             }
         }
 

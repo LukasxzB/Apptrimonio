@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BoasVindasAdaptador extends RecyclerView.Adapter<BoasVindasAdaptador.BoasVindasViewHolder> {
 
-    private List<BoasVindasItem> itens;
+    private final List<BoasVindasItem> itens;
 
     public BoasVindasAdaptador(List<BoasVindasItem> itens) {
         this.itens = itens;

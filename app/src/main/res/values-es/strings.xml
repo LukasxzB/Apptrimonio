@@ -37,11 +37,9 @@
     <string name="sendEmailFail">Ocorreu um erro ao enviar o e-mail: </string>
     <string name="sendEmailWait">Enviando o e-mail...</string>
     <string name="appDesc">Veja quanto custa o seu ensino</string>
-    <string name="swipeUp">Arraste para cima</string>
     <string name="hello">Olá!</string>
     <string name="texts">Textos informativos</string>
     <string name="apphelp">Ajuda sobre o aplicativo</string>
-    <string name="appobj">Objetivo do Apptrimônio</string>
     <string name="support">Suporte</string>
     <string name="scanCode">Escanear um código</string>
     <string name="addObj">Adicionar um objeto</string>
@@ -70,4 +68,7 @@
     <string name="permRequiredDesc">Para utilizar algumas das funcionalidades do aplicativo, você deve aceitar as seguintes permissões.</string>
     <string name="permRequiredAccept">Aceitar permissões</string>
     <string name="zxing_msg_default_status">Coloque o código dentro do quadro</string>
+    <string name="text1t">Patrimônio público escolar</string>
+    <string name="text2t">Legislação</string>
+    <string name="text3t">Nossos impostos</string>
     </resources>

@@ -13,7 +13,7 @@ import com.integrador.apptrimonio.FragmentoLogin;
 
 public class AutenticadorAdaptador extends FragmentStateAdapter {
 
-    private Fragment[] mFragments;
+    private final Fragment[] mFragments;
 
     public AutenticadorAdaptador(FragmentActivity fa, ViewPager2 vp) {
         super(fa);

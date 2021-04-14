@@ -6,22 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
-import com.integrador.apptrimonio.FragmentoCadastro;
 import com.integrador.apptrimonio.FragmentoCamera;
-import com.integrador.apptrimonio.FragmentoLogin;
 import com.integrador.apptrimonio.FragmentoTelaInicial;
 
 public class InicoAdaptador extends FragmentStateAdapter {
 
     public Fragment[] mFragments;
 
-    public InicoAdaptador(FragmentActivity fa, ViewPager2 vp, View.OnClickListener clickListener) {
+    public InicoAdaptador(FragmentActivity fa, View.OnClickListener clickListener) {
         super(fa);
         mFragments = new Fragment[]{
-                new FragmentoTelaInicial(vp, clickListener),
-                new FragmentoCamera(vp),
+                new FragmentoTelaInicial(clickListener),
+                new FragmentoCamera(),
         };
     }
 

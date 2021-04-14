@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="360dp"
+    android:layout_gravity="center"
+    android:background="@drawable/background_branco"
+    android:padding="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/codigoinvalido_icon"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="67dp"
+            android:src="@drawable/error_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/codigoinvalido_titulo"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="@string/invCode"
+            android:textAlignment="center"
+            android:textColor="@color/vermelho"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/codigoinvalido_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/codigoinvalido_desc"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/invCodeDesc"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/codigoinvalido_icon" />
+
+        <TextView
+            android:id="@+id/codigoinvalido_tentenovamente"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:fontFamily="@font/regular"
+            android:text="@string/tryAgain"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/codigoinvalido_desc"
+            app:layout_constraintStart_toStartOf="@+id/codigoinvalido_desc"
+            app:layout_constraintTop_toBottomOf="@+id/codigoinvalido_desc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

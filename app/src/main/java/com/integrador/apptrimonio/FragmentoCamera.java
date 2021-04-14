@@ -1,17 +1,14 @@
 package com.integrador.apptrimonio;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Transformation;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -21,13 +18,9 @@ import java.util.List;
 
 public class FragmentoCamera extends Fragment {
 
-    private ViewPager2 viewPager2;
     private CompoundBarcodeView scannerView;
 
-    private ImageView swipeUp;
-
-    public FragmentoCamera(ViewPager2 vp) {
-        viewPager2 = vp;
+    public FragmentoCamera() {
     }
 
 
@@ -40,14 +33,14 @@ public class FragmentoCamera extends Fragment {
         scannerView.decodeContinuous(scannerCallback); //define o callback
         scannerView.getChildAt(2).setVisibility(View.INVISIBLE); //remove o texto orginal
 
-        swipeUp = view.findViewById(R.id.camera_swipe);
+        ImageView swipeUp = view.findViewById(R.id.camera_swipe);
         Glide.with(this).load(R.drawable.swipeup).into(swipeUp);
         swipeUp.setRotationX(180f);
 
         return view;
     }
 
-    private BarcodeCallback scannerCallback = new BarcodeCallback() {
+    private final BarcodeCallback scannerCallback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             if (result.getText() != null) {

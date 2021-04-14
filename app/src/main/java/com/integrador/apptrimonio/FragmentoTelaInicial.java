@@ -22,12 +22,11 @@ import java.util.Random;
 
 public class FragmentoTelaInicial extends Fragment {
 
-    private ImageView background, swipeUp, botaoMenuIcon;
-    private ViewPager2 viewPager2;
+    private ImageView swipeUp;
+    private ImageView botaoMenuIcon;
     private View.OnClickListener aoClicarBotaoMenu;
 
-    public FragmentoTelaInicial(ViewPager2 vp, View.OnClickListener clickListener) {
-        viewPager2 = vp;
+    public FragmentoTelaInicial(View.OnClickListener clickListener) {
         aoClicarBotaoMenu = clickListener;
     }
 
@@ -41,7 +40,7 @@ public class FragmentoTelaInicial extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragmento_tela_inicial, container, false);
 
-        background = view.findViewById(R.id.inicio_background);
+        ImageView background = view.findViewById(R.id.inicio_background);
         @SuppressLint("UseCompatLoadingForDrawables") final Drawable[] backgrounds = {getResources().getDrawable(R.drawable.backgroundi), getResources().getDrawable(R.drawable.backgroundii),
                 getResources().getDrawable(R.drawable.backgroundiii), getResources().getDrawable(R.drawable.backgroundiv), getResources().getDrawable(R.drawable.backgroundv)};
         int backgroundAleatorio = new Random().nextInt(backgrounds.length);
@@ -53,15 +52,13 @@ public class FragmentoTelaInicial extends Fragment {
         Glide.with(this).load(R.drawable.swipeup).into(swipeUp);
 
         //muda a cor dos textos para dar contraste com o background
-        TextView titulo, desc, swipe;
+        TextView titulo, desc;
         titulo = view.findViewById(R.id.inicio_titulo);
         desc = view.findViewById(R.id.inicio_desc);
-        swipe = view.findViewById(R.id.inicio_swipeup_texto);
 
         if (backgroundAleatorio == 1 || backgroundAleatorio == 2 || backgroundAleatorio == 3) {
             titulo.setTextColor(getResources().getColor(R.color.branco));
             desc.setTextColor(getResources().getColor(R.color.branco));
-            swipe.setTextColor(getResources().getColor(R.color.branco));
         }
 
         return view;

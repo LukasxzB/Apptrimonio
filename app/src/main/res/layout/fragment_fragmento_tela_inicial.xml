@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/FragmentoInicial"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentoTelaInicial">
 
@@ -42,11 +42,11 @@
             android:id="@+id/inicio_titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/preto"
-            android:textSize="30sp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/regular"
             android:text="@string/app_name"
+            android:textColor="@color/preto"
+            android:textSize="30sp"
             app:layout_constraintEnd_toStartOf="@+id/inicio_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/inicio_logo" />
@@ -65,17 +65,13 @@
             app:layout_constraintStart_toStartOf="@+id/inicio_titulo"
             app:layout_constraintTop_toBottomOf="@+id/inicio_titulo" />
 
-        <TextView
-            android:id="@+id/inicio_swipeup_texto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/swipeUp"
-            android:textAllCaps="true"
-            android:textColor="@color/preto"
-            android:fontFamily="@font/bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/inicio_background"
+        <ImageView
+            android:id="@+id/inicio_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera_top"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -83,8 +79,10 @@
             android:id="@+id/inicio_swipe_gif"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/inicio_swipeup_texto"
-            app:layout_constraintEnd_toEndOf="@+id/inicio_swipeup_texto"
-            app:layout_constraintStart_toStartOf="@+id/inicio_swipeup_texto" />
+            app:layout_constraintBottom_toBottomOf="@+id/inicio_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
