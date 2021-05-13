@@ -55,20 +55,23 @@ public class FragmentoCadastro extends Fragment {
 
         //ao clicar em cadastrar
         cadastrar.setOnClickListener(v -> {
-            String email = inputEmail.getText().toString().trim();
-            String senha = inputSenha.getText().toString().trim();
 
-            boolean emailValido = EmailValidator.getInstance().isValid(email);
-            boolean senhaValida = inputSenha.getText().toString().trim().length() >= 8;
+            String email = inputEmail.getText().toString().trim(); //email
+            String senha = inputSenha.getText().toString().trim(); //senha
+
+            boolean emailValido = EmailValidator.getInstance().isValid(email); //verifica se o email é valido
+            boolean senhaValida = senha.length() >= 8 && senha != null; //verifica se a sneha é valida
 
             if (!emailValido) {
                 inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
+                Toast.makeText(getContext(), getResources().getString(R.string.invEmail), Toast.LENGTH_SHORT).show();
             } else {
                 inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
             }
 
             if (!senhaValida) {
                 inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
+                Toast.makeText(getContext(), getResources().getString(R.string.invPass), Toast.LENGTH_SHORT).show();
             } else {
                 inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
             }

@@ -2,6 +2,7 @@
 <resources>
     <color name="branco">#FFF</color>
     <color name="preto">#000</color>
+    <color name="verde0">#C9FDCC</color>
     <color name="verde1">#8DFF9E</color>
     <color name="verde2">#5CD86F</color>
     <color name="verde3">#3FAF50</color>

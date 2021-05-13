@@ -103,19 +103,28 @@ public class FragmentoLogin extends Fragment {
     }
 
     private void fazerLogin() {
-        String email = inputEmail.getText().toString().trim();
-        String senha = inputSenha.getText().toString().trim();
+        String email = inputEmail.getText().toString().trim(); //email
+        String senha = inputSenha.getText().toString().trim(); //senha
 
-        boolean emailValido = EmailValidator.getInstance().isValid(email);
+        boolean emailValido = EmailValidator.getInstance().isValid(email); //caso o email for valido
+        boolean senhaValida = senha.length() >= 0 && senha != null; //caso a senha tiver mais de 8 caracteres
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
+            Toast.makeText(getContext(), getResources().getString(R.string.invEmail), Toast.LENGTH_SHORT).show();
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
+        if(!senhaValida){
+            inputSenha.setTextColor(getResources().getColor(R.color.vermelho));
+            Toast.makeText(getContext(), getResources().getString(R.string.invPass), Toast.LENGTH_SHORT).show();
+        }else{
+            inputSenha.setTextColor(getResources().getColor(R.color.verde4));
+        }
+
         //faz login
-        if(emailValido){
+        if(emailValido && senhaValida){
             mAuth.signInWithEmailAndPassword(email, senha)
                     .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
                         if (task.isSuccessful()) {

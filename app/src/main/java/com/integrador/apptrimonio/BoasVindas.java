@@ -1,11 +1,15 @@
 package com.integrador.apptrimonio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +17,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.android.volley.VolleyError;
 import com.integrador.apptrimonio.Utils.BoasVindasAdaptador;
 import com.integrador.apptrimonio.Utils.BoasVindasItem;
+import com.integrador.apptrimonio.Utils.VolleyInterface;
+import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
@@ -24,15 +31,18 @@ public class BoasVindas extends AppCompatActivity {
 
     private BoasVindasAdaptador boasVindasAdaptador;
     private Button botao;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boas_vindas);
 
+        sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
+
         //abre a tela inicial caso ja entrou
         if (getSharedPreferences("apptrimonio", MODE_PRIVATE).getBoolean("entrou", false)) {
-            startActivity(new Intent(BoasVindas.this, MainActivity.class));
+            startActivity(new Intent(BoasVindas.this, MainActivity.class)); //abre a tela inicial
             finish();
         }
 
@@ -67,24 +77,21 @@ public class BoasVindas extends AppCompatActivity {
             }
         });
 
-        botao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (boasVindasViewPager.getCurrentItem() + 1 < boasVindasAdaptador.getItemCount()) {
-                    boasVindasViewPager.setCurrentItem(boasVindasViewPager.getCurrentItem() + 1);
-                } else {
-                    //atualiza o shared pois entrou no app pela primeira vez
-                    SharedPreferences sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.remove("entrou");
-                    editor.putBoolean("entrou", true);
-                    editor.apply();
+        botao.setOnClickListener(v -> {
+            if (boasVindasViewPager.getCurrentItem() + 1 < boasVindasAdaptador.getItemCount()) {
+                boasVindasViewPager.setCurrentItem(boasVindasViewPager.getCurrentItem() + 1);
+            } else {
+                //atualiza o shared pois entrou no app pela primeira vez
+                SharedPreferences sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("entrou");
+                editor.putBoolean("entrou", true);
+                editor.apply();
 
-                    //abre a tela incial
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
+                //abre a tela incial
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
 
-                }
             }
         });
     }

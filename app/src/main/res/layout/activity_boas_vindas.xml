@@ -16,11 +16,10 @@
 
     <Button
         android:id="@+id/botaoBoasVindas"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
-        android:autoSizeTextType="none"
         android:background="@drawable/button_verde_escuro"
         android:fontFamily="@font/regular"
         android:paddingStart="5dp"
@@ -31,7 +30,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/branco"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

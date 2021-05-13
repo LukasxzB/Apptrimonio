@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class FragmentoCamera extends Fragment {
 
     private CompoundBarcodeView scannerView;
+    private boolean carregandoCodigo = false;
 
     public FragmentoCamera() {
     }
@@ -43,11 +45,27 @@ public class FragmentoCamera extends Fragment {
     private final BarcodeCallback scannerCallback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if (result.getText() != null) {
-                scannerView.setStatusText(result.getText());
-            }
+            if(!carregandoCodigo){ //boolean pra evitar que o código seja escaneado várias vezes ao mesmo tempo
+                carregandoCodigo = true; //irá rodar apenas uma vez, depois de concluir a pesquisa irá rodar novamente
 
-            //Do something with code result
+                String resultado = result.getText();
+                String codigo = resultado;
+
+                boolean valido = true;
+
+                if(!resultado.contains("#$") || !resultado.contains("$#") || !resultado.contains("apptrimonio-")){ //caso não conter #$ $# e apptrimonio
+                    valido = false;
+                }
+
+                try {
+                    codigo = resultado.substring(resultado.indexOf("#$"), resultado.lastIndexOf("$#")).replace("#$apptrimonio-", "");
+                }catch (Exception e){
+                    valido = false;
+                }
+
+                carregandoCodigo = false;
+                Toast.makeText(getContext(), codigo, Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class VerificadorPermissoes {
 
-    private static final String[] permissoesNecessarias = {"android.permission.CAMERA"};
+    private static final String[] permissoesNecessarias = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE"};
 
     public static void verificarPermissoes(Activity activity) { //verifica as permissões caso foram aceitas e pede pra aceitar
 

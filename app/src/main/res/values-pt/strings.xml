@@ -43,14 +43,14 @@
     <string name="support">Suporte</string>
     <string name="scanCode">Escanear um código</string>
     <string name="addObj">Adicionar um objeto</string>
-    <string name="invCode">Código Inválido</string>
+    <string name="reqGer">Requisitar gerenciador</string>
+    <string name="invCode">Código inválido</string>
     <string name="invCodeDesc">O código escaneando não existe ou não é um código Apptrimônio.</string>
     <string name="tryAgain">Por favor, tente novamente.</string>
     <string name="name">Nome</string>
     <string name="category">Categoria</string>
     <string name="place">Local</string>
     <string name="date">Data de compra</string>
-    <string name="desc">Descrição</string>
     <string name="report">Reportar</string>
     <string name="objName">Nome do objeto</string>
     <string name="objNameEx">Exemplo: Cadeiras brancas</string>
@@ -61,8 +61,11 @@
     <string name="objValueEx">Exemplo: R$12,99</string>
     <string name="objPlace">Local em que o objeto se encontra</string>
     <string name="objPlaceDesc">Exemplo: IFSC - Xânxere</string>
+    <string name="objImgDesc">Descrição de imagem</string>
+    <string name="objImgDescEx">Exemplo: Duas cadeiras brancas</string>
+    <string name="objSValue">Valor sentimental</string>
+    <string name="objSValueEx">Exemplo: Cadeira utilizada pelos alunos em áreas recreativas</string>
     <string name="add">Adicionar</string>
-    <string name="objPhoto">Clique aqui para adicionar uma imagem</string>
     <string name="objSuccess">Objeto adicionado!</string>
     <string name="permRequired">Permissão necessária</string>
     <string name="permRequiredDesc">Para utilizar algumas das funcionalidades do aplicativo, você deve aceitar as seguintes permissões.</string>
@@ -71,4 +74,16 @@
     <string name="text1t">Patrimônio público</string>
     <string name="text2t">Legislação</string>
     <string name="text3t">Nossos impostos</string>
+    <string name="qrcodelink">Aplicativo Apptrimônio - descubra quanto custa seu ensino! Quer descobrir o que tem neste QRCode? Baixe o aplicativo Apptrimônio em: https://bit.ly/apptrimonio - #$apptrimonio-%link%$#</string>
+    <string name="invPass">Senha inválida! A sua senha precisa ter no minímo 8 caracteres!</string>
+    <string name="invEmail">E-mail inválido! Insira um e-mail válido!</string>
+    <string name="qrcodePlaceholder">
+Apptrimônio - Download: bit.ly/apptrimonio
+
+Quer descobrir o que tem neste QRCode? Baixe o aplicativo!
+Want to find out what\'s in this QRCode? Get the app!
+¿Quiere saber qué hay en este código QR? ¡Obtener la aplicación!
+
+#$apptrimonio-ajMKhOi4Sle2ui4RUUuJ$#
+    </string>
 </resources>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:windowSoftInputMode="adjustNothing"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/verde0"
+    tools:context=".AdicionarObjetos">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/verde0"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/adicionarObjetos_voltar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_back_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_titulo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/addObj"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </Toolbar>
+
+    <ImageView
+        android:id="@+id/adicionarObjetos_cinza"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:src="@color/cinza3" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/addimg_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="25dp"
+                android:id="@+id/adicionarObjetos_imagem_fundo"
+                android:layout_width="130dp"
+                android:background="@drawable/addimg_borda_cinza"
+                android:layout_height="130dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/adicionarObjetos_imagem"
+                    android:layout_width="125dp"
+                    android:padding="3dp"
+                    android:layout_height="125dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/addimg_ptg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_nome_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objName"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_nome"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_nome" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_input_nome"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objNameEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_imagem_fundo" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_categoria_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objCat"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_categoria"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_categoria" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_input_categoria"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objCat"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_nome" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_data_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objDate"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_data"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_data" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_input_data"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objDateEx"
+                android:inputType="date"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_categoria" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_valor_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objValue"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_valor"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_valor" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_valor"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objValueEx"
+                android:inputType="numberDecimal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_data" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_local_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objPlace"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_local"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_local" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_local"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objPlaceDesc"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_valor" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_descricaoImg_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objImgDesc"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_descricaoImg"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_descricaoImg" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_descricaoImg"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objImgDesc"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_local" />
+
+            <TextView
+                android:id="@+id/adicionarObjetos_input_valorSentimental_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objSValue"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_valorSentimental"
+                app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_valorSentimental" />
+
+
+            <EditText
+                android:id="@+id/adicionarObjetos_valorSentimental"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objSValueEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_descricaoImg" />
+
+            <Button
+                android:layout_marginTop="25dp"
+                android:id="@+id/adicionarObjetos_botao"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@drawable/add_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_valorSentimental" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_botao" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

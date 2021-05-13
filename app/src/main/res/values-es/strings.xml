@@ -11,58 +11,61 @@
     <string name="wScan">Escanea los códigos</string>
     <string name="wScanD">Busque códigos esparcidos por su campus</string>
     <string name="ok">Ok!</string>
-    <string name="login">Entrar</string>
-    <string name="logoff">Sair</string>
+    <string name="login">Acceso</string>
+    <string name="logoff">Desconectarse</string>
     <string name="madeLogoff">Você saiu de sua conta com sucesso!</string>
-    <string name="changePass">Trocar senha</string>
-    <string name="singup">Cadastrar</string>
-    <string name="loginAccess">Acesso apenas a gerenciadores</string>
-    <string name="singupAccess">Cadastro apenas a gerenciadores</string>
+    <string name="changePass">Cambia la contraseña</string>
+    <string name="singup">Registrar</string>
+    <string name="loginAccess">Acceso solo para administradores</string>
+    <string name="singupAccess">Registro solo para administradores</string>
     <string name="email">Email</string>
     <string name="emailInst">Email institucional</string>
-    <string name="emailUsed">Email utilizado no cadastro</string>
-    <string name="password">Senha</string>
-    <string name="forgotPass">Esqueceu sua senha?</string>
-    <string name="dontHaveAccount">Você ainda não possui uma conta? Cadastre-se!</string>
-    <string name="alreadyHaveAccount">Você já possui uma conta? Entre!</string>
-    <string name="loginSuccess">Você entrou com sucesso!</string>
-    <string name="loginFail">Ocorreu um erro ao entrar: </string>
-    <string name="registerSucess">Você cadastrou sua conta com sucesso!</string>
-    <string name="registerFail">Ocorreu um erro ao se cadastrar: </string>
+    <string name="emailUsed">Email utilizado en el registro</string>
+    <string name="password">Contraseña</string>
+    <string name="forgotPass">¿Olvidaste tu contraseña?</string>
+    <string name="dontHaveAccount">¿Todavía no tienes una cuenta? ¡Haz clic aquí para registrarse!</string>
+    <string name="alreadyHaveAccount">¿Ya tiene una cuenta? ¡Haga clic aquí para iniciar sesión!</string>
+    <string name="loginSuccess">Usted entró con éxito!</string>
+    <string name="loginFail">Ha ocurrido un error al iniciar sesión: </string>
+    <string name="registerSucess">¡Has registrado tu cuenta con éxito!</string>
+    <string name="registerFail">Ha ocurrido un error al registrarse: </string>
     <string name="confirmEmail">Confirmar email</string>
-    <string name="confirmEmailDesc">Confirme o seu cadastro clicando no link em seu email!</string>
-    <string name="yourEmailSingup">Seu email utilizado no cadastro</string>
+    <string name="confirmEmailDesc">¡Confirma tu suscripción haciendo clic en el enlace en tu email!</string>
+    <string name="yourEmailSingup">Tu email utilizado en el registro</string>
     <string name="sendEmail">Enviar email</string>
-    <string name="sendEmailSuccess">E-mail enviado com sucesso!</string>
-    <string name="sendEmailFail">Ocorreu um erro ao enviar o e-mail: </string>
-    <string name="sendEmailWait">Enviando o e-mail...</string>
-    <string name="appDesc">Veja quanto custa o seu ensino</string>
-    <string name="hello">Olá!</string>
+    <string name="sendEmailSuccess">Email enviado con éxito!</string>
+    <string name="sendEmailFail">Se produjo un error al enviar el email: </string>
+    <string name="sendEmailWait">Enviando el email...</string>
+    <string name="appDesc">Vea cuánto cuesta su enseñanza</string>
+    <string name="hello">¡Hola!</string>
     <string name="texts">Textos informativos</string>
-    <string name="apphelp">Ajuda sobre o aplicativo</string>
-    <string name="support">Suporte</string>
+    <string name="apphelp">Ayuda de la aplicación</string>
+    <string name="support">Soporte</string>
     <string name="scanCode">Escanear um código</string>
-    <string name="addObj">Adicionar um objeto</string>
-    <string name="invCode">Código Inválido</string>
-    <string name="invCodeDesc">O código escaneando não existe ou não é um código Apptrimônio</string>
-    <string name="tryAgain">Por favor, tente novamente.</string>
-    <string name="name">Nome</string>
-    <string name="category">Categoria</string>
+    <string name="addObj">Agregar un objeto</string>
+    <string name="reqGer">Requisitar gerenciador</string>
+    <string name="invCode">Codigo invalido</string>
+    <string name="invCodeDesc">El código de escaneo no existe o no es un código de Apptrimônio.</string>
+    <string name="tryAgain">Por favor, inténtelo de nuevo.</string>
+    <string name="name">Nombre</string>
+    <string name="category">Categoría</string>
     <string name="place">Local</string>
-    <string name="date">Data de compra</string>
-    <string name="desc">Descrição</string>
+    <string name="date">Fecha de compra</string>
     <string name="report">Reportar</string>
-    <string name="objName">Nome do objeto</string>
-    <string name="objNameEx">Exemplo: Cadeiras brancas</string>
-    <string name="objCat">Categoria do objeto</string>
-    <string name="objDate">Data de compra do objeto</string>
-    <string name="objDateEx">Exemplo: 01/01/2020 </string>
-    <string name="objValue">Valor do objeto</string>
-    <string name="objValueEx">Exemplo: R$12,99</string>
-    <string name="objPlace">Local em que o objeto se encontra</string>
-    <string name="objPlaceDesc">Exemplo: IFSC - Xânxere</string>
-    <string name="add">Adicionar</string>
-    <string name="objPhoto">Clique aqui para adicionar uma imagem</string>
+    <string name="objName">Nombre del objeto</string>
+    <string name="objNameEx">Ejemplo: Sillas blancas</string>
+    <string name="objCat">Categoría del objeto</string>
+    <string name="objDate">Fecha de compra del objeto</string>
+    <string name="objDateEx">Ejemplo: 01/01/2020</string>
+    <string name="objValue">Valor del objeto</string>
+    <string name="objValueEx">Ejemplo: R$12,99</string>
+    <string name="objPlace">Lugar en que se encuentra el objeto</string>
+    <string name="objPlaceDesc">Ejemplo: IFSC - Xanxerê</string>
+    <string name="objImgDesc">Descrição de imagem</string>
+    <string name="objImgDescEx">Exemplo: Duas cadeiras brancas</string>
+    <string name="objSValue">Valor sentimental</string>
+    <string name="objSValueEx">Exemplo: Cadeira utilizada pelos alunos em áreas recreativas</string>
+    <string name="add">Agregar</string>
     <string name="objSuccess">Objeto adicionado!</string>
     <string name="permRequired">Permissão necessária</string>
     <string name="permRequiredDesc">Para utilizar algumas das funcionalidades do aplicativo, você deve aceitar as seguintes permissões.</string>
@@ -71,4 +74,16 @@
     <string name="text1t">Patrimônio público escolar</string>
     <string name="text2t">Legislação</string>
     <string name="text3t">Nossos impostos</string>
-    </resources>
+    <string name="qrcodelink">Aplicativo Apptrimônio - descubra quanto custa seu ensino! Quer descobrir o que tem neste QRCode? Baixe o aplicativo Apptrimônio em: https://bit.ly/apptrimonio - #$apptrimonio-%link%$#</string>
+    <string name="invPass">Senha inválida! A sua senha precisa ter no minímo 8 caracteres!</string>
+    <string name="invEmail">E-mail inválido! Insira um e-mail válido!</string>
+    <string name="qrcodePlaceholder">
+        Apptrimônio - Download: bit.ly/apptrimonio
+
+Quer descobrir o que tem neste QRCode? Baixe o aplicativo!
+Want to find out what\'s in this QRCode? Get the app!
+¿Quiere saber qué hay en este código QR? ¡Obtener la aplicación!
+
+#$apptrimonio-ajMKhOi4Sle2ui4RUUuJ$#
+    </string>
+</resources>
