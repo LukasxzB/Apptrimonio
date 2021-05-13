@@ -1,11 +1,11 @@
-# Apptrimônio
+# **Apptrimônio**
 ## Descubra quanto custa seu ensino
 
 #### Qual o objetivo do Apptrimônio?
-O Apptrimônio foi construído com o intuito de informar a comunidade do IFSC, especialmente os estudantes, com relação ao patrimônio público contido nos câmpus.
+O Apptrimônio foi construído com o intuito de **informar** a comunidade do IFSC, especialmente os estudantes, com relação ao patrimônio público contido nos câmpus.
 
 #### Quem pode usar o app?
-Todos! Nós nos esforçamos para tornar o Apptrimônio acessível e ativo em todos os conjuntos que compõem a comunidade do IFSC :)
+**Todos**! Nós nos esforçamos para tornar o Apptrimônio acessível e ativo em todos os conjuntos que compõem a comunidade do IFSC :)
 
 #### Como funciona?
 Acesse a câmera do seu celular através do app e escaneie o QR code contido no objeto desejado, apontando a câmera diretamente para ele. Você será redirecionado para uma página dedicada ao objeto em questão, mostrando informações como valor e data de compra! 
