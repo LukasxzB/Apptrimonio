@@ -1,7 +1,9 @@
 # **Apptrimônio**
 ## Descubra quanto custa seu ensino
 
-![Logo do apptrimônio](https://i.imgur.com/7pV4obV.png)
+<p align="center">
+  <img width="300" height="300" src="https://i.imgur.com/7pV4obV.png">
+</p>
 
 #### Qual o objetivo do Apptrimônio?
 O Apptrimônio foi construído com o intuito de **informar** a comunidade do IFSC, especialmente os estudantes, com relação ao patrimônio público contido nos câmpus.
