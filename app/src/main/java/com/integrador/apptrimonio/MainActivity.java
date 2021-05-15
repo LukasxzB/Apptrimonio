@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.InicoAdaptador;
 import com.integrador.apptrimonio.Utils.VerificadorPermissoes;
@@ -23,6 +24,8 @@ import com.integrador.apptrimonio.Utils.VolleyInterface;
 import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private SlidingRootNav menuLateral;
     private Button menulateralBotaoEntrar;
     private Dialog popupCarregando;
+    private VolleyUtils volleyUtils;
 
     //menu lateral
     private TextView texto1Txt, texto2Txt, texto3Txt, faqTxt, suporteTxt, escanearTxt, adicionarTxt;
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
+        volleyUtils = new VolleyUtils(this);
 
         //define o popup carregando
         popupCarregando = new Dialog(this);
@@ -163,34 +168,44 @@ public class MainActivity extends AppCompatActivity {
         //verifica se é ou não gerenciador
         VolleyInterface volleyInterface = new VolleyInterface() { //callback
             @Override
-            public void onResponse(String response) { //salva o gerenciador como true ou false e fecha o popup
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                try {
-                    editor.putBoolean("gerenciador", Boolean.parseBoolean(response));
-                }catch (Exception e){
-                    editor.putBoolean("gerenciador", false);
+            public void onResponse(String response) { //salva o gerenciador e estudante como true ou false e fecha o popup
+
+                boolean gerenciador = false, estudante = false;
+
+                if(response != "ERROR"){ //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
+                    try {
+                        JSONObject objeto = new JSONObject(response);
+                        gerenciador = objeto.getBoolean("gerenciador");
+                        estudante = objeto.getBoolean("estudante");
+                    }catch (Exception e){ //caso não recebeu um JSON do servidor por algum motivo
+                        e.printStackTrace();
+                        gerenciador = estudante = false;
+                    }
                 }
-                editor.apply();
+
                 fecharPopUpCarregando();
-                mudarGerenciador();
+                mudarGerenciador(gerenciador, estudante);
             }
 
             @Override
-            public void onError(VolleyError error) { //salva como false o gerenciador e fecha o popup
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("gerenciador", false);
-                editor.apply();
+            public void onError(VolleyError error) { //salva o gerenciador e estudante como false e fecha o popup
                 fecharPopUpCarregando();
-                mudarGerenciador();
+                mudarGerenciador(false, false);
             }
         };
 
         //faz a verificação do gerenciador
-        VolleyUtils.verificarConta(this, volleyInterface);
+        volleyUtils.verificarConta(volleyInterface);
     }
 
-    private void mudarGerenciador(){ //depois da requisição muda se é ou não gerenciador
-        if(sharedPreferences.getBoolean("gerenciador", false)){ //caso for gerenciador ao clicar é redirecionado a tela de adicionar objetos
+    private void mudarGerenciador(boolean gerenciador, boolean estudante){ //salva se é ou não gerenciador e estudante
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("gerenciador", gerenciador); //salva o gerenciador
+        editor.putBoolean("estudante", estudante); //salva o estudante
+        editor.apply();
+
+        if(gerenciador){ //caso for gerenciador ao clicar é redirecionado a tela de adicionar objetos
             adicionarTxt.setText(getResources().getString(R.string.addObj)); //muda o nome para adicionar objetos
             adicionarTxt.setOnClickListener(v -> abrirAdicionarObjeto());
             adicionarImg.setOnClickListener(v -> abrirAdicionarObjeto());
@@ -199,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             adicionarTxt.setOnClickListener(v -> requisitarGerenciador());
             adicionarImg.setOnClickListener(v -> requisitarGerenciador());
         }
+
     }
 
     private void abrirCamera() {
