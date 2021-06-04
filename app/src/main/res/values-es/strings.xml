@@ -74,6 +74,7 @@
     <string name="text1t">Patrimônio público escolar</string>
     <string name="text2t">Legislação</string>
     <string name="text3t">Nossos impostos</string>
+    <string name="text4t">Importância sentimental</string>
     <string name="qrcodelink">Aplicativo Apptrimônio - descubra quanto custa seu ensino! Quer descobrir o que tem neste QRCode? Baixe o aplicativo Apptrimônio em: https://bit.ly/apptrimonio - #$apptrimonio-%link%$#</string>
     <string name="invPass">Senha inválida! A sua senha precisa ter no minímo 8 caracteres!</string>
     <string name="invEmail">E-mail inválido! Insira um e-mail válido!</string>

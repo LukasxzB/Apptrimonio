@@ -112,7 +112,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
@@ -140,7 +140,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
@@ -151,7 +151,7 @@
                     app:layout_constraintStart_toEndOf="@+id/menulateral_textoinfo2"
                     app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo1" />
 
-                <!-- FAQ -->
+                <!-- Nossos impostos -->
 
                 <ImageView
                     android:id="@+id/menulateral_textoinfo3"
@@ -168,7 +168,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
@@ -179,6 +179,35 @@
                     app:layout_constraintStart_toEndOf="@+id/menulateral_textoinfo3"
                     app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo2" />
 
+                <!-- Valor sentimental -->
+
+                <ImageView
+                    android:id="@+id/menulateral_textoinfo4"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/icon_texto"
+                    app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo4" />
+
+                <TextView
+                    android:id="@+id/menulateral_textoinfotitulo4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="@string/text4t"
+                    android:textColor="@color/preto"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/menulateral_textoinfo4"
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo3" />
+
+
                 <ImageView
                     android:id="@+id/menulateral_divisor2"
                     android:layout_width="match_parent"
@@ -188,7 +217,7 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo3" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo4" />
 
                 <!-- FAQ Ajuda -->
 
