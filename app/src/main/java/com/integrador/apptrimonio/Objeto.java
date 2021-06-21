@@ -43,15 +43,15 @@ public class Objeto extends AppCompatActivity {
         //variáveis do objeto
         Bundle bundle = getIntent().getExtras();
         String imagem = bundle.getString("imagem");
-        String descricao = !bundle.getString("descricao").equals("") || bundle.getString("descricao") == null? bundle.getString("descricao") : getResources().getString(R.string.naoInfo);
-        String codigo = !bundle.getString("codigo").equals("")  || bundle.getString("codigo") == null? bundle.getString("codigo") : getResources().getString(R.string.naoInfo);
-        String nome = !bundle.getString("nome").equals("")||bundle.getString("nome") == null ? bundle.getString("nome") : getResources().getString(R.string.naoInfo);
-        String lingua = !bundle.getString("lingua").equals("")||bundle.getString("lingua")==null ? bundle.getString("lingua") : getResources().getString(R.string.naoInfo);
-        String categoria = !bundle.getString("categoria").equals("")||bundle.getString("categoria")==null ? bundle.getString("categoria") : getResources().getString(R.string.naoInfo);
-        String descricaoImagem = !bundle.getString("descricaoImagem").equals("")||bundle.getString("descricaoImagem")==null ? bundle.getString("descricaoImagem") : getResources().getString(R.string.naoInfo);
-        String local = !bundle.getString("local").equals("")||bundle.getString("local")==null ? bundle.getString("local") : getResources().getString(R.string.naoInfo);
+        String descricao = !bundle.getString("descricao").equals("") || bundle.getString("descricao") == null ? bundle.getString("descricao") : getResources().getString(R.string.naoInfo);
+        String codigo = !bundle.getString("codigo").equals("") || bundle.getString("codigo") == null ? bundle.getString("codigo") : getResources().getString(R.string.naoInfo);
+        String nome = !bundle.getString("nome").equals("") || bundle.getString("nome") == null ? bundle.getString("nome") : getResources().getString(R.string.naoInfo);
+        String lingua = !bundle.getString("lingua").equals("") || bundle.getString("lingua") == null ? bundle.getString("lingua") : getResources().getString(R.string.naoInfo);
+        String categoria = !bundle.getString("categoria").equals("") || bundle.getString("categoria") == null ? bundle.getString("categoria") : getResources().getString(R.string.naoInfo);
+        String descricaoImagem = !bundle.getString("descricaoImagem").equals("") || bundle.getString("descricaoImagem") == null ? bundle.getString("descricaoImagem") : getResources().getString(R.string.naoInfo);
+        String local = !bundle.getString("local").equals("") || bundle.getString("local") == null ? bundle.getString("local") : getResources().getString(R.string.naoInfo);
         String valor = bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : getResources().getString(R.string.naoInfo);
-        String valorSentimental = !bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") == null? bundle.getString("valorSentimental") : getResources().getString(R.string.naoInfo);
+        String valorSentimental = !bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") == null ? bundle.getString("valorSentimental") : getResources().getString(R.string.naoInfo);
 
         String dataCompra = getResources().getString(R.string.naoInfo);
         String dataPublicacao = getResources().getString(R.string.naoInfo);
@@ -105,51 +105,51 @@ public class Objeto extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.objeto_imagem);
         //define a imagem
-        if(imagem.equals("")){
+        if (imagem.equals("")) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.semimagem));
-        }else{
+        } else {
             Bitmap bitmap = Utils.getBitmapImage(imagem);
             imageView.setImageBitmap(bitmap);
         }
 
         //define a lingua
         ImageView linguaView = findViewById(R.id.objeto_lingua);
-        if(lingua.equals("pt")){
+        if (lingua.equals("pt")) {
             linguaView.setImageDrawable(getResources().getDrawable(R.drawable.flag_pt));
-        }else if(lingua.equals("es")){
+        } else if (lingua.equals("es")) {
             linguaView.setImageDrawable(getResources().getDrawable(R.drawable.flag_es));
         }
 
     }
 
     private void abrirQrCode(String codigo) { //ao clicar no icone de qrcode
-        utils.abrirPopUpQRCode(codigo);
+        utils.abrirPopUpQRCode(codigo, findViewById(R.id.activity_objeto));
     }
 
-    private void removerObjeto(){ //ao clicar no icone de remover
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
+    private void removerObjeto() { //ao clicar no icone de remover
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
             Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
-        }else if(!User.getInstance().isPermissaoGerenciador()){ //caso o usuário não possua permissão de gerenciador
+        } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
             Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.remObjError));
-        }else{ //caso possua
+        } else { //caso possua
             Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void editarObjeto(){ //ao clicar no icone de editar
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
+    private void editarObjeto() { //ao clicar no icone de editar
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
             Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
-        }else if(!User.getInstance().isPermissaoGerenciador()){ //caso o usuário não possua permissão de editar objeto
+        } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de editar objeto
             Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.editObjError));
-        }else{ //caso possua
+        } else { //caso possua
             Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void reportarObjeto(){ //ao clicar no icone de reportar
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
+    private void reportarObjeto() { //ao clicar no icone de reportar
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
             Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
-        }else{ //caso tenha
+        } else { //caso tenha
             Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
         }
     }

@@ -1,5 +1,6 @@
 package com.integrador.apptrimonio.Utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class VerificadorPermissoes {
 
-    private static final String[] permissoesNecessarias = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE"};
+    private static final String[] permissoesNecessarias = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     public static void verificarPermissoes(Activity activity) { //verifica as permissões caso foram aceitas e pede pra aceitar
 

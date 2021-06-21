@@ -22,8 +22,8 @@ import java.util.Map;
 public class QRCode {
 
     public static Bitmap generateQRCode(String codigo, Context context) {
-        int width = 500;
-        int height = 500;
+        int width = 1250;
+        int height = 1250;
 
         //parametros
         String charset = "UTF-8";
@@ -51,7 +51,7 @@ public class QRCode {
                         int colorInt = color.argb(255, red, green, blue);
                         pixels[y * width + x] = bitMatrix.get(x, y) ? colorInt : 16777215;// 0x000000:0xffffff
                     } else {
-                        pixels[y * width + x] = 0x00ffffff;// background color
+                        pixels[y * width + x] = 0xffffffff;// background color
                     }
                 }
             }
@@ -73,8 +73,8 @@ public class QRCode {
 
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
-        float scaleWidth = ((float) 150) / width;
-        float scaleheight = ((float) 150) / height;
+        float scaleWidth = ((float) 375) / width;
+        float scaleheight = ((float) 375) / height;
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleheight);
 

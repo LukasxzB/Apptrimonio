@@ -123,6 +123,8 @@
     <string name="repImage">A imagem do objeto está incorreta</string>
     <string name="repDesc">A descrição do objeto está incorreta</string>
     <string name="other">Outro</string>
+    <string name="downloadSuccess">O QRCode foi salvo no seu dispositivo com sucesso!</string>
+    <string name="downloadError">Ocorreu um erro ao salvar o QRCode em seu dispositivo. Você concedeu as permissões necessárias?</string>
     <string name="qrcodePlaceholder">Quer descobrir o que está neste QRCode?
 
         Baixe o aplicativo! Apptrimônio - bit.ly/apptrimonio

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/activity_objeto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/branco"
     tools:context=".Objeto">
@@ -81,8 +81,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:fillViewport="true"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/objeto_background"
         app:layout_constraintHorizontal_bias="0.0"
@@ -94,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,10 +105,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:background="@color/cinza2"
+                    android:orientation="vertical"
                     android:paddingTop="120dp"
                     android:paddingBottom="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -307,12 +308,12 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
-                    android:padding="1dp"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/objeto_bordas"
                     android:id="@+id/objeto_imagem"
                     android:layout_width="275dp"
                     android:layout_height="160dp"
+                    android:background="@drawable/objeto_bordas"
+                    android:padding="1dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/semimagem"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                     app:layout_constraintEnd_toEndOf="parent"
