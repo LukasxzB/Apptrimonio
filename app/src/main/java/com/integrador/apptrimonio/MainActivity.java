@@ -1,6 +1,7 @@
 package com.integrador.apptrimonio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Dialog;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.InicoAdaptador;
+import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VerificadorPermissoes;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
@@ -41,18 +43,16 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private SlidingRootNav menuLateral;
     private Button menulateralBotaoEntrar;
-    private Dialog popupCarregando;
 
     private Utils utils;
 
     //menu lateral
-    private TextView texto1Txt, texto2Txt, texto3Txt, texto4Txt, faqTxt, suporteTxt, escanearTxt, adicionarTxt;
-    private ImageView texto1Img, texto2Img, texto3Img, texto4Img, faqImg, suporteImg, escanearImg, adicionarImg;
+    private ConstraintLayout perfil, texto1, texto2, texto3, texto4, faq, suporte, escanear, adicionar, aprovar;
 
     @Override
     protected void onStart() {
         super.onStart();
-        atualizarBotaoEntrarMenuLateral();
+        atualizarBotoes();
     }
 
 
@@ -64,13 +64,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
 
         utils = new Utils(this);
-        utils.verificarConta();
-
-        //define o popup carregando
-        popupCarregando = new Dialog(this);
-        popupCarregando.setContentView(R.layout.popup_carregando);
-        popupCarregando.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupCarregando.setCancelable(false);
+        utils.verificarConta(login -> { });
 
         //adiciona o menu lateral
         menuLateral = new SlidingRootNavBuilder(this)
@@ -88,53 +82,48 @@ public class MainActivity extends AppCompatActivity {
 
         //botão de entrar ou sair e listener
         menulateralBotaoEntrar = menuView.findViewById(R.id.menulateral_entrar);
-        atualizarBotaoEntrarMenuLateral();
+        atualizarBotoes();
 
-        texto1Txt = menuView.findViewById(R.id.menulateral_textoinfotitulo1);
-        texto2Txt = menuView.findViewById(R.id.menulateral_textoinfotitulo2);
-        texto3Txt = menuView.findViewById(R.id.menulateral_textoinfotitulo3);
-        texto4Txt = menuView.findViewById(R.id.menulateral_textoinfotitulo4);
-        texto1Img = menuView.findViewById(R.id.menulateral_textoinfo1);
-        texto2Img = menuView.findViewById(R.id.menulateral_textoinfo2);
-        texto3Img = menuView.findViewById(R.id.menulateral_textoinfo3);
-        texto4Img = menuView.findViewById(R.id.menulateral_textoinfo4);
-        texto1Txt.setOnClickListener(v -> abrirTexto(1));
-        texto1Img.setOnClickListener(v -> abrirTexto(1));
-        texto2Txt.setOnClickListener(v -> abrirTexto(2));
-        texto2Img.setOnClickListener(v -> abrirTexto(2));
-        texto3Txt.setOnClickListener(v -> abrirTexto(3));
-        texto3Img.setOnClickListener(v -> abrirTexto(3));
-        texto4Txt.setOnClickListener(v -> abrirTexto(4));
-        texto4Img.setOnClickListener(v -> abrirTexto(4));
+        //perfil
+        perfil = menuView.findViewById(R.id.menulateral_perfil0);
+        perfil.setOnClickListener(v -> abrirPerfil());
+
+        //textos informativos
+        texto1 = menuView.findViewById(R.id.menulateral_textoinfo10);
+        texto1.setOnClickListener(v -> abrirTexto(1));
+        texto2 = menuView.findViewById(R.id.menulateral_textoinfo20);
+        texto2.setOnClickListener(v -> abrirTexto(2));
+        texto3 = menuView.findViewById(R.id.menulateral_textoinfo30);
+        texto3.setOnClickListener(v -> abrirTexto(3));
+        texto4 = menuView.findViewById(R.id.menulateral_textoinfo40);
+        texto4.setOnClickListener(v -> abrirTexto(4));
 
         //listeners do faq
-        faqTxt = menuView.findViewById(R.id.menulateral_faqtitulo);
-        faqImg = menuView.findViewById(R.id.menulateral_faq);
-        faqTxt.setOnClickListener(v -> abrirFaq());
-        faqImg.setOnClickListener(v -> abrirFaq());
+        faq = menuView.findViewById(R.id.menulateral_faq0);
+        faq.setOnClickListener(v -> abrirFaq());
 
         //listeners do suporte
-        suporteImg = menuView.findViewById(R.id.menulateral_suporte);
-        suporteTxt = menuView.findViewById(R.id.menulateral_suportetitulo);
-        suporteImg.setOnClickListener(v -> abrirSuporte());
-        suporteTxt.setOnClickListener(v -> abrirSuporte());
+        suporte = menuView.findViewById(R.id.menulateral_suporte0);
+        suporte.setOnClickListener(v -> abrirSuporte());
 
-        //listeners do botão de adicionar objeto ou requisitar gerenciador
-        adicionarImg = menuView.findViewById(R.id.menulateral_adicionar);
-        adicionarTxt = menuView.findViewById(R.id.menulateral_adicionartitulo);
+        //listeners do botão de adicionar objeto
+        adicionar = menuView.findViewById(R.id.menulateral_adicionar0);
+        adicionar.setOnClickListener(v -> abrirAdicionarObjeto());
 
-        //listeners das opções do menu lateral
-        escanearImg = menuView.findViewById(R.id.menulateral_escanear);
-        escanearTxt = menuView.findViewById(R.id.menulateral_escaneartitulo);
-        escanearTxt.setOnClickListener(v -> abrirCamera());
-        escanearImg.setOnClickListener(v -> abrirCamera());
+        //listeners de escanear
+        escanear = menuView.findViewById(R.id.menulateral_escanear0);
+        escanear.setOnClickListener(v -> abrirCamera());
+
+        //listerens de aprovar
+        aprovar = menuView.findViewById(R.id.menulateral_aprovar0);
+        aprovar.setOnClickListener(v -> abrirAprovarObjeto());
 
         //cria o listener de clique pra abrir e fechar o menu dentro do fragmento
         View.OnClickListener clickListener = v -> mudarMenu();
 
         //adiciona o fragmento da tela inicial e camera
         viewPager2 = findViewById(R.id.inicio_viewpager2);
-        InicoAdaptador adaptador = new InicoAdaptador(this, clickListener);
+        InicoAdaptador adaptador = new InicoAdaptador(this, clickListener, this);
         viewPager2.setAdapter(adaptador);
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() { //callback pra permissao
@@ -147,6 +136,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void abrirPerfil(){
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            Utils.abrirSnackbar(findViewById(R.id.activity_main), getResources().getString(R.string.loginRequired));
+        }else {
+            Intent intent = new Intent(MainActivity.this, Perfil.class);
+            startActivity(intent);
+        }
     }
 
     private void abrirSuporte(){ //abre o aplicativo do email
@@ -177,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, AdicionarObjetos.class));
     }
 
+    private void abrirAprovarObjeto(){
+
+    }
+
     private void abrirCamera() {
         fecharMenu();
         viewPager2.setCurrentItem(1, true);
@@ -196,13 +198,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void atualizarBotaoEntrarMenuLateral() {
+    private void atualizarBotoes() {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não houver usuário logado
             menulateralBotaoEntrar.setText(getResources().getString(R.string.login)); //muda o nome pra entrar
             menulateralBotaoEntrar.setBackground(getResources().getDrawable(R.drawable.button_verde_escuro)); //muda a cor pra verde
             menulateralBotaoEntrar.setOnClickListener(v -> {
                 startActivity(new Intent(MainActivity.this, Autenticar.class)); //abre a tela de autenticar
-                utils.verificarConta();
             });
         } else { //caso houver
             menulateralBotaoEntrar.setText(getResources().getString(R.string.logoff)); //muda o nome pra sair
@@ -210,8 +211,7 @@ public class MainActivity extends AppCompatActivity {
             menulateralBotaoEntrar.setOnClickListener(v -> {
                 FirebaseAuth.getInstance().signOut(); //faz logout do firebase
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.madeLogoff), Toast.LENGTH_SHORT).show();
-                atualizarBotaoEntrarMenuLateral();
-                utils.verificarConta();
+                atualizarBotoes();
             });
         }
     }

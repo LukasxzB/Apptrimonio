@@ -23,7 +23,9 @@
         android:roundIcon="@drawable/logo_apptrimonio_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.apptr">
-        <activity android:name=".TextoInformativo"></activity>
+        <activity android:name=".Objeto"></activity>
+        <activity android:name=".Perfil" />
+        <activity android:name=".TextoInformativo" />
         <activity
             android:name=".AdicionarObjetos"
             android:windowSoftInputMode="adjustPan" />

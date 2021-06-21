@@ -5,7 +5,8 @@
     android:id="@+id/fragmento_cadastro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentoCadastro">
+    tools:context=".FragmentoCadastro"
+    android:layout_marginBottom="240dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         <ImageView
             android:id="@+id/cadastro_top"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="130dp"
             android:scaleType="fitXY"
             android:src="@drawable/cadastro_top"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,10 +24,10 @@
 
         <ImageView
             android:id="@+id/cadastro_icon"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/logo_apptrimonio_round"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +53,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/singupAccess"
             android:textColor="@color/branco"
-            android:textSize="17sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/cadastro_titulo"
             app:layout_constraintTop_toBottomOf="@+id/cadastro_titulo" />
 
@@ -60,11 +61,11 @@
             android:id="@+id/cadastro_input_email"
             android:layout_width="310dp"
             android:layout_height="55dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/input_shape"
             android:ems="10"
             android:fontFamily="@font/regular"
-            android:hint="@string/emailInst"
+            android:hint="@string/validMail"
             android:inputType="textEmailAddress"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -90,7 +91,7 @@
             android:id="@+id/cadastro_input_senha"
             android:layout_width="310dp"
             android:layout_height="55dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/input_shape"
             android:ems="10"
             android:fontFamily="@font/regular"
@@ -120,26 +121,16 @@
             android:id="@+id/cadastro_botao"
             android:layout_width="250dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/button_verde_escuro"
             android:fontFamily="@font/regular"
             android:text="@string/singup"
             android:textAllCaps="true"
             android:textColor="@color/branco"
             android:textSize="23sp"
-            app:layout_constraintBottom_toTopOf="@+id/cadastro_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cadastro_input_senha" />
-
-        <ImageView
-            android:id="@+id/cadastro_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:src="@drawable/registrar_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/cadastro_ja_possui"
@@ -151,7 +142,7 @@
             android:textAlignment="center"
             android:textColor="@color/preto"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/cadastro_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cadastro_botao" />

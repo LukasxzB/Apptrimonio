@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="320dp"
-    android:layout_height="360dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/background_branco"
     android:padding="5dp">
@@ -10,6 +10,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/codigoinvalido_fechar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/codigoinvalido_titulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/codigoinvalido_titulo"
+            app:srcCompat="@drawable/fechar" />
 
         <ImageView
             android:id="@+id/codigoinvalido_icon"
@@ -23,13 +34,14 @@
 
         <TextView
             android:id="@+id/codigoinvalido_titulo"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:fontFamily="@font/bold"
             android:text="@string/invCode"
             android:textAlignment="center"
             android:textColor="@color/vermelho"
-            android:textSize="22sp"
+            android:textSize="26sp"
             app:layout_constraintBottom_toTopOf="@+id/codigoinvalido_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,14 +49,16 @@
 
         <TextView
             android:id="@+id/codigoinvalido_desc"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="65dp"
             android:fontFamily="@font/regular"
             android:text="@string/invCodeDesc"
             android:textAlignment="center"
             android:textColor="@color/preto"
-            android:textSize="16sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +73,7 @@
             android:text="@string/tryAgain"
             android:textAlignment="center"
             android:textColor="@color/preto"
-            android:textSize="13sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/codigoinvalido_desc"
             app:layout_constraintStart_toStartOf="@+id/codigoinvalido_desc"

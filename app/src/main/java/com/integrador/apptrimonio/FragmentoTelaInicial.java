@@ -59,6 +59,7 @@ public class FragmentoTelaInicial extends Fragment {
         if (backgroundAleatorio == 1 || backgroundAleatorio == 2 || backgroundAleatorio == 3) {
             titulo.setTextColor(getResources().getColor(R.color.branco));
             desc.setTextColor(getResources().getColor(R.color.branco));
+            botaoMenuIcon.setImageDrawable(getResources().getDrawable(R.drawable.menu_iconbranco));
         }
 
         return view;

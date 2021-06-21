@@ -1,5 +1,6 @@
 package com.integrador.apptrimonio.Utils;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -14,11 +15,11 @@ public class InicoAdaptador extends FragmentStateAdapter {
 
     public Fragment[] mFragments;
 
-    public InicoAdaptador(FragmentActivity fa, View.OnClickListener clickListener) {
+    public InicoAdaptador(FragmentActivity fa, View.OnClickListener clickListener, Context context) {
         super(fa);
         mFragments = new Fragment[]{
                 new FragmentoTelaInicial(clickListener),
-                new FragmentoCamera(),
+                new FragmentoCamera(context),
         };
     }
 

@@ -3,44 +3,114 @@ package com.integrador.apptrimonio.Utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.bumptech.glide.util.Util;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Locale;
+
 public class Utils {
 
-    private Dialog popupCarregando;
+    private Dialog popupCarregando, popupQRCode;
     private Context context;
-    private SharedPreferences sharedPreferences;
 
-    public Utils(Context context){
+    //variáveis do apptrimônio
+    public static String emailApptrimonio = "apptrimonio@gmail.com";
+
+    public Utils(Context context) {
 
         //define o popup carregando
         this.context = context;
-        sharedPreferences = context.getSharedPreferences("apptrimonio", Context.MODE_PRIVATE);
         popupCarregando = new Dialog(context);
         popupCarregando.setContentView(R.layout.popup_carregando);
         popupCarregando.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupCarregando.setCancelable(false);
 
+        popupQRCode = new Dialog(context);
+        popupQRCode.setContentView(R.layout.popup_qrcode);
+        popupQRCode.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupQRCode.setCancelable(true);
+
     }
 
-    private void abrirPopUpCarregando(){ //abre o popup
+    public static String getStringImage(Bitmap bitmap) { //transforma o bitmap em string
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+    public static Bitmap getBitmapImage(String image) { //transforma a string em bitmap
+        try {
+            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        } catch (Exception e) {
+            Log.e("BITMAP ERROR", e.getMessage());
+            return null;
+        }
+    }
+
+    public static String getLanguage() { //retorna a lingua, 0 INGLES, 1 PORTUGUES, 2 ESPANHOL
+        String lingua = Locale.getDefault().getLanguage();
+
+        if (lingua.equalsIgnoreCase("pt")) {
+            lingua = "1";
+        } else if (lingua.equalsIgnoreCase("2")) {
+            lingua = "2";
+        } else {
+            lingua = "0";
+        }
+        return lingua;
+    }
+
+    public void abrirPopUpCarregando() { //abre o popup
         popupCarregando.show();
     }
 
-    private void fecharPopUpCarregando(){ //fecha o popup
+    public void fecharPopUpCarregando() { //fecha o popup
         popupCarregando.dismiss();
     }
 
-    public void verificarConta(){
+    public void abrirPopUpQRCode(String codigo){
+
+        //define o qr code
+        ImageView viewQRCode = popupQRCode.findViewById(R.id.qrcode_qrcode);
+        Bitmap qrcode = QRCode.generateQRCode(context.getResources().getString(R.string.qrcodePlaceholder).replaceAll("%CODIGO%", codigo), context);
+        if(qrcode == null){
+            viewQRCode.setImageDrawable(context.getResources().getDrawable(R.drawable.semimagem));
+        }else{
+            viewQRCode.setImageBitmap(qrcode);
+        }
+
+        //ao fechar
+        ImageView fechar = popupQRCode.findViewById(R.id.qrcode_fechar);
+        fechar.setOnClickListener(v -> fecharPopUpQRCode());
+
+        popupQRCode.show();
+
+    }
+
+    private void fecharPopUpQRCode(){
+        popupQRCode.dismiss();
+    }
+
+    public void verificarConta(UserInterface callback) {
 
         //abre o popup carregando
         abrirPopUpCarregando();
@@ -51,10 +121,11 @@ public class Utils {
             public void onResponse(String response) { //salva os dados do usuário
 
                 boolean gerenciador, editar, adicionar;
-                int xp = 0, objetosAdicionados = 0, objetosVerificados = 0;
+                int xp;
+                JSONArray objetosAdicionados = new JSONArray(), objetosVerificados = new JSONArray();
                 JSONArray codigos = new JSONArray();
 
-                if(response != "ERROR"){ //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
+                if (response != "ERROR") { //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
                     try {
                         JSONObject objeto = new JSONObject(response);
                         gerenciador = objeto.getBoolean("gerenciador");
@@ -63,38 +134,43 @@ public class Utils {
                         xp = objeto.getInt("xp");
                         codigos = objeto.getJSONArray("codigos");
                         salvarDados(gerenciador, editar, adicionar, xp, objetosAdicionados, objetosVerificados, codigos);
-                    }catch (Exception e){ //caso não recebeu um JSON do servidor por algum motivo
+                    } catch (Exception e) { //caso não recebeu um JSON do servidor por algum motivo
                         e.printStackTrace();
-                        salvarDados(false, false, false, 0, 0, 0, new JSONArray());
+                        salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray());
                     }
                 }
 
                 fecharPopUpCarregando();
+                callback.callbackLogin(true);
             }
 
             @Override
             public void onError(VolleyError error) { //salva o gerenciador e estudante como false e fecha o popup
                 fecharPopUpCarregando();
+                callback.callbackLogin(false);
             }
         };
 
-        //faz a verificação da conta
-
+        //faz a requisitação
         new VolleyUtils(this.context).verificarConta(volleyInterface);
     }
 
     //salva os dados recebidos do servidor
-    private void salvarDados(boolean gerenciador, boolean editar, boolean adicionar, int xp, int objetosAdicionados, int objetosVerificados, JSONArray codigos){
+    private void salvarDados(boolean gerenciador, boolean editar, boolean adicionar, int xp, JSONArray objetosAdicionados, JSONArray objetosVerificados, JSONArray codigos) {
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("gerenciador", gerenciador); //salva o gerenciador
-        editor.putBoolean("editar", editar); //salva o editar
-        editor.putBoolean("adicionar", adicionar); //salva o adicionar
-        editor.putInt("xp", xp); //salva o xp
-        editor.putInt("objetosAdicionados", objetosAdicionados); //salva o objetosAdicionados
-        editor.putInt("objetosVerificados", objetosVerificados); //salva os objetosVerificados
-        editor.putString("codigos", codigos.toString()); //salva os codigos
-        editor.apply();
+        User user = User.getInstance();
+        user.setPermissaoGerenciador(gerenciador);
+        user.setPermissaoAdicionar(adicionar);
+        user.setPermissaoEditar(editar);
+        user.setXp(xp);
+        user.setObjetosAdicionados(objetosAdicionados);
+        user.setObjetosVerificados(objetosVerificados);
+        user.setCodigos(codigos);
 
     }
+
+    public static void abrirSnackbar(View view, String mensagem){
+        Snackbar.make(view, mensagem, 4000).show();
+    }
+
 }

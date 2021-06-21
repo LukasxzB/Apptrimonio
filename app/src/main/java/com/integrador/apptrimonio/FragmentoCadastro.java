@@ -1,5 +1,6 @@
 package com.integrador.apptrimonio;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.integrador.apptrimonio.Utils.UserInterface;
+import com.integrador.apptrimonio.Utils.Utils;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -23,13 +27,20 @@ public class FragmentoCadastro extends Fragment {
 
     private final ViewPager2 viewPager2;
     private FirebaseAuth mAuth;
+    private Utils utils;
 
     private EditText inputEmail, inputSenha;
     private TextView inputEmailTop;
+    private Context context;
     private TextView inputSenhaTop;
 
-    public FragmentoCadastro(ViewPager2 vp) {
+    private View view;
+
+
+    public FragmentoCadastro(ViewPager2 vp, Context context) {
         viewPager2 = vp;
+        this.context = context;
+        utils = new Utils(context);
     }
 
     @Override
@@ -41,7 +52,7 @@ public class FragmentoCadastro extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fragmento_cadastro, container, false);
+        view = inflater.inflate(R.layout.fragment_fragmento_cadastro, container, false);
 
         inputEmail = view.findViewById(R.id.cadastro_input_email);
         inputSenha = view.findViewById(R.id.cadastro_input_senha);
@@ -54,42 +65,52 @@ public class FragmentoCadastro extends Fragment {
         entrar.setOnClickListener(v -> viewPager2.setCurrentItem(1, true));
 
         //ao clicar em cadastrar
-        cadastrar.setOnClickListener(v -> {
-
-            String email = inputEmail.getText().toString().trim(); //email
-            String senha = inputSenha.getText().toString().trim(); //senha
-
-            boolean emailValido = EmailValidator.getInstance().isValid(email); //verifica se o email é valido
-            boolean senhaValida = senha.length() >= 8 && senha != null; //verifica se a sneha é valida
-
-            if (!emailValido) {
-                inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-                Toast.makeText(getContext(), getResources().getString(R.string.invEmail), Toast.LENGTH_SHORT).show();
-            } else {
-                inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
-            }
-
-            if (!senhaValida) {
-                inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-                Toast.makeText(getContext(), getResources().getString(R.string.invPass), Toast.LENGTH_SHORT).show();
-            } else {
-                inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
-            }
-
-            //faz cadastro
-            if (senhaValida && emailValido) {
-                mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
-                        Objects.requireNonNull(getActivity()).finish();
-                    } else {
-                        Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
-                        Toast.makeText(getContext(), getResources().getString(R.string.registerFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        cadastrar.setOnClickListener(v -> fazerCadastro());
 
         return view;
+    }
+
+    private void loginCallback(){
+        requireActivity().finish();
+    }
+
+    private void fazerCadastro(){
+        String email = inputEmail.getText().toString().trim(); //email
+        String senha = inputSenha.getText().toString().trim(); //senha
+
+        boolean emailValido = EmailValidator.getInstance().isValid(email); //verifica se o email é valido
+        boolean senhaValida = senha.length() >= 8; //verifica se a sneha é valida
+
+        if (!emailValido) {
+            inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
+            Utils.abrirSnackbar(view, getResources().getString(R.string.invEmail));
+        } else {
+            inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
+        }
+
+        if (!senhaValida) {
+            inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
+            Utils.abrirSnackbar(view, getResources().getString(R.string.invPass));
+        } else {
+            inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
+        }
+
+        //faz cadastro
+        if (senhaValida && emailValido) {
+            utils.abrirPopUpCarregando();
+            mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(task -> {
+                utils.fecharPopUpCarregando();
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), getResources().getString(R.string.registerSucess), Toast.LENGTH_SHORT).show();
+
+                    UserInterface callback = login -> loginCallback();
+                    utils.verificarConta(callback);
+                } else {
+                    Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
+                    String mensagem = Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()).equalsIgnoreCase("The email address is already in use by another account.") ? getResources().getString(R.string.emailUsedError) : task.getException().getMessage();
+                    Utils.abrirSnackbar(view, mensagem);
+                }
+            });
+        }
     }
 }

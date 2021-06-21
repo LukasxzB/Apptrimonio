@@ -30,40 +30,48 @@
 
         <ImageView
             android:id="@+id/inicio_logo"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="75dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="90dp"
             android:layout_marginRight="40dp"
             android:src="@drawable/logo_apptrimonio"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/inicio_titulo"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/app_name"
-            android:textColor="@color/preto"
-            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/inicio_logo"
             app:layout_constraintEnd_toStartOf="@+id/inicio_logo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/inicio_logo" />
+            app:layout_constraintTop_toTopOf="@+id/inicio_logo">
 
-        <TextView
-            android:id="@+id/inicio_desc"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:fontFamily="@font/regular"
-            android:text="@string/appDesc"
-            android:textAlignment="center"
-            android:textColor="@color/preto"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/inicio_titulo"
-            app:layout_constraintStart_toStartOf="@+id/inicio_titulo"
-            app:layout_constraintTop_toBottomOf="@+id/inicio_titulo" />
+            <TextView
+                android:id="@+id/inicio_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/app_name"
+                android:textColor="@color/preto"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/inicio_desc"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:fontFamily="@font/regular"
+                android:text="@string/appDesc"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/inicio_titulo"
+                app:layout_constraintStart_toStartOf="@+id/inicio_titulo"
+                app:layout_constraintTop_toBottomOf="@+id/inicio_titulo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/inicio_bottom"

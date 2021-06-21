@@ -4,11 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/branco"
     tools:context=".Autenticar">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/autenticar_viewpager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autenticar_viewpager2">
+
+        <ImageView
+            android:id="@+id/autenticar_divisor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linha" />
+
+        <TextView
+            android:id="@+id/autenticar_loginwith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/branco"
+            android:paddingHorizontal="10dp"
+            android:text="@string/loginWith"
+            app:layout_constraintBottom_toBottomOf="@+id/autenticar_divisor"
+            app:layout_constraintEnd_toEndOf="@+id/autenticar_divisor"
+            app:layout_constraintStart_toStartOf="@+id/autenticar_divisor"
+            app:layout_constraintTop_toTopOf="@+id/autenticar_divisor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/autenticar_botao_google_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/google"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/autenticar_botao_google"
+        app:layout_constraintStart_toStartOf="@+id/autenticar_botao_google"
+        app:layout_constraintTop_toTopOf="@+id/autenticar_botao_google"
+        app:srcCompat="@drawable/icon_google" />
+
+    <Button
+        android:id="@+id/autenticar_botao_google"
+        android:layout_width="285dp"
+        android:layout_height="60dp"
+        android:background="@drawable/background_branco"
+        android:elevation="0dp"
+        android:fontFamily="@font/regular"
+        android:text="@string/google"
+        android:textAllCaps="false"
+        android:textColor="@color/preto"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toTopOf="@+id/autenticar_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+
+    <ImageView
+        android:id="@+id/autenticar_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:src="@drawable/registrar_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

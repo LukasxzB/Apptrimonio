@@ -4,7 +4,7 @@
     <string name="jump">Pular</string>
     <string name="next">Próximo</string>
     <string name="start">Começar</string>
-    <string name="wWelcome">Seja bem vindo!</string>
+    <string name="wWelcome">Seja bem-vindo!</string>
     <string name="wWelcomeD">Descubra quanto custa o seu ensino com Apptrimônio</string>
     <string name="wRegister">Cadastro não necessário</string>
     <string name="wRegiterD">Você pode aproveitar todas as funcionalidades sem cadastro</string>
@@ -16,12 +16,20 @@
     <string name="madeLogoff">Você saiu de sua conta com sucesso!</string>
     <string name="changePass">Trocar senha</string>
     <string name="singup">Cadastrar</string>
-    <string name="loginAccess">Acesso apenas a gerenciadores</string>
-    <string name="singupAccess">Cadastro apenas a gerenciadores</string>
+    <string name="loginWith">Entre com</string>
+    <string name="google">Google</string>
+    <string name="loginAccess">Entre em sua conta já cadastrada!</string>
+    <string name="singupAccess">Cadastre sua conta para acessar mais funcionalidades!</string>
     <string name="email">Email</string>
-    <string name="emailInst">Email institucional</string>
+    <string name="validMail">E-mail válido</string>
     <string name="emailUsed">Email utilizado no cadastro</string>
     <string name="password">Senha</string>
+    <string name="emailUsedError">Este e-mail já está cadastrado!</string>
+    <string name="singupError">Ocorreu um erro ao fazer o cadastro! Tente novamente.</string>
+    <string name="emailNotUsedError">Este e-mail não foi cadastrado!</string>
+    <string name="passError">A senha está incoreta!</string>
+    <string name="loginError">Ocorreu um erro ao fazer login! Tente novamente.</string>
+    <string name="loginBanned">A conta com este e-mail foi desativada!</string>
     <string name="forgotPass">Esqueceu sua senha?</string>
     <string name="dontHaveAccount">Você ainda não possui uma conta? Clique aqui para se cadastrar!</string>
     <string name="alreadyHaveAccount">Você já possui uma conta? Clique aqui para entrar!</string>
@@ -35,7 +43,7 @@
     <string name="sendEmail">Enviar email</string>
     <string name="sendEmailSuccess">E-mail enviado com sucesso!</string>
     <string name="sendEmailFail">Ocorreu um erro ao enviar o e-mail: </string>
-    <string name="sendEmailWait">Enviando o e-mail...</string>
+    <string name="sendEmailWait">Enviando o e-mail…</string>
     <string name="appDesc">Veja quanto custa o seu ensino</string>
     <string name="hello">Olá!</string>
     <string name="texts">Textos informativos</string>
@@ -43,15 +51,36 @@
     <string name="support">Suporte</string>
     <string name="scanCode">Escanear um código</string>
     <string name="addObj">Adicionar um objeto</string>
+    <string name="aprObj">Aprovar objetos</string>
+    <string name="profile">Perfil</string>
     <string name="reqGer">Requisitar gerenciador</string>
     <string name="invCode">Código inválido</string>
+    <string name="remCode">Objeto removido</string>
+    <string name="andCode">Objeto em andamento</string>
+    <string name="disCode">Objeto não aprovado</string>
+    <string name="intCode">Sem conexão</string>
+    <string name="intCodeDesc">Aparentemente você está sem conexão com a internet!</string>
+    <string name="errCode">Erro!</string>
+    <string name="errCodeDesc">Ocorreu um erro desconhecido!</string>
+    <string name="disCodeDesc">O objeto não foi aprovado pelos gerenciadores!</string>
     <string name="invCodeDesc">O código escaneando não existe ou não é um código Apptrimônio.</string>
+    <string name="remCodeDesc">O objeto foi removido pelo criador ou por um gerenciador. Motivo(s): </string>
+    <string name="andCodeDesc">O objeto está em andamento e ainda não está disponível </string>
     <string name="tryAgain">Por favor, tente novamente.</string>
+    <string name="tryAgainLater">Por favor, tente novamente mais tarde.</string>
+    <string name="naoInfo">Não informado</string>
+    <string name="details">Detalhes</string>
+    <string name="description">Descrição</string>
+    <string name="pubDate">Data de publicação</string>
+    <string name="objDescriptionEx">Exemplo: cadeiras brancas com encostos brancos, comprado a fim de…</string>
+    <string name="imgDesc">Descrição de imagem</string>
+    <string name="senValue">Valor sentimental</string>
     <string name="name">Nome</string>
     <string name="category">Categoria</string>
     <string name="place">Local</string>
     <string name="date">Data de compra</string>
     <string name="report">Reportar</string>
+    <string name="objNull">Sem informações</string>
     <string name="objName">Nome do objeto</string>
     <string name="objNameEx">Exemplo: Cadeiras brancas</string>
     <string name="objCat">Categoria do objeto</string>
@@ -78,13 +107,27 @@
     <string name="qrcodelink">Aplicativo Apptrimônio - descubra quanto custa seu ensino! Quer descobrir o que tem neste QRCode? Baixe o aplicativo Apptrimônio em: https://bit.ly/apptrimonio - #$apptrimonio-%link%$#</string>
     <string name="invPass">Senha inválida! A sua senha precisa ter no mínimo 8 caracteres!</string>
     <string name="invEmail">E-mail inválido! Insira um e-mail válido!</string>
-    <string name="qrcodePlaceholder">
-Apptrimônio - Download: bit.ly/apptrimonio
+    <string name="remObjError">Desbloqueie a permissão de gerenciador para remover objetos!</string>
+    <string name="addObjError">Desbloqueie a permissão de adicionar objetos para adicionar objetos!</string>
+    <string name="editObjError">Desbloqueie a permissão de editar objetos para editar objetos!</string>
+    <string name="loginRequired">Para realizar essa ação, você precisa criar uma conta!</string>
+    <string name="repDoesNotExists">O objeto não existe no local indicado.</string>
+    <string name="repSpam">Não é um objeto válido (spam)</string>
+    <string name="repLanguage">A língua do objeto está incorreta</string>
+    <string name="repCategory">A categoria do objeto está incorreta</string>
+    <string name="repDate">A data de compra do objeto está incorreta</string>
+    <string name="repImageDesc">A descrição de imagem do objeto está incorreta</string>
+    <string name="repLocal">O local do objeto está incorreto</string>
+    <string name="repName">O nome do objeto está incorreto</string>
+    <string name="repValue">O valor do objeto está incorreto</string>
+    <string name="repSenValue">O valor sentimental do objeto está incorreto</string>
+    <string name="repImage">A imagem do objeto está incorreta</string>
+    <string name="repDesc">A descrição do objeto está incorreta</string>
+    <string name="other">Outro</string>
+    <string name="qrcodePlaceholder">Quer descobrir o que está neste QRCode?
 
-Quer descobrir o que tem neste QRCode? Baixe o aplicativo!
-Want to find out what\'s in this QRCode? Get the app!
-¿Quiere saber qué hay en este código QR? ¡Obtener la aplicación!
+        Baixe o aplicativo! Apptrimônio - bit.ly/apptrimonio
 
-#$apptrimonio-ajMKhOi4Sle2ui4RUUuJ$#
+#$apptrimonio-%CODIGO%$#
     </string>
 </resources>

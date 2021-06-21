@@ -1,6 +1,8 @@
 package com.integrador.apptrimonio.Utils;
 
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -15,11 +17,11 @@ public class AutenticadorAdaptador extends FragmentStateAdapter {
 
     private final Fragment[] mFragments;
 
-    public AutenticadorAdaptador(FragmentActivity fa, ViewPager2 vp) {
+    public AutenticadorAdaptador(FragmentActivity fa, ViewPager2 vp, Context context) {
         super(fa);
         mFragments = new Fragment[]{
-                new FragmentoCadastro(vp),
-                new FragmentoLogin(vp),
+                new FragmentoCadastro(vp, context),
+                new FragmentoLogin(vp, context),
         };
     }
 

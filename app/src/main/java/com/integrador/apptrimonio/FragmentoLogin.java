@@ -1,6 +1,7 @@
 package com.integrador.apptrimonio;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.integrador.apptrimonio.Utils.UserInterface;
+import com.integrador.apptrimonio.Utils.Utils;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -28,29 +31,46 @@ public class FragmentoLogin extends Fragment {
     private final ViewPager2 viewPager2;
 
     private EditText inputEmail, inputSenha;
-    private TextView inputEmailTop;
+    private TextView inputEmailTop, inputSenhaTop;
 
     private FirebaseAuth mAuth;
+    private Context context;
+    private Utils utils;
 
-    public FragmentoLogin(ViewPager2 vp) {
+    private View view;
+
+    private Dialog dialogEsqueceuSenha;
+
+    public FragmentoLogin(ViewPager2 vp, Context context) {
         viewPager2 = vp;
+        this.context = context;
+        utils = new Utils(context);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+
+        dialogEsqueceuSenha = new Dialog(getContext());
+        dialogEsqueceuSenha.setContentView(R.layout.popup_esqueceusenha);
+        dialogEsqueceuSenha.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogEsqueceuSenha.setCancelable(true);
+
+        //ao clicar em fechar
+        dialogEsqueceuSenha.findViewById(R.id.esqueceusenha_fechar).setOnClickListener(v12 -> dialogEsqueceuSenha.dismiss());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_fragmento_login, container, false);
+        view = inflater.inflate(R.layout.fragment_fragmento_login, container, false);
 
         inputEmail = view.findViewById(R.id.login_input_email);
         inputSenha = view.findViewById(R.id.login_input_senha);
         inputEmailTop = view.findViewById(R.id.login_input_email_top);
+        inputSenhaTop = view.findViewById(R.id.login_input_senha_top);
         Button entrar = view.findViewById(R.id.login_botao);
         TextView cadastrese = view.findViewById(R.id.login_nao_possui);
         TextView esqueceuSenha = view.findViewById(R.id.login_esqueceu_senha);
@@ -62,44 +82,13 @@ public class FragmentoLogin extends Fragment {
         cadastrese.setOnClickListener(v -> viewPager2.setCurrentItem(0, true));
 
         //ao clicar em esqueceu a senha
-        esqueceuSenha.setOnClickListener(v -> {
-            Dialog dialog = new Dialog(getContext());
-            dialog.setContentView(R.layout.popup_esqueceusenha);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.setCancelable(true);
-            dialog.show();
-
-            EditText dialogEmailInput = dialog.findViewById(R.id.esqueceusenha_input_email);
-            TextView dialogEmailInputTop = dialog.findViewById(R.id.esqueceusenha_input_emailtop);
-            Button dialogBotao = dialog.findViewById(R.id.esqueceusenha_botao);
-            ImageView dialogFechar = dialog.findViewById(R.id.esqueceusenha_fechar);
-
-            //ao clicar em enviar email
-            dialogBotao.setOnClickListener(v1 -> {
-                String dialogEmail = dialogEmailInput.getText().toString().trim();
-                boolean dialogEmailValido = EmailValidator.getInstance().isValid(dialogEmail);
-
-                if(!dialogEmailValido){
-                    dialogEmailInputTop.setTextColor(getResources().getColor(R.color.vermelho));
-                }else{
-                    Toast.makeText(getContext(), getResources().getString(R.string.sendEmailWait), Toast.LENGTH_SHORT).show();
-                    dialogEmailInputTop.setTextColor(getResources().getColor(R.color.verde4));
-                    FirebaseAuth.getInstance().sendPasswordResetEmail(dialogEmail).addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getContext(), getResources().getString(R.string.sendEmailSuccess), Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }else{
-                            Toast.makeText(getContext(), getResources().getString(R.string.sendEmailFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-
-            //ao clicar em fechar
-            dialogFechar.setOnClickListener(v12 -> dialog.dismiss());
-        });
+        esqueceuSenha.setOnClickListener(v -> esqueceuSenha());
 
         return view;
+    }
+
+    private void loginCallback() {
+        requireActivity().finish();
     }
 
     private void fazerLogin() {
@@ -107,35 +96,81 @@ public class FragmentoLogin extends Fragment {
         String senha = inputSenha.getText().toString().trim(); //senha
 
         boolean emailValido = EmailValidator.getInstance().isValid(email); //caso o email for valido
-        boolean senhaValida = senha.length() >= 0 && senha != null; //caso a senha tiver mais de 8 caracteres
+        boolean senhaValida = senha.length() >= 8; //caso a senha tiver mais de 8 caracteres
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(getContext(), getResources().getString(R.string.invEmail), Toast.LENGTH_SHORT).show();
+            Utils.abrirSnackbar(view, getResources().getString(R.string.invEmail));
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
-        if(!senhaValida){
-            inputSenha.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(getContext(), getResources().getString(R.string.invPass), Toast.LENGTH_SHORT).show();
-        }else{
-            inputSenha.setTextColor(getResources().getColor(R.color.verde4));
+        if (!senhaValida) {
+            inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
+            Utils.abrirSnackbar(view, getResources().getString(R.string.invPass));
+        } else {
+            inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
         //faz login
-        if(emailValido && senhaValida){
+        if (emailValido && senhaValida) {
+            utils.abrirPopUpCarregando();
             mAuth.signInWithEmailAndPassword(email, senha)
-                    .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
+                    .addOnCompleteListener(requireActivity(), task -> {
+                        utils.fecharPopUpCarregando();
                         if (task.isSuccessful()) {
                             Log.d("LOGIN", "signInWithEmail:success");
                             Toast.makeText(getContext(), getResources().getString(R.string.loginSuccess), Toast.LENGTH_SHORT).show();
-                            getActivity().finish();
+
+                            UserInterface callback = login -> loginCallback();
+                            utils.verificarConta(callback);
+
                         } else {
                             Log.w("LOGIN", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), getResources().getString(R.string.loginFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            String erro = Objects.requireNonNull(task.getException()).getMessage();
+                            String mensagem = getResources().getString(R.string.loginError);
+                            assert erro != null;
+                            if(erro.equalsIgnoreCase("There is no user record corresponding to this identifier. The user may have been deleted.")){
+                                mensagem = getResources().getString(R.string.emailNotUsedError);
+                            }else if(erro.equalsIgnoreCase("The password is invalid or the user does not have a password.")){
+                                mensagem = getResources().getString(R.string.passError);
+                            }else if(erro.equalsIgnoreCase("The user account has been disabled by an administrator.")){
+                                mensagem = getResources().getString(R.string.loginBanned);
+                            }
+
+                            Utils.abrirSnackbar(view, mensagem);
                         }
                     });
         }
+    }
+
+    private void esqueceuSenha() {
+
+        dialogEsqueceuSenha.show();
+
+        EditText dialogEmailInput = dialogEsqueceuSenha.findViewById(R.id.esqueceusenha_input_email);
+        TextView dialogEmailInputTop = dialogEsqueceuSenha.findViewById(R.id.esqueceusenha_input_emailtop);
+        Button dialogBotao = dialogEsqueceuSenha.findViewById(R.id.esqueceusenha_botao);
+
+        //ao clicar em enviar email
+        dialogBotao.setOnClickListener(v1 -> {
+            String dialogEmail = dialogEmailInput.getText().toString().trim();
+            boolean dialogEmailValido = EmailValidator.getInstance().isValid(dialogEmail);
+
+            if (!dialogEmailValido) {
+                dialogEmailInputTop.setTextColor(getResources().getColor(R.color.vermelho));
+            } else {
+                Toast.makeText(getContext(), getResources().getString(R.string.sendEmailWait), Toast.LENGTH_SHORT).show();
+                dialogEmailInputTop.setTextColor(getResources().getColor(R.color.verde4));
+                FirebaseAuth.getInstance().sendPasswordResetEmail(dialogEmail).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), getResources().getString(R.string.sendEmailSuccess), Toast.LENGTH_SHORT).show();
+                        dialogEsqueceuSenha.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string.sendEmailFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }
