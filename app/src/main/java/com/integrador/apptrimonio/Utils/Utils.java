@@ -93,7 +93,7 @@ public class Utils {
         popupCarregando.dismiss();
     }
 
-    public void abrirPopUpQRCode(String codigo, View view) {
+    public void abrirPopUpQRCode(String codigo, String descricaoImagem) {
 
         //define o qr code
         ImageView viewQRCode = popupQRCode.findViewById(R.id.qrcode_qrcode);
@@ -106,7 +106,7 @@ public class Utils {
 
         //ao clicar em download
         Button download = popupQRCode.findViewById(R.id.qrcode_download);
-        download.setOnClickListener(v -> salvarQRCode(codigo, qrcode, view));
+        download.setOnClickListener(v -> salvarQRCode(codigo, qrcode, descricaoImagem));
 
         //ao fechar
         ImageView fechar = popupQRCode.findViewById(R.id.qrcode_fechar);
@@ -116,22 +116,15 @@ public class Utils {
 
     }
 
-    private void salvarQRCode(String codigo, Bitmap bitmap, View view) {
+    private void salvarQRCode(String codigo, Bitmap bitmap, String descricaoImagem) {
         try {
 
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-            File f = new File(Environment.getExternalStorageDirectory()
-                    + File.separator + codigo + ".jpg");
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-            fo.close();
-            Utils.abrirSnackbar(view, context.getResources().getString(R.string.downloadSuccess));
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, codigo + ".jpg", descricaoImagem);
+            Toast.makeText(context, context.getResources().getString(R.string.downloadSuccess), Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
-            Utils.abrirSnackbar(view, context.getResources().getString(R.string.downloadError));
+            Toast.makeText(context, context.getResources().getString(R.string.downloadError), Toast.LENGTH_LONG).show();
         }
         fecharPopUpQRCode();
     }
@@ -155,11 +148,11 @@ public class Utils {
                 JSONArray objetosAdicionados = new JSONArray(), objetosVerificados = new JSONArray();
                 JSONArray codigos = new JSONArray();
 
-                if(response.equals("NO USER")){ //caso não tiver usuário logado
+                if (response.equals("NO USER")) { //caso não tiver usuário logado
 
                     salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray());
 
-                }else if (!response.equals("ERROR")) { //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
+                } else if (!response.equals("ERROR")) { //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
                     try {
                         JSONObject objeto = new JSONObject(response);
                         gerenciador = objeto.getBoolean("gerenciador");
@@ -201,10 +194,6 @@ public class Utils {
         user.setObjetosVerificados(objetosVerificados);
         user.setCodigos(codigos);
 
-    }
-
-    public static void abrirSnackbar(View view, String mensagem) {
-        Snackbar.make(view, mensagem, 4000).show();
     }
 
 }

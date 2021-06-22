@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.Utils;
 
@@ -29,9 +30,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Objeto extends AppCompatActivity {
+public class Objeto extends ActivityBase {
 
     private Utils utils;
+    private String idObjeto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class Objeto extends AppCompatActivity {
         String local = !bundle.getString("local").equals("") || bundle.getString("local") == null ? bundle.getString("local") : getResources().getString(R.string.naoInfo);
         String valor = bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : getResources().getString(R.string.naoInfo);
         String valorSentimental = !bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") == null ? bundle.getString("valorSentimental") : getResources().getString(R.string.naoInfo);
+
+        idObjeto = codigo;
 
         String dataCompra = getResources().getString(R.string.naoInfo);
         String dataPublicacao = getResources().getString(R.string.naoInfo);
@@ -75,7 +79,7 @@ public class Objeto extends AppCompatActivity {
         ImageView voltar = findViewById(R.id.objeto_voltar);
         voltar.setOnClickListener(v -> finish());
         ImageView qrCode = findViewById(R.id.objeto_qrcode);
-        qrCode.setOnClickListener(v -> abrirQrCode(codigo));
+        qrCode.setOnClickListener(v -> abrirQrCode(codigo, descricaoImagem));
         ImageView reportar = findViewById(R.id.objeto_reportar);
         reportar.setOnClickListener(v -> reportarObjeto());
         ImageView editar = findViewById(R.id.objeto_editar);
@@ -122,15 +126,15 @@ public class Objeto extends AppCompatActivity {
 
     }
 
-    private void abrirQrCode(String codigo) { //ao clicar no icone de qrcode
-        utils.abrirPopUpQRCode(codigo, findViewById(R.id.activity_objeto));
+    private void abrirQrCode(String codigo, String descricaoImagem) { //ao clicar no icone de qrcode
+        utils.abrirPopUpQRCode(codigo, descricaoImagem);
     }
 
     private void removerObjeto() { //ao clicar no icone de remover
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
+            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
         } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
-            Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.remObjError));
+            Toast.makeText(this, getResources().getString(R.string.remObjError), Toast.LENGTH_LONG).show();
         } else { //caso possua
             Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
         }
@@ -138,9 +142,9 @@ public class Objeto extends AppCompatActivity {
 
     private void editarObjeto() { //ao clicar no icone de editar
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
+            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
         } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de editar objeto
-            Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.editObjError));
+            Toast.makeText(this, getResources().getString(R.string.editObjError), Toast.LENGTH_LONG).show();
         } else { //caso possua
             Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
         }
@@ -148,9 +152,9 @@ public class Objeto extends AppCompatActivity {
 
     private void reportarObjeto() { //ao clicar no icone de reportar
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Utils.abrirSnackbar(findViewById(R.id.activity_objeto), getResources().getString(R.string.loginRequired));
+            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
         } else { //caso tenha
-            Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
+            new PopupReport(this, idObjeto).abrirPopup();
         }
     }
 }

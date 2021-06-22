@@ -22,8 +22,8 @@
             android:id="@+id/inicio_menu_icon"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="45dp"
             android:src="@drawable/menu_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +76,7 @@
         <ImageView
             android:id="@+id/inicio_bottom"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="75dp"
             android:scaleType="centerCrop"
             android:src="@drawable/camera_top"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +89,8 @@
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="@+id/inicio_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/inicio_bottom" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

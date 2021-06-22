@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/branco"
+    android:orientation="vertical"
     tools:context=".BoasVindas">
 
     <ImageView
@@ -19,7 +20,7 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_verde_escuro"
         android:fontFamily="@font/regular"
         android:paddingStart="5dp"
@@ -43,13 +44,13 @@
         android:id="@+id/inicio_dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         app:dotsColor="@color/cinza3"
         app:dotsCornerRadius="8dp"
         app:dotsSize="14dp"
         app:dotsSpacing="3dp"
         app:dotsWidthFactor="2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/botaoBoasVindas"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/botaoBoasVindas"
         app:progressMode="true"

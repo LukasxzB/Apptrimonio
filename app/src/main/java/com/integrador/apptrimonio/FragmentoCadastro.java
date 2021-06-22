@@ -70,11 +70,11 @@ public class FragmentoCadastro extends Fragment {
         return view;
     }
 
-    private void loginCallback(){
+    private void loginCallback() {
         requireActivity().finish();
     }
 
-    private void fazerCadastro(){
+    private void fazerCadastro() {
         String email = inputEmail.getText().toString().trim(); //email
         String senha = inputSenha.getText().toString().trim(); //senha
 
@@ -83,14 +83,14 @@ public class FragmentoCadastro extends Fragment {
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Utils.abrirSnackbar(view, getResources().getString(R.string.invEmail));
+            Toast.makeText(context, getResources().getString(R.string.invEmail), Toast.LENGTH_LONG).show();
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
         if (!senhaValida) {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Utils.abrirSnackbar(view, getResources().getString(R.string.invPass));
+            Toast.makeText(context, getResources().getString(R.string.invPass), Toast.LENGTH_LONG).show();
         } else {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
         }
@@ -108,7 +108,7 @@ public class FragmentoCadastro extends Fragment {
                 } else {
                     Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
                     String mensagem = Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()).equalsIgnoreCase("The email address is already in use by another account.") ? getResources().getString(R.string.emailUsedError) : task.getException().getMessage();
-                    Utils.abrirSnackbar(view, mensagem);
+                    Toast.makeText(context, mensagem, Toast.LENGTH_LONG).show();
                 }
             });
         }

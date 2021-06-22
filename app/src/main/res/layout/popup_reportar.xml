@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginVertical="100dp"
+    android:background="@drawable/background_branco"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reportar_titulo"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="@string/report"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/reportar_fechar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/reportar_titulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reportar_titulo"
+            app:layout_constraintTop_toTopOf="@+id/reportar_titulo"
+            app:srcCompat="@drawable/fechar" />
+
+        <ScrollView
+            android:id="@+id/reportar_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/reportar_titulo"
+            tools:layout_editor_absoluteX="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="50dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/reportar_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/reportDesc"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_desc">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_1_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_1_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_1_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_1_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_1_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_1_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repDoesNotExists"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_2_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_2_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_2_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_2_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_2_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_2_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repSpam"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_2">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_3_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_3_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_3_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_3_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_3_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_3_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repLanguage"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_3">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_4_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_4_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_4_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_4_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_4_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_4_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repImage"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_4">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_5_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_5_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_5_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_5_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_5_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_5_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repImageDesc"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_5">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_6_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_6_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_6_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_6_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_6_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_6_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repName"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_6">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_7_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_7_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_7_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_7_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_7_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_7_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repDesc"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_7">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_8_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_8_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_8_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_8_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_8_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_8_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repValue"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_8">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_9_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_9_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_9_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_9_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_9_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_9_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repCategory"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_9">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_10_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_10_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_10_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_10_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_10_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_10_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repLocal"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_10">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_11_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_11_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_11_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_11_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_11_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_11_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repDate"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_11">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_12_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_12_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_12_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_12_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_12_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_12_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repSenValue"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/reportar_13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/reportar_12">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/reportar_13_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/reportar_13_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reportar_13_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reportar_13_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/reportar_13_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/reportar_13_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/other"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/reportar_warning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/reportWarning"
+                        android:textAlignment="center"
+                        android:textColor="@color/vermelho"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/reportar_13" />
+
+                    <Button
+                        android:id="@+id/reportar_botao"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/report_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/reportar_warning" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

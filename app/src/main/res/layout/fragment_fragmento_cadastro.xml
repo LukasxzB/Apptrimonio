@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/cadastro_top"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="150dp"
             android:scaleType="fitXY"
             android:src="@drawable/cadastro_top"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,8 @@
             android:id="@+id/cadastro_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/logo_apptrimonio_round"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
             android:id="@+id/cadastro_titulo"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/regular"
             android:text="@string/singup"
             android:textAlignment="textStart"

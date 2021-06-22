@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
+import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.BoasVindasAdaptador;
 import com.integrador.apptrimonio.Utils.BoasVindasItem;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
@@ -27,7 +28,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoasVindas extends AppCompatActivity {
+public class BoasVindas extends ActivityBase {
 
     private BoasVindasAdaptador boasVindasAdaptador;
     private Button botao;
@@ -69,9 +70,9 @@ public class BoasVindas extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if(position == boasVindasAdaptador.getItemCount() -1){
+                if (position == boasVindasAdaptador.getItemCount() - 1) {
                     botao.setText(getResources().getString(R.string.start));
-                }else{
+                } else {
                     botao.setText(getResources().getString(R.string.next));
                 }
             }

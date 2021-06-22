@@ -40,7 +40,7 @@
     <string name="confirmEmail">Confirmar email</string>
     <string name="confirmEmailDesc">Confirme o seu cadastro clicando no link em seu email!</string>
     <string name="yourEmailSingup">Seu email utilizado no cadastro</string>
-    <string name="sendEmail">Enviar email</string>
+    <string name="sendEmail">Enviar e-mail</string>
     <string name="sendEmailSuccess">E-mail enviado com sucesso!</string>
     <string name="sendEmailFail">Ocorreu um erro ao enviar o e-mail: </string>
     <string name="sendEmailWait">Enviando o e-mail…</string>
@@ -65,7 +65,7 @@
     <string name="disCodeDesc">O objeto não foi aprovado pelos gerenciadores!</string>
     <string name="invCodeDesc">O código escaneando não existe ou não é um código Apptrimônio.</string>
     <string name="remCodeDesc">O objeto foi removido pelo criador ou por um gerenciador. Motivo(s): </string>
-    <string name="andCodeDesc">O objeto está em andamento e ainda não está disponível </string>
+    <string name="andCodeDesc">O objeto está em andamento e ainda não está disponível.</string>
     <string name="tryAgain">Por favor, tente novamente.</string>
     <string name="tryAgainLater">Por favor, tente novamente mais tarde.</string>
     <string name="naoInfo">Não informado</string>
@@ -111,6 +111,7 @@
     <string name="addObjError">Desbloqueie a permissão de adicionar objetos para adicionar objetos!</string>
     <string name="editObjError">Desbloqueie a permissão de editar objetos para editar objetos!</string>
     <string name="loginRequired">Para realizar essa ação, você precisa criar uma conta!</string>
+    <string name="emailRequired">Para realizar essa ação, você precisa verificar seu e-mail!</string>
     <string name="repDoesNotExists">O objeto não existe no local indicado.</string>
     <string name="repSpam">Não é um objeto válido (spam)</string>
     <string name="repLanguage">A língua do objeto está incorreta</string>
@@ -126,10 +127,11 @@
     <string name="other">Outro</string>
     <string name="downloadSuccess">O QRCode foi salvo no seu dispositivo com sucesso!</string>
     <string name="downloadError">Ocorreu um erro ao salvar o QRCode em seu dispositivo. Você concedeu as permissões necessárias?</string>
-    <string name="qrcodePlaceholder">Quer descobrir o que está neste QRCode?
-
-        Baixe o aplicativo! Apptrimônio - bit.ly/apptrimonio
-
-#$apptrimonio-%CODIGO%$#
-    </string>
+    <string name="qrcodePlaceholder">Quer descobrir o que está neste QRCode?\n\nBaixe o aplicativo! Apptrimônio - bit.ly/apptrimonio\n\n#$apptrimonio-%CODIGO%$#</string>
+    <string name="reportDesc">Selecione os motivos a seguir para reportar o objeto. Após reportar o objeto, esta ação não poderá ser desfeita.</string>
+    <string name="reportWarning">Lembre-se: reportar um objeto falsamente ou abusar da funcionalidade poderá ocasionar a suspensão da sua conta!</string>
+    <string name="reportError">Ocorreu um erro ao reportar o objeto! Por favor, tente novamente.</string>
+    <string name="reportSuccess">Você reportou o objeto com sucesso! Obrigado pela contribuição s2</string>
+    <string name="reportErrorCheck">Você precisa selecionar ao menos um motivo para reportar!</string>
+    <string name="objNotFound">O objeto não foi encontrado no nosso sistema! Por favor, tente novamente mais tarde.</string>
 </resources>

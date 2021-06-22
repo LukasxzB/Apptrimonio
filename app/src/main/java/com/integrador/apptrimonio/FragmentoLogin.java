@@ -100,14 +100,14 @@ public class FragmentoLogin extends Fragment {
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Utils.abrirSnackbar(view, getResources().getString(R.string.invEmail));
+            Toast.makeText(context, getResources().getString(R.string.invEmail), Toast.LENGTH_LONG).show();
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
         if (!senhaValida) {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Utils.abrirSnackbar(view, getResources().getString(R.string.invPass));
+            Toast.makeText(context, getResources().getString(R.string.invPass), Toast.LENGTH_LONG).show();
         } else {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
         }
@@ -130,15 +130,15 @@ public class FragmentoLogin extends Fragment {
                             String erro = Objects.requireNonNull(task.getException()).getMessage();
                             String mensagem = getResources().getString(R.string.loginError);
                             assert erro != null;
-                            if(erro.equalsIgnoreCase("There is no user record corresponding to this identifier. The user may have been deleted.")){
+                            if (erro.equalsIgnoreCase("There is no user record corresponding to this identifier. The user may have been deleted.")) {
                                 mensagem = getResources().getString(R.string.emailNotUsedError);
-                            }else if(erro.equalsIgnoreCase("The password is invalid or the user does not have a password.")){
+                            } else if (erro.equalsIgnoreCase("The password is invalid or the user does not have a password.")) {
                                 mensagem = getResources().getString(R.string.passError);
-                            }else if(erro.equalsIgnoreCase("The user account has been disabled by an administrator.")){
+                            } else if (erro.equalsIgnoreCase("The user account has been disabled by an administrator.")) {
                                 mensagem = getResources().getString(R.string.loginBanned);
                             }
 
-                            Utils.abrirSnackbar(view, mensagem);
+                            Toast.makeText(context, mensagem, Toast.LENGTH_LONG).show();
                         }
                     });
         }

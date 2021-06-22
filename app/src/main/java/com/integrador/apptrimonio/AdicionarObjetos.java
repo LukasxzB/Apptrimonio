@@ -21,12 +21,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.zxing.common.BitMatrix;
+import com.integrador.apptrimonio.Utils.ActivityBase;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
 
-public class AdicionarObjetos extends AppCompatActivity {
+public class AdicionarObjetos extends ActivityBase {
 
     private boolean inseriuImagem = false;
     private int selecionarFoto = 1;

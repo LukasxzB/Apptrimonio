@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
+import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.InicoAdaptador;
 import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActivityBase {
 
     //sharedpreferences
     private SharedPreferences sharedPreferences;
@@ -64,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
 
         utils = new Utils(this);
-        utils.verificarConta(login -> { });
+        utils.verificarConta(login -> {
+        });
 
         //adiciona o menu lateral
         menuLateral = new SlidingRootNavBuilder(this)
@@ -138,24 +140,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void abrirPerfil(){
-        if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            Utils.abrirSnackbar(findViewById(R.id.activity_main), getResources().getString(R.string.loginRequired));
-        }else {
+    private void abrirPerfil() {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
+        } else {
             Intent intent = new Intent(MainActivity.this, Perfil.class);
             startActivity(intent);
         }
     }
 
-    private void abrirSuporte(){ //abre o aplicativo do email
+    private void abrirSuporte() { //abre o aplicativo do email
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "apptrimonio@gmail.com" }); //email que será usado
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"apptrimonio@gmail.com"}); //email que será usado
         intent.putExtra(Intent.EXTRA_SUBJECT, "Apptrimônio - Support"); //titulo do email
         startActivity(Intent.createChooser(intent, getResources().getString(R.string.support))); //abre o email
     }
 
-    private void abrirFaq(){
+    private void abrirFaq() {
         Intent intent = new Intent(MainActivity.this, TextoInformativo.class);
         Bundle bundle = new Bundle();
         bundle.putString("code", "faq");
@@ -163,19 +165,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void abrirTexto(int num){
+    private void abrirTexto(int num) {
         Intent intent = new Intent(MainActivity.this, TextoInformativo.class);
         Bundle bundle = new Bundle();
-        bundle.putString("code", "text"+num);
+        bundle.putString("code", "text" + num);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    private void abrirAdicionarObjeto(){ //abre a tela de adicionar objetos
+    private void abrirAdicionarObjeto() { //abre a tela de adicionar objetos
         startActivity(new Intent(MainActivity.this, AdicionarObjetos.class));
     }
 
-    private void abrirAprovarObjeto(){
+    private void abrirAprovarObjeto() {
 
     }
 

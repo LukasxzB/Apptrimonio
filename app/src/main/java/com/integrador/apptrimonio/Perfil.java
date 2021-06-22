@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.User;
 import com.skydoves.progressview.ProgressView;
 
-public class Perfil extends AppCompatActivity {
+public class Perfil extends ActivityBase {
 
     private int xp, xpNecessario, xpAtual, level;
 

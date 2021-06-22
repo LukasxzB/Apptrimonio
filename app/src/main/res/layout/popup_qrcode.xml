@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="320dp"
-    android:layout_height="420dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/background_branco"
     android:padding="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/qrcode_qrcode"
@@ -26,6 +27,7 @@
             android:id="@+id/qrcode_download"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/download_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/qrcode_qrcode"

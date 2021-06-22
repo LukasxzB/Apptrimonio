@@ -23,13 +23,14 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.AutenticadorAdaptador;
 import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
 
 import java.util.Objects;
 
-public class Autenticar extends AppCompatActivity {
+public class Autenticar extends ActivityBase {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
