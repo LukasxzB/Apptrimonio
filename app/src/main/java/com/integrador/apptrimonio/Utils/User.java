@@ -1,11 +1,6 @@
 package com.integrador.apptrimonio.Utils;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
-import com.integrador.apptrimonio.R;
 
 import org.json.JSONArray;
 
@@ -16,9 +11,8 @@ public class User {
     //variáveis do usuário
     private int xp;
     private String email;
-    private boolean permissaoEditar, permissaoAdicionar, permissaoGerenciador, emailVerificado;
+    private boolean permissaoEditar, permissaoAdicionar, permissaoGerenciador, emailVerificado, receberEmails;
     private JSONArray codigos, objetosAdicionados, objetosVerificados;
-
 
     //get instance
     public static User getInstance() {
@@ -28,9 +22,18 @@ public class User {
         return instance;
     }
 
-    //getters and setters
+    public boolean isReceberEmails() {
+        return receberEmails;
+    }
+
+    public void setReceberEmails(boolean receberEmails) {
+        this.receberEmails = receberEmails;
+    }
+
     public int getXp() { //retorna a quantidade de xp do usuário
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return 0; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return 0;
+        }
         return xp;
     }
 
@@ -39,17 +42,25 @@ public class User {
     }
 
     public int getLevel() { //retorna o nível do usuário ex: nivel 29
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return 0; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return 0;
+        }
         double level = ((Math.sqrt((2025 + 120 * xp)) - 45) / 30) + 1;
         return (int) level;
     }
 
     public int getNextLevelXP() { //xp necessário pra atingir o próximo nível ex: nivel 29 ao 30: 450
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return 0; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return 45;
+        }
         return 15 * (getLevel() + 1);
     }
 
     private int getNextLevelXPTotal() { //xp TOTAL necessário pra atingir o próximo nível ex: 30 ao 31: 7425
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            return 45;
+        }
+
         int level = getLevel();
         return (level * (45 + (15 * level))) / 2;
     }
@@ -70,7 +81,9 @@ public class User {
     }
 
     public boolean isPermissaoEditar() {
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return false; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return false;
+        }
         return permissaoEditar;
     }
 
@@ -79,7 +92,9 @@ public class User {
     }
 
     public boolean isPermissaoAdicionar() {
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return false; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return false;
+        }
         return permissaoAdicionar;
     }
 
@@ -88,7 +103,9 @@ public class User {
     }
 
     public boolean isPermissaoGerenciador() {
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return false; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return false;
+        }
         return permissaoGerenciador;
     }
 
@@ -97,7 +114,9 @@ public class User {
     }
 
     public boolean isEmailVerificado() {
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) { return false; }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return false;
+        }
         return emailVerificado;
     }
 
@@ -129,9 +148,9 @@ public class User {
         this.objetosVerificados = objetosVerificados;
     }
 
-    public void adicionarObjetoEscaneado(String idObjeto){
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-            if(!codigos.toString().contains(idObjeto)){
+    public void adicionarObjetoEscaneado(String idObjeto) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if (!codigos.toString().contains(idObjeto)) {
                 xp += 15;
                 codigos.put(idObjeto);
             }

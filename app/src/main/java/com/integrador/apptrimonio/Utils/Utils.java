@@ -2,22 +2,22 @@ package com.integrador.apptrimonio.Utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.android.volley.VolleyError;
-import com.bumptech.glide.util.Util;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.R;
@@ -26,15 +26,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Locale;
 
 public class Utils {
 
-    private Dialog popupCarregando, popupQRCode;
-    private Context context;
+    private final Dialog popupCarregando;
+    private final Dialog popupQRCode;
+    private final Context context;
 
     //variáveis do apptrimônio
     public static String emailApptrimonio = "apptrimonio@gmail.com";
@@ -99,7 +97,7 @@ public class Utils {
         ImageView viewQRCode = popupQRCode.findViewById(R.id.qrcode_qrcode);
         Bitmap qrcode = QRCode.generateQRCode(context.getResources().getString(R.string.qrcodePlaceholder).replaceAll("%CODIGO%", codigo), context);
         if (qrcode == null) {
-            viewQRCode.setImageDrawable(context.getResources().getDrawable(R.drawable.semimagem));
+            viewQRCode.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.semimagem, null));
         } else {
             viewQRCode.setImageBitmap(qrcode);
         }
@@ -143,14 +141,14 @@ public class Utils {
             @Override
             public void onResponse(String response) { //salva os dados do usuário
 
-                boolean gerenciador, editar, adicionar;
+                boolean gerenciador, editar, adicionar, receberEmails;
                 int xp;
                 JSONArray objetosAdicionados = new JSONArray(), objetosVerificados = new JSONArray();
                 JSONArray codigos = new JSONArray();
 
                 if (response.equals("NO USER")) { //caso não tiver usuário logado
 
-                    salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray());
+                    salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray(), false);
 
                 } else if (!response.equals("ERROR")) { //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
                     try {
@@ -160,10 +158,11 @@ public class Utils {
                         adicionar = objeto.getBoolean("adicionar");
                         xp = objeto.getInt("xp");
                         codigos = objeto.getJSONArray("codigos");
-                        salvarDados(gerenciador, editar, adicionar, xp, objetosAdicionados, objetosVerificados, codigos);
+                        receberEmails = objeto.getBoolean("receberEmails");
+                        salvarDados(gerenciador, editar, adicionar, xp, objetosAdicionados, objetosVerificados, codigos, receberEmails);
                     } catch (Exception e) { //caso não recebeu um JSON do servidor por algum motivo
                         e.printStackTrace();
-                        salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray());
+                        salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray(), false);
                     }
                 }
 
@@ -183,7 +182,7 @@ public class Utils {
     }
 
     //salva os dados recebidos do servidor
-    private void salvarDados(boolean gerenciador, boolean editar, boolean adicionar, int xp, JSONArray objetosAdicionados, JSONArray objetosVerificados, JSONArray codigos) {
+    private void salvarDados(boolean gerenciador, boolean editar, boolean adicionar, int xp, JSONArray objetosAdicionados, JSONArray objetosVerificados, JSONArray codigos, boolean receberEmails) {
 
         User user = User.getInstance();
         user.setPermissaoGerenciador(gerenciador);
@@ -193,7 +192,16 @@ public class Utils {
         user.setObjetosAdicionados(objetosAdicionados);
         user.setObjetosVerificados(objetosVerificados);
         user.setCodigos(codigos);
+        user.setEmail(FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getEmail() : null);
+        user.setEmailVerificado(FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
+        user.setReceberEmails(receberEmails);
 
+    }
+
+    public static void makeSnackbar(String mensagem, View view) {
+        Snackbar snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_LONG);
+        ((TextView)snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setMaxLines(5);
+        snackbar.show();
     }
 
 }

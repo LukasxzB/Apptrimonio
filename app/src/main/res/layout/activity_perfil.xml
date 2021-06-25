@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_perfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_transparente"
@@ -56,51 +57,333 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfil_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/perfil_toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
-            <com.skydoves.progressview.ProgressView
-                android:id="@+id/perfil_progress"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:progressView_autoAnimate="true"
-                app:progressView_colorBackground="@color/cinza3"
-                app:progressView_colorGradientEnd="#2F6EED"
-                app:progressView_colorGradientStart="#5D93EA"
-                app:progressView_labelColorInner="@color/branco"
-                app:progressView_labelColorOuter="@color/preto"
-                app:progressView_labelSize="17sp"
-                app:progressView_labelSpace="25dp"
-                app:progressView_labelText="teste"
-                app:progressView_max="100"
-                app:progressView_min="0"
-                app:progressView_progress="60"
-                app:progressView_progressFromPrevious="true"
-                app:progressView_radius="10dp" />
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/perfil_progress"
+                    android:layout_width="200dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="25dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="@color/cinza3"
+                    app:progressView_colorGradientEnd="@color/verde4"
+                    app:progressView_colorGradientStart="@color/verde2"
+                    app:progressView_labelColorInner="@color/branco"
+                    app:progressView_labelColorOuter="@color/preto"
+                    app:progressView_labelSize="17sp"
+                    app:progressView_labelSpace="25dp"
+                    app:progressView_labelText="teste"
+                    app:progressView_max="100"
+                    app:progressView_min="0"
+                    app:progressView_progress="60"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="10dp" />
 
-            <ImageView
-                android:id="@+id/perfil_star"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/star"
-                app:layout_constraintBottom_toBottomOf="@+id/perfil_progress"
-                app:layout_constraintEnd_toStartOf="@+id/perfil_progress"
-                app:layout_constraintStart_toStartOf="@+id/perfil_progress"
-                app:layout_constraintTop_toTopOf="@+id/perfil_progress" />
+                <ImageView
+                    android:id="@+id/perfil_star"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/star"
+                    app:layout_constraintBottom_toBottomOf="@+id/perfil_progress"
+                    app:layout_constraintEnd_toStartOf="@+id/perfil_progress"
+                    app:layout_constraintStart_toStartOf="@+id/perfil_progress"
+                    app:layout_constraintTop_toTopOf="@+id/perfil_progress" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/perfil_badges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/perfil_badge_verificado"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/badge_verified" />
+
+                <ImageView
+                    android:id="@+id/perfil_badge_editar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/badge_edit" />
+
+                <ImageView
+                    android:id="@+id/perfil_badge_adicionar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/badge_add" />
+
+                <ImageView
+                    android:id="@+id/perfil_badge_gerenciador"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/badge_gerenciador" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/perfil_linear_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_verde"
+                android:orientation="vertical"
+                android:paddingHorizontal="25dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/perfil_informacoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/informations"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/perfil_email_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/email"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/email"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/perfil_nivel_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/accountLevel"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_nivel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/level"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/perfil_xp_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/xpReceived"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_xp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/xp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/perfil_escaneados_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/scannedCodes"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_escaneados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/codes"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/perfil_adicionados_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/addedObjects"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_adicionados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/objects"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/perfil_verificados_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/verifiedObjects"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/preto85"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/perfil_verificados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/objects"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/perfil_linear_configuracoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_verde"
+                android:orientation="vertical"
+                android:paddingHorizontal="25dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/perfil_configuracoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/config"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="22sp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/perfil_constraint_acessibilidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/perfil_acessibilidade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="50dp"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/accessibility"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/preto85"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/perfil_acessibilidade_botao"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/perfil_acessibilidade"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/perfil_acessibilidade"
+                        app:layout_constraintTop_toTopOf="@+id/perfil_acessibilidade"
+                        app:lottie_rawRes="@raw/toggle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/perfil_constraint_receberemails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/perfil_receberemails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="50dp"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/receiveEmails"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/preto85"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/perfil_receberemails_botao"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/perfil_receberemails"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/perfil_receberemails"
+                        app:layout_constraintTop_toTopOf="@+id/perfil_receberemails"
+                        app:lottie_rawRes="@raw/toggle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

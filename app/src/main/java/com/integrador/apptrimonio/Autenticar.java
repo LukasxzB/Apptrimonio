@@ -3,13 +3,9 @@ package com.integrador.apptrimonio;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,10 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.integrador.apptrimonio.Utils.ActivityBase;
@@ -59,28 +53,28 @@ public class Autenticar extends ActivityBase {
         botaoAutenticarGoogle.setOnClickListener(v -> loginGoogle());
     }
 
-    private void loginGoogle(){ //ao clicar em fazer login com o google
+    private void loginGoogle() { //ao clicar em fazer login com o google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void loginFirebaseGoogle(String idToken){
+    private void loginFirebaseGoogle(String idToken) {
         AuthCredential credencial = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credencial).addOnCompleteListener(this, task -> {
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 //login com sucesso
                 Log.d("LOGIN", "signInWithEmail:success");
                 Toast.makeText(Autenticar.this, getResources().getString(R.string.loginSuccess), Toast.LENGTH_SHORT).show();
                 UserInterface callback = login -> loginCallback();
                 utils.verificarConta(callback);
-            }else{
+            } else {
                 Log.w("LOGIN", "signInWithEmail:failure", task.getException());
-                Toast.makeText(Autenticar.this, getResources().getString(R.string.loginFail) + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                Utils.makeSnackbar(getResources().getString(R.string.loginFail) + Objects.requireNonNull(task.getException()).getMessage(), findViewById(R.id.activity_autenticar));
             }
         });
     }
 
-    private void loginCallback(){
+    private void loginCallback() {
         finish();
     }
 
@@ -94,10 +88,11 @@ public class Autenticar extends ActivityBase {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 assert account != null;
-                Log.d("LOGIN", "Login feito com o Google: "+account.getId());
+                Log.d("LOGIN", "Login feito com o Google: " + account.getId());
                 loginFirebaseGoogle(account.getIdToken());
-            }catch (ApiException e){
-                Log.w("ERRO", "Login com o Google falhou: "+e);
+            } catch (ApiException e) {
+
+                Log.w("ERRO", "Login com o Google falhou: " + e);
             }
         }
     }

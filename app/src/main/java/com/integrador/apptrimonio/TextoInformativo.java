@@ -1,36 +1,27 @@
 package com.integrador.apptrimonio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.integrador.apptrimonio.Utils.ActivityBase;
 
 public class TextoInformativo extends ActivityBase {
-
-    private ImageView voltar;
-    private TextView titulo;
-    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texto_informativo);
 
-        webView = findViewById(R.id.textoinfo_webview);
+        WebView webView = findViewById(R.id.textoinfo_webview);
 
         //titulo
-        titulo = findViewById(R.id.textoinfo_titulo);
+        TextView titulo = findViewById(R.id.textoinfo_titulo);
 
         //botao voltar
-        voltar = findViewById(R.id.textoinfo_voltar);
+        ImageView voltar = findViewById(R.id.textoinfo_voltar);
         voltar.setOnClickListener(v -> finish());
 
         String lingua = Resources.getSystem().getConfiguration().locale.getLanguage().trim();

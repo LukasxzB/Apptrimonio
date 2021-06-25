@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
@@ -27,14 +26,12 @@ public class FragmentoCadastro extends Fragment {
 
     private final ViewPager2 viewPager2;
     private FirebaseAuth mAuth;
-    private Utils utils;
+    private final Utils utils;
 
     private EditText inputEmail, inputSenha;
     private TextView inputEmailTop;
-    private Context context;
+    private final Context context;
     private TextView inputSenhaTop;
-
-    private View view;
 
 
     public FragmentoCadastro(ViewPager2 vp, Context context) {
@@ -52,7 +49,7 @@ public class FragmentoCadastro extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_fragmento_cadastro, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragmento_cadastro, container, false);
 
         inputEmail = view.findViewById(R.id.cadastro_input_email);
         inputSenha = view.findViewById(R.id.cadastro_input_senha);
@@ -83,14 +80,14 @@ public class FragmentoCadastro extends Fragment {
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(context, getResources().getString(R.string.invEmail), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.invEmail), viewPager2.getRootView());
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
         if (!senhaValida) {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(context, getResources().getString(R.string.invPass), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.invPass), viewPager2.getRootView());
         } else {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
         }
@@ -108,7 +105,7 @@ public class FragmentoCadastro extends Fragment {
                 } else {
                     Log.w("LOGIN", "signUpWithEmail:failure", task.getException());
                     String mensagem = Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()).equalsIgnoreCase("The email address is already in use by another account.") ? getResources().getString(R.string.emailUsedError) : task.getException().getMessage();
-                    Toast.makeText(context, mensagem, Toast.LENGTH_LONG).show();
+                    Utils.makeSnackbar(mensagem, viewPager2.getRootView());
                 }
             });
         }

@@ -16,15 +16,16 @@
         android:src="@drawable/screen_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/adicionarObjetos_background" />
+        app:layout_constraintTop_toTopOf="@+id/adicionarObjetos_background"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/adicionarObjetos_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_transparente"
-        android:scaleType="centerCrop" />
-
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
     <Toolbar
         android:id="@+id/toolbar"
@@ -49,6 +50,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
+                android:contentDescription="@string/back"
                 android:src="@drawable/ic_back_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +94,8 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/addimg_back">
+                android:background="@drawable/addimg_back"
+                android:paddingBottom="30dp">
 
                 <RelativeLayout
                     android:id="@+id/adicionarObjetos_imagem_fundo"
@@ -112,32 +115,86 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
+                        android:contentDescription="@string/addImg"
                         android:padding="3dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/addimg_ptg"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/adicionarObjetos_linear_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="70dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/objLan"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/adicionarObjetos_linear"
+                    app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_linear"
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_imagem_fundo" />
+
+
+                <LinearLayout
+                    android:id="@+id/adicionarObjetos_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_linear_top">
+
+                    <ImageView
+                        android:id="@+id/adicionarObjetos_lingua_pt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:contentDescription="@string/pt"
+                        android:src="@drawable/flag_pt" />
+
+                    <ImageView
+                        android:id="@+id/adicionarObjetos_lingua_en"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:contentDescription="@string/en"
+                        android:src="@drawable/flag_us" />
+
+                    <ImageView
+                        android:id="@+id/adicionarObjetos_lingua_es"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:contentDescription="@string/es"
+                        android:src="@drawable/flag_es" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/adicionarObjetos_input_nome_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objName"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_nome"
-                    app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_nome" />
+                    app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_nome"
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_linear" />
 
 
                 <EditText
                     android:id="@+id/adicionarObjetos_input_nome"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="30dp"
                     android:background="@drawable/input_shape"
                     android:ems="10"
                     android:fontFamily="@font/regular"
@@ -149,20 +206,49 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_imagem_fundo" />
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_nome_top" />
+
+                <TextView
+                    android:id="@+id/adicionarObjetos_input_descricao_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/objDesc"
+                    android:textColor="@color/preto"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_descricao"
+                    app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_descricao" />
+
+                <EditText
+                    android:id="@+id/adicionarObjetos_input_descricao"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/input_shape"
+                    android:ems="10"
+                    android:fontFamily="@font/regular"
+                    android:hint="@string/objDescriptionEx"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/preto"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_nome" />
 
                 <TextView
                     android:id="@+id/adicionarObjetos_input_categoria_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objCat"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/adicionarObjetos_input_categoria"
                     app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_categoria" />
-
 
                 <EditText
                     android:id="@+id/adicionarObjetos_input_categoria"
@@ -180,13 +266,13 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_nome" />
+                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_input_descricao" />
 
                 <TextView
                     android:id="@+id/adicionarObjetos_input_data_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objDate"
                     android:textColor="@color/preto"
@@ -217,7 +303,7 @@
                     android:id="@+id/adicionarObjetos_input_valor_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objValue"
                     android:textColor="@color/preto"
@@ -248,7 +334,7 @@
                     android:id="@+id/adicionarObjetos_input_local_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objPlace"
                     android:textColor="@color/preto"
@@ -279,7 +365,7 @@
                     android:id="@+id/adicionarObjetos_input_descricaoImg_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objImgDesc"
                     android:textColor="@color/preto"
@@ -310,7 +396,7 @@
                     android:id="@+id/adicionarObjetos_input_valorSentimental_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/objSValue"
                     android:textColor="@color/preto"
@@ -339,20 +425,15 @@
 
                 <Button
                     android:id="@+id/adicionarObjetos_botao"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/add_button"
+                    android:contentDescription="@string/add"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_valorSentimental" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/adicionarObjetos_botao" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

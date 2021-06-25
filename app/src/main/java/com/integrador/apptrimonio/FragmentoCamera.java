@@ -12,17 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.ResultPoint;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
@@ -31,21 +28,19 @@ import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.util.List;
 
 public class FragmentoCamera extends Fragment {
 
-    private Context context;
+    private final Context context;
     private CompoundBarcodeView scannerView;
     private boolean carregandoCodigo = false;
 
-    private VolleyUtils volleyUtils;
-    private Dialog popupCarregando, popupCodigoInvalido;
+    private final VolleyUtils volleyUtils;
+    private final Dialog popupCarregando;
+    private final Dialog popupCodigoInvalido;
 
     public FragmentoCamera(Context context) {
         this.context = context;
@@ -209,6 +204,7 @@ public class FragmentoCamera extends Fragment {
             //verifica se tem data de compra
             try {
                 JSONObject dataCompra = objeto.has("compra") ? new JSONObject(objeto.getString("compra")) : null;
+                assert dataCompra != null;
                 long compraLong = Long.parseLong(dataCompra.getString("_seconds"));
                 bundle.putLong("compra", compraLong * 1000);
             }catch (Exception e){
@@ -218,6 +214,7 @@ public class FragmentoCamera extends Fragment {
             //verifica se tem data de publicação
             try {
                 JSONObject dataPub = objeto.has("_aprovadoEm") ? new JSONObject(objeto.getString("_aprovadoEm")) : null;
+                assert dataPub != null;
                 long publicacaoLong = Long.parseLong(dataPub.getString("_seconds"));
                 bundle.putLong("dataPublicacao", publicacaoLong*1000);
             }catch (Exception e){

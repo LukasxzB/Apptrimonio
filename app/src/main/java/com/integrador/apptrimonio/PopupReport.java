@@ -18,15 +18,15 @@ import com.integrador.apptrimonio.Utils.VolleyUtils;
 
 public class PopupReport {
 
-    private Dialog dialog;
-    private LottieAnimationView[] checks = new LottieAnimationView[13];
-    private boolean[] ativos = new boolean[13];
+    private final Dialog dialog;
+    private final LottieAnimationView[] checks = new LottieAnimationView[13];
+    private final boolean[] ativos = new boolean[13];
 
-    private String idObjeto;
+    private final String idObjeto;
 
-    private Utils utils;
-    private VolleyUtils volleyUtils;
-    private Context context;
+    private final Utils utils;
+    private final VolleyUtils volleyUtils;
+    private final Context context;
 
     public PopupReport(Context context, String idObjeto) {
         this.context = context;

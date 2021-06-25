@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -24,7 +23,7 @@ public class VolleyUtils {
 
     private final RequestQueue queue;
 
-    private final String url = "https://us-central1-apptrimonio-9844d.cloudfunctions.net/";
+    private final String urlFirebase = "https://us-central1-apptrimonio-9844d.cloudfunctions.net/";
 
     public VolleyUtils(Context context) {
         this.queue = Volley.newRequestQueue(context);
@@ -39,7 +38,7 @@ public class VolleyUtils {
                     String idToken = Objects.requireNonNull(task.getResult()).getToken(); //idToken do usuário
 
                     //faz o request
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, volleyInterface::onResponse, volleyInterface::onError) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, volleyInterface::onError) {
                         @Override
                         protected Map<String, String> getParams() {
                             params.put("token", idToken);
@@ -66,7 +65,7 @@ public class VolleyUtils {
 
     private void fazerRequest(VolleyInterface volleyInterface, String url, final Map<String, String> params) {
         //faz o request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, volleyInterface::onResponse, volleyInterface::onError) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, volleyInterface::onError) {
             @Override
             protected Map<String, String> getParams() {
                 params.put("lingua", Utils.getLanguage());
@@ -87,7 +86,7 @@ public class VolleyUtils {
     public void enviarEmailConfirmacao(VolleyInterface volleyInterface) { //enviar e-mail para confirmar a conta, LINGUA 0 = EN, 1 = PT, 2 = ES
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fazerRequest(volleyInterface, url + "enviarEmailConfirmacao", user, new HashMap<>());
+        fazerRequest(volleyInterface, "enviarEmailConfirmacao", user, new HashMap<>());
 
     }
 
@@ -96,7 +95,7 @@ public class VolleyUtils {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Map<String, String> params = new HashMap<>();
         params.put("status", String.valueOf(status));
-        fazerRequest(volleyInterface, url + "receberEmails", user, params);
+        fazerRequest(volleyInterface, "receberEmails", user, params);
 
     }
 
@@ -107,16 +106,16 @@ public class VolleyUtils {
 
         //seleciona qual request vai fazer, caso tiver ou não tiver usuário
         if (user != null) {
-            fazerRequest(volleyInterface, url + "requisitarObjeto", user, params);
+            fazerRequest(volleyInterface, "requisitarObjeto", user, params);
         } else {
-            fazerRequest(volleyInterface, url + "requisitarObjeto", params);
+            fazerRequest(volleyInterface, "requisitarObjeto", params);
         }
     }
 
     public void verificarConta(VolleyInterface volleyInterface) { //ao entrar no aplicativo, verifica se é gerenciador
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fazerRequest(volleyInterface, url + "verificarConta", user, new HashMap<>());
+        fazerRequest(volleyInterface, "verificarConta", user, new HashMap<>());
     }
 
     public void adicionarObjeto(VolleyInterface volleyInterface, String nome, String categoria, String descricao, Date dataCompra, double valor, String local, String descricaoImagem, String valorSentimental, Bitmap imagem) {
@@ -135,7 +134,7 @@ public class VolleyUtils {
         params.put("descricaoImagem", descricaoImagem);
         params.put("valorSentimental", valorSentimental);
 
-        fazerRequest(volleyInterface, url + "adicionarObjeto", user, params);
+        fazerRequest(volleyInterface, "adicionarObjeto", user, params);
     }
 
     public void editarObjeto(VolleyInterface volleyInterface, String idObjeto, String descricao, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental) {
@@ -154,7 +153,7 @@ public class VolleyUtils {
         params.put("descricaoImagem", descricaoImagem);
         params.put("valorSentimental", valorSentimental);
 
-        fazerRequest(volleyInterface, url + "editarObjeto", user, params);
+        fazerRequest(volleyInterface, "editarObjeto", user, params);
     }
 
     public void removerObjeto(VolleyInterface volleyInterface, String idAndamento, String idObjeto, String motivos) {
@@ -164,13 +163,13 @@ public class VolleyUtils {
         params.put("idAndamento", idAndamento);
         params.put("idObjeto", idObjeto);
         params.put("motivo", motivos);
-        fazerRequest(volleyInterface, url + "removerObjeto", user, params);
+        fazerRequest(volleyInterface, "removerObjeto", user, params);
     }
 
     public void objetosAndamento(VolleyInterface volleyInterface) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        fazerRequest(volleyInterface, url + "objetosAndamento", user, new HashMap<>());
+        fazerRequest(volleyInterface, "objetosAndamento", user, new HashMap<>());
     }
 
     public void aprovacaoObjeto(VolleyInterface volleyInterface, boolean status, String idAndamento, String descricao, String motivo, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental) {
@@ -201,7 +200,7 @@ public class VolleyUtils {
         params.put("motivo", motivo);
         params.put("valoresAprovar", object.toString());
 
-        fazerRequest(volleyInterface, url + "aprovacaoObjeto", user, params);
+        fazerRequest(volleyInterface, "aprovacaoObjeto", user, params);
     }
 
     public void reportarObjeto(VolleyInterface volleyInterface, String idObjeto, String motivo) {
@@ -211,7 +210,7 @@ public class VolleyUtils {
         params.put("idObjeto", idObjeto);
         params.put("motivo", motivo);
 
-        fazerRequest(volleyInterface, url + "reportarObjeto", user, params);
+        fazerRequest(volleyInterface, "reportarObjeto", user, params);
     }
 
 }

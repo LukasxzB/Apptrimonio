@@ -47,8 +47,7 @@ public class QRCode {
                         int red = (int) (92 - (92.0 - 242.0) / height * (y + 1));
                         int green = (int) (216 - (216.0 - 83.0) / height * (y + 1));
                         int blue = (int) (111 - (111.0 - 83.0) / height * (y + 1));
-                        Color color = new Color();
-                        int colorInt = color.argb(255, red, green, blue);
+                        int colorInt = Color.argb(255, red, green, blue);
                         pixels[y * width + x] = bitMatrix.get(x, y) ? colorInt : 16777215;// 0x000000:0xffffff
                     } else {
                         pixels[y * width + x] = 0xffffffff;// background color
@@ -78,8 +77,7 @@ public class QRCode {
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleheight);
 
-        Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
-        return resized;
+        return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
     }
 
     private static Bitmap merge(Bitmap overlay, Bitmap bitmap) {

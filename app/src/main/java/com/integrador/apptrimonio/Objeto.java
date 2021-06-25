@@ -1,20 +1,9 @@
 package com.integrador.apptrimonio;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +15,8 @@ import com.integrador.apptrimonio.Utils.Utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class Objeto extends ActivityBase {
@@ -60,7 +49,7 @@ public class Objeto extends ActivityBase {
         String dataCompra = getResources().getString(R.string.naoInfo);
         String dataPublicacao = getResources().getString(R.string.naoInfo);
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         df.setTimeZone(TimeZone.getDefault());
 
         //caso tiver data de compra
@@ -132,27 +121,35 @@ public class Objeto extends ActivityBase {
 
     private void removerObjeto() { //ao clicar no icone de remover
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
-        } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
-            Toast.makeText(this, getResources().getString(R.string.remObjError), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_objeto));
+        } else if (User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
+            Utils.makeSnackbar(getResources().getString(R.string.remObjError), findViewById(R.id.activity_objeto));
         } else { //caso possua
-            Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
+
         }
+    }
+
+    private void abrirPopupRemover() {
+
     }
 
     private void editarObjeto() { //ao clicar no icone de editar
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
-        } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de editar objeto
-            Toast.makeText(this, getResources().getString(R.string.editObjError), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_objeto));
+        } else if (User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de editar objeto
+            Utils.makeSnackbar(getResources().getString(R.string.editObjError), findViewById(R.id.activity_objeto));
         } else { //caso possua
-            Toast.makeText(this, "Em desenvolvimento", Toast.LENGTH_SHORT).show();
+
         }
+    }
+
+    private void abrirTelaEditar() {
+
     }
 
     private void reportarObjeto() { //ao clicar no icone de reportar
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
-            Toast.makeText(this, getResources().getString(R.string.loginRequired), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_objeto));
         } else { //caso tenha
             new PopupReport(this, idObjeto).abrirPopup();
         }

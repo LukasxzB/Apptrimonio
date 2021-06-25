@@ -1,28 +1,19 @@
 package com.integrador.apptrimonio;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.volley.VolleyError;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.BoasVindasAdaptador;
 import com.integrador.apptrimonio.Utils.BoasVindasItem;
-import com.integrador.apptrimonio.Utils.VolleyInterface;
-import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
@@ -32,14 +23,11 @@ public class BoasVindas extends ActivityBase {
 
     private BoasVindasAdaptador boasVindasAdaptador;
     private Button botao;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boas_vindas);
-
-        sharedPreferences = getSharedPreferences("apptrimonio", MODE_PRIVATE);
 
         //abre a tela inicial caso ja entrou
         if (getSharedPreferences("apptrimonio", MODE_PRIVATE).getBoolean("entrou", false)) {

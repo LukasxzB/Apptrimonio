@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +33,8 @@ public class FragmentoLogin extends Fragment {
     private TextView inputEmailTop, inputSenhaTop;
 
     private FirebaseAuth mAuth;
-    private Context context;
-    private Utils utils;
-
-    private View view;
+    private final Context context;
+    private final Utils utils;
 
     private Dialog dialogEsqueceuSenha;
 
@@ -65,7 +62,7 @@ public class FragmentoLogin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_fragmento_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragmento_login, container, false);
 
         inputEmail = view.findViewById(R.id.login_input_email);
         inputSenha = view.findViewById(R.id.login_input_senha);
@@ -100,14 +97,14 @@ public class FragmentoLogin extends Fragment {
 
         if (!emailValido) {
             inputEmailTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(context, getResources().getString(R.string.invEmail), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.invEmail), viewPager2.getRootView());
         } else {
             inputEmailTop.setTextColor(getResources().getColor(R.color.verde4));
         }
 
         if (!senhaValida) {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.vermelho));
-            Toast.makeText(context, getResources().getString(R.string.invPass), Toast.LENGTH_LONG).show();
+            Utils.makeSnackbar(getResources().getString(R.string.invPass), viewPager2.getRootView());
         } else {
             inputSenhaTop.setTextColor(getResources().getColor(R.color.verde4));
         }
@@ -138,7 +135,7 @@ public class FragmentoLogin extends Fragment {
                                 mensagem = getResources().getString(R.string.loginBanned);
                             }
 
-                            Toast.makeText(context, mensagem, Toast.LENGTH_LONG).show();
+                            Utils.makeSnackbar(mensagem, viewPager2.getRootView());
                         }
                     });
         }

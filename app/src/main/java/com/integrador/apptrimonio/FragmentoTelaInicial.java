@@ -3,28 +3,21 @@ package com.integrador.apptrimonio;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.yarolegovich.slidingrootnav.SlidingRootNav;
-import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+
 import java.util.Random;
 
 public class FragmentoTelaInicial extends Fragment {
 
-    private ImageView swipeUp;
-    private ImageView botaoMenuIcon;
-    private View.OnClickListener aoClicarBotaoMenu;
+    private final View.OnClickListener aoClicarBotaoMenu;
 
     public FragmentoTelaInicial(View.OnClickListener clickListener) {
         aoClicarBotaoMenu = clickListener;
@@ -45,8 +38,8 @@ public class FragmentoTelaInicial extends Fragment {
                 getResources().getDrawable(R.drawable.backgroundiii), getResources().getDrawable(R.drawable.backgroundiv), getResources().getDrawable(R.drawable.backgroundv)};
         int backgroundAleatorio = new Random().nextInt(backgrounds.length);
         background.setImageDrawable(backgrounds[backgroundAleatorio]);
-        swipeUp = view.findViewById(R.id.inicio_swipe_gif);
-        botaoMenuIcon = view.findViewById(R.id.inicio_menu_icon);
+        ImageView swipeUp = view.findViewById(R.id.inicio_swipe_gif);
+        ImageView botaoMenuIcon = view.findViewById(R.id.inicio_menu_icon);
         botaoMenuIcon.setOnClickListener(aoClicarBotaoMenu);
 
         Glide.with(this).load(R.drawable.swipeup).into(swipeUp);
