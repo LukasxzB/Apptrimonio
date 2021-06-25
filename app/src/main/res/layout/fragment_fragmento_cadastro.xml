@@ -5,8 +5,8 @@
     android:id="@+id/fragmento_cadastro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentoCadastro"
-    android:layout_marginBottom="240dp">
+    android:layout_marginBottom="240dp"
+    tools:context=".FragmentoCadastro">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,8 @@
             android:src="@drawable/cadastro_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/cadastro_icon"
@@ -30,7 +31,8 @@
             android:layout_marginEnd="10dp"
             android:src="@drawable/logo_apptrimonio_round"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/cadastro_titulo"
@@ -73,7 +75,8 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cadastro_top" />
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_top"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/cadastro_input_email_top"
@@ -81,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:fontFamily="@font/regular"
+            android:labelFor="@id/cadastro_input_email"
             android:text="@string/email"
             android:textColor="@color/preto"
             android:textSize="20sp"
@@ -95,7 +99,7 @@
             android:background="@drawable/input_shape"
             android:ems="10"
             android:fontFamily="@font/regular"
-            android:hint="***********"
+            android:hint="@string/pass"
             android:inputType="textPassword"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -103,14 +107,16 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/cadastro_input_email"
             app:layout_constraintStart_toStartOf="@+id/cadastro_input_email"
-            app:layout_constraintTop_toBottomOf="@+id/cadastro_input_email" />
+            app:layout_constraintTop_toBottomOf="@+id/cadastro_input_email"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/cadastro_input_senha_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/regular"
+            android:labelFor="@id/cadastro_input_senha"
             android:text="@string/password"
             android:textColor="@color/preto"
             android:textSize="20sp"

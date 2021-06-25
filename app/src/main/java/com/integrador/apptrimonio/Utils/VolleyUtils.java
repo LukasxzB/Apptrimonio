@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class VolleyUtils {
 
@@ -29,9 +31,11 @@ public class VolleyUtils {
         this.queue = Volley.newRequestQueue(context);
     }
 
-    private void fazerRequest(VolleyInterface volleyInterface, String url, FirebaseUser user, final Map<String, String> params) {
+    private void fazerRequest(VolleyInterface volleyInterface, String url, FirebaseUser user, final Map<String, String> params, String lingua) {
+        lingua = lingua == null ? Utils.getLanguage() : lingua;
         //verifica se há usuário logado
         if (user != null) { //caso houver usuário logado
+            String finalLingua = lingua;
             user.getIdToken(false).addOnCompleteListener(task -> { //pega o idToken do usuário
                 if (task.isSuccessful()) { //caso deu certo
 
@@ -42,7 +46,7 @@ public class VolleyUtils {
                         @Override
                         protected Map<String, String> getParams() {
                             params.put("token", idToken);
-                            params.put("lingua", Utils.getLanguage());
+                            params.put("lingua", finalLingua);
                             return params;
                         }
 
@@ -53,6 +57,8 @@ public class VolleyUtils {
                             return headers;
                         }
                     };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                            (int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     queue.add(stringRequest);
                 } else { //caso deu erro ao pegar o token
                     volleyInterface.onResponse("ERROR");
@@ -63,12 +69,14 @@ public class VolleyUtils {
         }
     }
 
-    private void fazerRequest(VolleyInterface volleyInterface, String url, final Map<String, String> params) {
+    private void fazerRequest(VolleyInterface volleyInterface, String url, final Map<String, String> params, String lingua) {
+        lingua = lingua == null ? Utils.getLanguage() : lingua;
         //faz o request
+        String finalLingua = lingua;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, volleyInterface::onError) {
             @Override
             protected Map<String, String> getParams() {
-                params.put("lingua", Utils.getLanguage());
+                params.put("lingua", finalLingua);
                 return params;
             }
 
@@ -80,13 +88,15 @@ public class VolleyUtils {
                 return headers;
             }
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }
 
     public void enviarEmailConfirmacao(VolleyInterface volleyInterface) { //enviar e-mail para confirmar a conta, LINGUA 0 = EN, 1 = PT, 2 = ES
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fazerRequest(volleyInterface, "enviarEmailConfirmacao", user, new HashMap<>());
+        fazerRequest(volleyInterface, "enviarEmailConfirmacao", user, new HashMap<>(), null);
 
     }
 
@@ -95,7 +105,7 @@ public class VolleyUtils {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Map<String, String> params = new HashMap<>();
         params.put("status", String.valueOf(status));
-        fazerRequest(volleyInterface, "receberEmails", user, params);
+        fazerRequest(volleyInterface, "receberEmails", user, params, null);
 
     }
 
@@ -106,19 +116,19 @@ public class VolleyUtils {
 
         //seleciona qual request vai fazer, caso tiver ou não tiver usuário
         if (user != null) {
-            fazerRequest(volleyInterface, "requisitarObjeto", user, params);
+            fazerRequest(volleyInterface, "requisitarObjeto", user, params, null);
         } else {
-            fazerRequest(volleyInterface, "requisitarObjeto", params);
+            fazerRequest(volleyInterface, "requisitarObjeto", params, null);
         }
     }
 
     public void verificarConta(VolleyInterface volleyInterface) { //ao entrar no aplicativo, verifica se é gerenciador
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fazerRequest(volleyInterface, "verificarConta", user, new HashMap<>());
+        fazerRequest(volleyInterface, "verificarConta", user, new HashMap<>(), null);
     }
 
-    public void adicionarObjeto(VolleyInterface volleyInterface, String nome, String categoria, String descricao, Date dataCompra, double valor, String local, String descricaoImagem, String valorSentimental, Bitmap imagem) {
+    public void adicionarObjeto(VolleyInterface volleyInterface, String nome, String categoria, String descricao, Date dataCompra, double valor, String local, String descricaoImagem, String valorSentimental, Bitmap imagem, String lingua) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
@@ -128,16 +138,16 @@ public class VolleyUtils {
         params.put("nome", nome);
         params.put("categoria", categoria);
         params.put("descricao", descricao);
-        params.put("dataCompra", Long.toString(dataCompra.getTime()));
+        params.put("dataCompra", dataCompra == null ? "0" : Long.toString(dataCompra.getTime()));
         params.put("valor", Double.toString(valor));
         params.put("local", local);
         params.put("descricaoImagem", descricaoImagem);
         params.put("valorSentimental", valorSentimental);
 
-        fazerRequest(volleyInterface, "adicionarObjeto", user, params);
+        fazerRequest(volleyInterface, "adicionarObjeto", user, params, lingua);
     }
 
-    public void editarObjeto(VolleyInterface volleyInterface, String idObjeto, String descricao, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental) {
+    public void editarObjeto(VolleyInterface volleyInterface, String idObjeto, String descricao, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental, String lingua) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
 
@@ -153,7 +163,7 @@ public class VolleyUtils {
         params.put("descricaoImagem", descricaoImagem);
         params.put("valorSentimental", valorSentimental);
 
-        fazerRequest(volleyInterface, "editarObjeto", user, params);
+        fazerRequest(volleyInterface, "editarObjeto", user, params, lingua);
     }
 
     public void removerObjeto(VolleyInterface volleyInterface, String idAndamento, String idObjeto, String motivos) {
@@ -163,16 +173,16 @@ public class VolleyUtils {
         params.put("idAndamento", idAndamento);
         params.put("idObjeto", idObjeto);
         params.put("motivo", motivos);
-        fazerRequest(volleyInterface, "removerObjeto", user, params);
+        fazerRequest(volleyInterface, "removerObjeto", user, params, null);
     }
 
     public void objetosAndamento(VolleyInterface volleyInterface) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        fazerRequest(volleyInterface, "objetosAndamento", user, new HashMap<>());
+        fazerRequest(volleyInterface, "objetosAndamento", user, new HashMap<>(), null);
     }
 
-    public void aprovacaoObjeto(VolleyInterface volleyInterface, boolean status, String idAndamento, String descricao, String motivo, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental) {
+    public void aprovacaoObjeto(VolleyInterface volleyInterface, boolean status, String idAndamento, String descricao, String motivo, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental, String lingua) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
@@ -200,7 +210,7 @@ public class VolleyUtils {
         params.put("motivo", motivo);
         params.put("valoresAprovar", object.toString());
 
-        fazerRequest(volleyInterface, "aprovacaoObjeto", user, params);
+        fazerRequest(volleyInterface, "aprovacaoObjeto", user, params, lingua);
     }
 
     public void reportarObjeto(VolleyInterface volleyInterface, String idObjeto, String motivo) {
@@ -210,7 +220,7 @@ public class VolleyUtils {
         params.put("idObjeto", idObjeto);
         params.put("motivo", motivo);
 
-        fazerRequest(volleyInterface, "reportarObjeto", user, params);
+        fazerRequest(volleyInterface, "reportarObjeto", user, params, null);
     }
 
 }

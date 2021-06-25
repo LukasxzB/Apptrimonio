@@ -2,11 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_adicionarObjetos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cinza2"
     android:windowSoftInputMode="adjustNothing"
-    tools:context=".AdicionarObjetos">
+    tools:context=".AdicionarObjetos"
+    tools:ignore="LabelFor">
 
     <ImageView
         android:id="@+id/adicionarObjetos_screenBack"
@@ -184,6 +186,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_input_nome"
                     android:text="@string/objName"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -214,6 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_input_descricao"
                     android:text="@string/objDesc"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -244,6 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_input_categoria"
                     android:text="@string/objCat"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -274,6 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_input_data"
                     android:text="@string/objDate"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -281,7 +287,7 @@
                     app:layout_constraintStart_toStartOf="@+id/adicionarObjetos_input_data" />
 
 
-                <EditText
+                <TextView
                     android:id="@+id/adicionarObjetos_input_data"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
@@ -289,8 +295,8 @@
                     android:background="@drawable/input_shape"
                     android:ems="10"
                     android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
                     android:hint="@string/objDateEx"
-                    android:inputType="date"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:textColor="@color/preto"
@@ -305,6 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_valor"
                     android:text="@string/objValue"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -336,6 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_local"
                     android:text="@string/objPlace"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -367,6 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_descricaoImg"
                     android:text="@string/objImgDesc"
                     android:textColor="@color/preto"
                     android:textSize="16sp"
@@ -398,6 +407,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/regular"
+                    android:labelFor="@id/adicionarObjetos_valorSentimental"
                     android:text="@string/objSValue"
                     android:textColor="@color/preto"
                     android:textSize="16sp"

@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/fragmento_login"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentoLogin"
-    android:layout_marginBottom="240dp">
+    android:layout_marginBottom="240dp"
+    tools:context=".FragmentoLogin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,8 @@
             android:src="@drawable/login_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/login_icon"
@@ -30,13 +31,14 @@
             android:layout_marginEnd="10dp"
             android:src="@drawable/logo_apptrimonio_round"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/login_titulo"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/regular"
             android:text="@string/login"
             android:textAlignment="textStart"
@@ -74,14 +76,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_top" />
+            app:layout_constraintTop_toBottomOf="@+id/login_top"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/login_input_email_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/regular"
+            android:labelFor="@id/login_input_email"
             android:text="@string/email"
             android:textColor="@color/preto"
             android:textSize="20sp"
@@ -96,7 +100,7 @@
             android:background="@drawable/input_shape"
             android:ems="10"
             android:fontFamily="@font/regular"
-            android:hint="***********"
+            android:hint="@string/pass"
             android:inputType="textPassword"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -104,13 +108,15 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/login_input_email"
             app:layout_constraintStart_toStartOf="@+id/login_input_email"
-            app:layout_constraintTop_toBottomOf="@+id/login_input_email" />
+            app:layout_constraintTop_toBottomOf="@+id/login_input_email"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/login_input_senha_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:labelFor="@id/login_input_senha"
             android:fontFamily="@font/regular"
             android:text="@string/password"
             android:textColor="@color/preto"
@@ -137,14 +143,14 @@
             android:id="@+id/login_esqueceu_senha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/forgotPass"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:textColor="@color/preto"
+            android:layout_marginEnd="5dp"
             android:alpha="0.5"
             android:fontFamily="@font/regular"
-            android:textSize="14sp"
+            android:text="@string/forgotPass"
             android:textAlignment="textEnd"
+            android:textColor="@color/preto"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/login_input_senha"
             app:layout_constraintTop_toBottomOf="@+id/login_input_senha" />
 

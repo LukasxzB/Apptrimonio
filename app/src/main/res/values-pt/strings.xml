@@ -212,9 +212,11 @@
     <string name="needDescImg">Você precisa definir a descrição de imagem do objeto!</string>
     <string name="addWarn">Lembre-se: adicionar objetos falsos ou duplicados pode ocasionar o enceramento de sua conta!</string>
     <string name="addAprove">Lembre-se: o seu objeto não estará disponível até que um gerenciador o aprove!</string>
+    <string name="selectImageError">Ocorreu um erro ao selecionar a imagem! Você deu permissão ao aplicativo?</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>
     <string name="addImg">Adicionar imagem</string>
     <string name="back">Voltar</string>
+    <string name="pass">***********</string>
 </resources>

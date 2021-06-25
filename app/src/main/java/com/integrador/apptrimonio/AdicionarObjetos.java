@@ -4,30 +4,46 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.common.BitMatrix;
 import com.integrador.apptrimonio.Utils.ActivityBase;
+import com.integrador.apptrimonio.Utils.Utils;
+import com.integrador.apptrimonio.Utils.VolleyInterface;
+import com.integrador.apptrimonio.Utils.VolleyUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AdicionarObjetos extends ActivityBase {
@@ -36,19 +52,52 @@ public class AdicionarObjetos extends ActivityBase {
     private int selecionarFoto = 1;
     private Uri uri;
     private RelativeLayout imagemBackground;
-    private EditText nome, categoria, data, valor, local, descricao, sentimental, descricaoImagem;
+    private EditText nome, categoria, valor, local, descricao, sentimental, descricaoImagem;
     private Button adicionar;
+    private TextView data;
 
     private ImageView imagem;
 
-    private ImageView[] linguas = new ImageView[3];
+    private final ImageView[] linguas = new ImageView[3];
 
     private int linguaSelecionada = 0; //0 = ingles, 1 portugues 2 espanhol
+
+    private TextView nomeTop, descricaoTop, categoriaTop, dataTop, valorTop, localTop, imgDescTop, senValorTop;
+
+    private Date dataCompra = null;
+    private DatePickerDialog datePickerDialog;
+    private VolleyUtils volleyUtils;
+    private Bitmap imagemBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_objetos);
+
+        volleyUtils = new VolleyUtils(this);
+
+        //seletor de datas
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                //pega a data que o usuário selecionou, formata e coloca no textview
+                dataCompra = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.YEAR, year);
+                dataCompra = calendar.getTime();
+                String dataTxt = android.text.format.DateFormat.getDateFormat(AdicionarObjetos.this).format(dataCompra.getTime());
+                data.setText(dataTxt);
+            }
+        };
+
+        Calendar calendar = Calendar.getInstance();
+        int ano = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, ano, mes, dia);
 
         //botao voltar
         ImageView voltar = findViewById(R.id.adicionarObjetos_voltar);
@@ -65,6 +114,16 @@ public class AdicionarObjetos extends ActivityBase {
             intent.setType("image/*");
             startActivityForResult(intent, selecionarFoto);
         });
+
+        //variaveis de top
+        nomeTop = findViewById(R.id.adicionarObjetos_input_nome_top);
+        descricaoTop = findViewById(R.id.adicionarObjetos_input_descricao_top);
+        categoriaTop = findViewById(R.id.adicionarObjetos_input_categoria_top);
+        dataTop = findViewById(R.id.adicionarObjetos_input_data_top);
+        valorTop = findViewById(R.id.adicionarObjetos_input_valor_top);
+        localTop = findViewById(R.id.adicionarObjetos_input_local_top);
+        imgDescTop = findViewById(R.id.adicionarObjetos_input_descricaoImg_top);
+        senValorTop = findViewById(R.id.adicionarObjetos_input_valorSentimental_top);
 
         //variaveis de inputs
         imagemBackground = findViewById(R.id.adicionarObjetos_imagem_fundo);
@@ -87,6 +146,10 @@ public class AdicionarObjetos extends ActivityBase {
 
         linguaSelecionada = Locale.getDefault().getLanguage().equalsIgnoreCase("pt") ? 1 : Locale.getDefault().getLanguage().equalsIgnoreCase("es") ? 2 : 0;
         mudarLingua(linguaSelecionada);
+
+        //ao clicar em data
+        data.setOnClickListener(v -> selecionarData());
+        dataTop.setOnClickListener(v -> selecionarData());
 
         //botao adicionar
         adicionar.setOnClickListener(v -> adicionarObjetos());
@@ -118,7 +181,6 @@ public class AdicionarObjetos extends ActivityBase {
         //valores do input
         String vNome = nome.getText().toString().trim();
         String vCategoria = categoria.getText().toString().trim();
-        String vData = data.getText().toString().trim();
         String vValor = valor.getText().toString().trim();
         String vLocal = local.getText().toString().trim();
         String vDescricao = descricao.getText().toString().trim();
@@ -130,8 +192,83 @@ public class AdicionarObjetos extends ActivityBase {
 
         //verifica se todos os valores existem, caso não exista muda a cor pra vermelho e mostra um snackbar
         if (vNome.equals("") || vCategoria.equals("") || vValor.equals("") || !inseriuImagem || vLocal.equals("") || vImgDesc.equals("")) {
-            
+            tudoOk = false;
+
+            //mostra snackbar
+            if (vNome.equals("")) {
+                Utils.makeSnackbar(getResources().getString(R.string.needName), findViewById(R.id.activity_adicionarObjetos));
+            } else if (vCategoria.equals("")) {
+                Utils.makeSnackbar(getResources().getString(R.string.needCategory), findViewById(R.id.activity_adicionarObjetos));
+            } else if (vValor.equals("")) {
+                Utils.makeSnackbar(getResources().getString(R.string.needValue), findViewById(R.id.activity_adicionarObjetos));
+            } else if (!inseriuImagem) {
+                Utils.makeSnackbar(getResources().getString(R.string.needImage), findViewById(R.id.activity_adicionarObjetos));
+            } else if (vLocal.equals("")) {
+                Utils.makeSnackbar(getResources().getString(R.string.needPlace), findViewById(R.id.activity_adicionarObjetos));
+            } else if (vImgDesc.equals("")) {
+                Utils.makeSnackbar(getResources().getString(R.string.needDescImg), findViewById(R.id.activity_adicionarObjetos));
+            }
         }
+
+        //muda cor
+        imagemBackground.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), inseriuImagem ? R.drawable.addimg_borda_verde : R.drawable.addimg_borda_vermelha, null));
+        descricaoTop.setTextColor(getResources().getColor(R.color.verde4));
+        nomeTop.setTextColor(getResources().getColor(vNome.equals("") ? R.color.vermelho : R.color.verde4));
+        categoriaTop.setTextColor(getResources().getColor(vCategoria.equals("") ? R.color.vermelho : R.color.verde4));
+        dataTop.setTextColor(getResources().getColor(R.color.verde4));
+        valorTop.setTextColor(getResources().getColor(vValor.equals("") ? R.color.vermelho : R.color.verde4));
+        localTop.setTextColor(getResources().getColor(vLocal.equals("") ? R.color.vermelho : R.color.verde4));
+        imgDescTop.setTextColor(getResources().getColor(vImgDesc.equals("") ? R.color.vermelho : R.color.verde4));
+        senValorTop.setTextColor(getResources().getColor(R.color.verde4));
+
+
+        if (tudoOk) {
+            adicionarVolley(vNome, vCategoria, vDescricao, Double.parseDouble(vValor), vLocal, vImgDesc, vValorSen);
+        }
+    }
+
+    private void adicionarVolley(String nome, String categoria, String descricao, double valor, String local, String imgDesc, String senValor) {
+        VolleyInterface volleyInterface = new VolleyInterface() {
+            @Override
+            public void onResponse(String response) {
+                Utils.makeSnackbar("ok!", findViewById(R.id.activity_adicionarObjetos));
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Utils.makeSnackbar("erro!", findViewById(R.id.activity_adicionarObjetos));
+            }
+        };
+
+        volleyUtils.adicionarObjeto(volleyInterface, nome, categoria, descricao, dataCompra, valor, local, imgDesc, senValor, comprimirImagem(imagemBitmap, 1280f, true), linguaSelecionada == 1 ? "pt" : linguaSelecionada == 2 ? "es" : "en");
+
+    }
+
+    private void abrirPopupAndamento() {
+
+    }
+
+    private void abrirObjeto() {
+
+    }
+
+    private void selecionarData() {
+        datePickerDialog.show();
+        ;
+    }
+
+    private Bitmap comprimirImagem(Bitmap realImage, float maxImageSize, boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
+        return BitmapFactory.decodeStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
     }
 
     @Override
@@ -140,8 +277,15 @@ public class AdicionarObjetos extends ActivityBase {
 
         if (requestCode == selecionarFoto && resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
-            inseriuImagem = true;
-            Glide.with(this).load(uri).transform(new CircleCrop()).into(imagem);
+            try {
+                imagemBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                inseriuImagem = true;
+                Glide.with(this).load(uri).transform(new CircleCrop()).into(imagem);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR", e.getMessage());
+                Utils.makeSnackbar(getResources().getString(R.string.selectImageError), findViewById(R.id.activity_adicionarObjetos));
+            }
         }
     }
 }
