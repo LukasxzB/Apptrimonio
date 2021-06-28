@@ -176,6 +176,15 @@ public class VolleyUtils {
         fazerRequest(volleyInterface, "removerObjeto", user, params, null);
     }
 
+    public void removerObjeto(VolleyInterface volleyInterface, String idObjeto, String motivos) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("idObjeto", idObjeto);
+        params.put("motivo", motivos);
+        fazerRequest(volleyInterface, "removerObjeto", user, params, null);
+    }
+
     public void objetosAndamento(VolleyInterface volleyInterface) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

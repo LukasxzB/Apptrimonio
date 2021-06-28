@@ -212,6 +212,16 @@
     <string name="addWarn">Lembre-se: adicionar objetos falsos ou duplicados pode ocasionar o enceramento de sua conta!</string>
     <string name="addAprove">Lembre-se: o seu objeto não estará disponível até que um gerenciador o aprove!</string>
     <string name="selectImageError">Ocorreu um erro ao selecionar a imagem! Você deu permissão ao aplicativo?</string>
+    <string name="objAndDesc"> Você receberá um e-mail assim que possível!</string>
+    <string name="addError">Ocorreu um erro ao adicionar o seu objeto, mas seu objeto foi adicionado!</string>
+    <string name="addErrorDesc">Verifique o objeto no seu perfil!</string>
+    <string name="addSucess">O seu objeto foi adicionado com sucesso!</string>
+    <string name="remObj">Remover objeto</string>
+    <string name="remDesc">Selecione os motivos a seguir para remover o objeto. Após remover o objeto, esta ação não poderá ser desfeita.</string>
+    <string name="remWarning">Lembre-se: remover um objeto falsamente ou abusar da funcionalidade poderá ocasionar a suspensão da sua conta!</string>
+    <string name="remErrorCheck">Você precisa selecionar ao menos um motivo para reportar!</string>
+    <string name="remSuccess">Você removeu o objeto com sucesso! Obrigado pela contribuição s2</string>
+    <string name="remError">Ocorreu um erro ao remover o objeto! Por favor, tente novamente.</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>

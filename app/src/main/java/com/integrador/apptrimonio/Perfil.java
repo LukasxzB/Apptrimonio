@@ -78,7 +78,7 @@ public class Perfil extends ActivityBase {
         if (!user.isPermissaoAdicionar()) {
             adicionador.setColorFilter(filter);
         }
-        if (user.isPermissaoGerenciador()) {
+        if (!user.isPermissaoGerenciador()) {
             gerenciador.setColorFilter(filter);
         }
 

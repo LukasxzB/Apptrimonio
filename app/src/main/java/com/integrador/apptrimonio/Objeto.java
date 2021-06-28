@@ -3,6 +3,7 @@ package com.integrador.apptrimonio;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +11,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.ActivityBase;
+import com.integrador.apptrimonio.Utils.Cache;
 import com.integrador.apptrimonio.Utils.User;
+import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
 
 import java.text.DateFormat;
@@ -43,7 +46,7 @@ public class Objeto extends ActivityBase {
         String local = !bundle.getString("local").equals("") || bundle.getString("local") == null ? bundle.getString("local") : getResources().getString(R.string.naoInfo);
         String valor = bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : getResources().getString(R.string.naoInfo);
         String valorSentimental = !bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") == null ? bundle.getString("valorSentimental") : getResources().getString(R.string.naoInfo);
-
+        Bitmap imagemBitmap = Cache.getInstance().getBitmapFromMemCache(imagem);
         idObjeto = codigo;
 
         String dataCompra = getResources().getString(R.string.naoInfo);
@@ -77,12 +80,12 @@ public class Objeto extends ActivityBase {
         excluir.setOnClickListener(v -> removerObjeto());
 
         //define as variáveis na tela
-        setObjeto(imagem, nome, lingua, categoria, descricaoImagem, local, valor, valorSentimental, dataCompra, dataPublicacao, descricao);
+        setObjeto(imagemBitmap, nome, lingua, categoria, descricaoImagem, local, valor, valorSentimental, dataCompra, dataPublicacao, descricao);
 
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void setObjeto(String imagem, String nome, String lingua, String categoria, String descricaoImagem, String local, String valor, String valorSentimental, String dataCompra, String dataPublicacao, String descricao) {
+    private void setObjeto(Bitmap imagem, String nome, String lingua, String categoria, String descricaoImagem, String local, String valor, String valorSentimental, String dataCompra, String dataPublicacao, String descricao) {
         //define as variáveis do objeto na tela
         ((TextView) findViewById(R.id.objeto_titulo)).setText(nome);
         ((TextView) findViewById(R.id.objeto_descricao)).setText(descricao);
@@ -98,11 +101,10 @@ public class Objeto extends ActivityBase {
 
         ImageView imageView = findViewById(R.id.objeto_imagem);
         //define a imagem
-        if (imagem.equals("")) {
+        if (imagem == null) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.semimagem));
         } else {
-            Bitmap bitmap = Utils.getBitmapImage(imagem);
-            imageView.setImageBitmap(bitmap);
+            imageView.setImageBitmap(imagem);
         }
 
         //define a lingua
@@ -122,15 +124,16 @@ public class Objeto extends ActivityBase {
     private void removerObjeto() { //ao clicar no icone de remover
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
             Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_objeto));
-        } else if (User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
+        } else if (!User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de gerenciador
             Utils.makeSnackbar(getResources().getString(R.string.remObjError), findViewById(R.id.activity_objeto));
         } else { //caso possua
-
+            UserInterface callback = bol -> { //callback pra fechar a tela do objeto ao ser removido
+                if (bol) {
+                    this.finish();
+                }
+            };
+            new PopupRemover(this, idObjeto, callback).abrirPopup();
         }
-    }
-
-    private void abrirPopupRemover() {
-
     }
 
     private void editarObjeto() { //ao clicar no icone de editar

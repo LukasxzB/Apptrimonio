@@ -1,8 +1,11 @@
 package com.integrador.apptrimonio.Utils;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class User {
 
@@ -11,7 +14,7 @@ public class User {
     //variáveis do usuário
     private int xp;
     private String email;
-    private boolean permissaoEditar, permissaoAdicionar, permissaoGerenciador, emailVerificado, receberEmails;
+    private boolean permissaoEditar, permissaoAdicionar, permissaoGerenciador, receberEmails;
     private JSONArray codigos, objetosAdicionados, objetosVerificados;
 
     //get instance
@@ -57,7 +60,7 @@ public class User {
     }
 
     private int getNextLevelXPTotal() { //xp TOTAL necessário pra atingir o próximo nível ex: 30 ao 31: 7425
-        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             return 45;
         }
 
@@ -117,11 +120,8 @@ public class User {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             return false;
         }
-        return emailVerificado;
-    }
-
-    public void setEmailVerificado(boolean emailVerificado) {
-        this.emailVerificado = emailVerificado;
+        FirebaseAuth.getInstance().getCurrentUser().reload();
+        return FirebaseAuth.getInstance().getCurrentUser().isEmailVerified();
     }
 
     public JSONArray getCodigos() {
@@ -154,6 +154,47 @@ public class User {
                 xp += 15;
                 codigos.put(idObjeto);
             }
+        }
+    }
+
+    public void adicionarObjetoAdicionado(String idObjeto, String nome) {
+        try {
+            boolean repetido = false;
+            for (int i = 0; i < objetosAdicionados.length(); i++) {
+                if (objetosAdicionados.getJSONObject(i).getString("id").equals(idObjeto)) {
+                    repetido = true;
+                }
+            }
+
+            if (!repetido) {
+                JSONObject objeto = new JSONObject();
+                objeto.put("id", idObjeto);
+                objeto.put("nome", nome);
+                objetosAdicionados.put(objeto);
+                xp += 30;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("ERROR", e.getMessage());
+        }
+    }
+
+    public void adicionarObjetoVerificado(String idObjeto) {
+        try {
+            boolean repetido = false;
+            for (int i = 0; i < objetosVerificados.length(); i++) {
+                if (objetosVerificados.getString(i).equals(idObjeto)) {
+                    repetido = true;
+                }
+            }
+
+            if (!repetido) {
+                objetosVerificados.put(idObjeto);
+                xp += 15;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("ERROR", e.getMessage());
         }
     }
 }

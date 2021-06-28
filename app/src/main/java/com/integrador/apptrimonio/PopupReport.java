@@ -2,6 +2,7 @@ package com.integrador.apptrimonio;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.VolleyError;
+import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
 import com.integrador.apptrimonio.Utils.VolleyUtils;
@@ -123,7 +125,6 @@ public class PopupReport {
             };
 
             volleyUtils.reportarObjeto(callback, idObjeto, motivos);
-
         }
     }
 

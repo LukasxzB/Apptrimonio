@@ -3,6 +3,7 @@ package com.integrador.apptrimonio;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,7 +22,9 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.ResultPoint;
+import com.integrador.apptrimonio.Utils.Cache;
 import com.integrador.apptrimonio.Utils.User;
+import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
 import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -52,7 +55,7 @@ public class FragmentoCamera extends Fragment {
         popupCodigoInvalido = new Dialog(context);
         popupCodigoInvalido.setContentView(R.layout.popup_codigoinvalido);
         popupCodigoInvalido.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupCodigoInvalido.setCancelable(true);
+        popupCodigoInvalido.setCancelable(false);
 
         volleyUtils = new VolleyUtils(context);
     }
@@ -188,10 +191,13 @@ public class FragmentoCamera extends Fragment {
             String valorSentimental = objeto.has("valorSentimental") ? objeto.getString("valorSentimental") : "";
             User.getInstance().adicionarObjetoEscaneado(codigo);
 
+            Bitmap img = imagem.equals("") ? null : Utils.getBitmapImage(imagem);
+            Cache.getInstance().addBitmapToMemoryCache(codigo, img);
+
             Intent intent = new Intent(context, Objeto.class);
             Bundle bundle = new Bundle();
             bundle.putString("codigo", codigo);
-            bundle.putString("imagem", imagem);
+            bundle.putString("imagem", codigo);
             bundle.putString("nome", nome);
             bundle.putString("lingua", lingua);
             bundle.putString("categoria", categoria);

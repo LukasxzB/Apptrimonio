@@ -147,9 +147,7 @@ public class Utils {
                 JSONArray codigos = new JSONArray();
 
                 if (response.equals("NO USER")) { //caso não tiver usuário logado
-
                     salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray(), false);
-
                 } else if (!response.equals("ERROR")) { //caso não recebeu "ERROR" do método então recebeu um JSON do servidor
                     try {
                         JSONObject objeto = new JSONObject(response);
@@ -167,13 +165,13 @@ public class Utils {
                 }
 
                 fecharPopUpCarregando();
-                callback.callbackLogin(true);
+                callback.callback(true);
             }
 
             @Override
             public void onError(VolleyError error) { //salva o gerenciador e estudante como false e fecha o popup
                 fecharPopUpCarregando();
-                callback.callbackLogin(false);
+                callback.callback(false);
             }
         };
 
@@ -193,14 +191,13 @@ public class Utils {
         user.setObjetosVerificados(objetosVerificados);
         user.setCodigos(codigos);
         user.setEmail(FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getEmail() : null);
-        user.setEmailVerificado(FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
         user.setReceberEmails(receberEmails);
 
     }
 
     public static void makeSnackbar(String mensagem, View view) {
         Snackbar snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_LONG);
-        ((TextView)snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setMaxLines(5);
+        ((TextView) snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setMaxLines(5);
         snackbar.show();
     }
 
