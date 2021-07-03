@@ -73,8 +73,11 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     private String imagemOriginal, descricaoOriginal, codigoOriginal, nomeOriginal, linguaOriginal, categoriaOriginal, descricaoImagemOriginal, localOriginal, valorOriginal, valorSentimentalOriginal;
     private Date dataCompraOriginal;
+    private String imagemEditada, descricaoEditada, codigoEditado, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorEditado, valorSentimentalEditado;
 
     private Dialog popupErro;
+
+    private String idAndamento;
 
 
     @Override
@@ -215,7 +218,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         categoriaOriginal = bundle.getString("categoria").equals("") || bundle.getString("categoria") != null ? bundle.getString("categoria").trim() : "";
         descricaoImagemOriginal = bundle.getString("descricaoImagem").equals("") || bundle.getString("descricaoImagem") != null ? bundle.getString("descricaoImagem").trim() : "";
         localOriginal = bundle.getString("local").equals("") || bundle.getString("local") != null ? bundle.getString("local").trim() : getResources().getString(R.string.naoInfo);
-        valorOriginal = bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : "";
+        valorOriginal = bundle.getDouble("valor") != 0 ? String.valueOf(bundle.getDouble("valor")) : "";
         valorSentimentalOriginal = bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") != null ? bundle.getString("valorSentimental").trim() : "";
         idObjeto = codigoOriginal;
 
@@ -224,11 +227,17 @@ public class GerenciarObjeto extends AppCompatActivity {
             Glide.with(this).load(imagemOriginal).transform(new CircleCrop()).into(imagemView);
         }
 
+        //define a lingua do objeto
+        int linguaFinal = linguaOriginal.equalsIgnoreCase("pt") ? 1 : linguaOriginal.equalsIgnoreCase("es") ? 2 : 1;
+        if (!linguaOriginal.equalsIgnoreCase("")) {
+            mudarLingua(linguaFinal);
+        }
+
         //define o valor do textview de original
         nomeDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("nome", getResources().getString(R.string.naoInfo)).trim()));
         descricaoDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("descricao", getResources().getString(R.string.naoInfo)).trim()));
         categoriaDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("categoria", getResources().getString(R.string.naoInfo)).trim()));
-        valorDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : getResources().getString(R.string.naoInfo)).trim());
+        valorDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getDouble("valor") != 0 ? bundle.getDouble("valor") : getResources().getString(R.string.naoInfo)).trim());
         localDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("local", getResources().getString(R.string.naoInfo)).trim()));
         descricaoImagemDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("descricaoImagem", getResources().getString(R.string.naoInfo)).trim()));
         valorSentimentalDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), bundle.getString("valorSentimental", getResources().getString(R.string.naoInfo)).trim()));
@@ -282,21 +291,113 @@ public class GerenciarObjeto extends AppCompatActivity {
         });
     }
 
+    private void setupValoresVerEdit() {
+        //define os valores do ver edit
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+
+        imagemEditada = bundle.getString("editImagem", "");
+        nomeEditado = bundle.getString("editNome", "");
+        linguaEditada = bundle.getString("editLingua", "");
+        categoriaEditada = bundle.getString("editCategoria", "");
+        descricaoImagemEditada = bundle.getString("editDescricaoImagem", "");
+        descricaoEditada = bundle.getString("editDescricao", "");
+        localEditado = bundle.getString("editLocal", "");
+        valorEditado = bundle.getString("editValor", "");
+        valorSentimentalEditado = bundle.getString("editValorSentimental", "");
+
+        //define a imagem do objeto
+        if (!imagemEditada.equals("")) {
+            Glide.with(this).load(imagemEditada).transform(new CircleCrop()).into(imagemView);
+        }
+
+        //define a lingua do objeto
+        int linguaFinal = linguaEditada.equalsIgnoreCase("pt") ? 1 : linguaOriginal.equalsIgnoreCase("es") ? 2 : 1;
+        if (!linguaEditada.equalsIgnoreCase("")) {
+            mudarLingua(linguaFinal);
+        }
+
+        //define o valor dos inputs
+        nomeView.setText(nomeEditado);
+        descricaoView.setText(descricaoEditada);
+        categoriaView.setText(categoriaEditada);
+        valorView.setText(valorEditado);
+        localView.setText(localEditado);
+        descricaoImagemView.setText(descricaoImagemEditada);
+        valorSentimentalView.setText(valorSentimentalEditado);
+
+        //define o valor da data de compra caso houver
+        String dataCompraTxt = getResources().getString(R.string.naoInfo);
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+
+        //caso tiver data de compra
+        if (bundle.getLong("compra", 0) != 0.0) {
+            Date dateDataCompra = new Date(bundle.getLong("compra"));
+            dataCompraTxt = df.format(dateDataCompra);
+        }
+
+        dataView.setText(dataCompraTxt.equalsIgnoreCase(getResources().getString(R.string.naoInfo)) ? "" : dataCompraTxt);
+        dataDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), dataCompraTxt));
+
+    }
+
+    private void setupValoresVerAdd() {
+        //define os valores do ver add
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+    }
+
+    private void setupValoresVerReport() {
+        //define os valores do ver report
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+    }
+
+    private void setupListenersVerificar() {
+        //ao clicar em aprovar em add ou edit
+        aprovarAddEditBotao.setOnClickListener(v -> {
+            //adicionar callback do volley
+            //fazer chamada
+            //mudar pra "" caso o valor nao mudou
+        });
+
+        //ao clicar em desaprovar em add ou edit
+        desaprovarAddEditBotao.setOnClickListener(v -> {
+
+        });
+
+        //ao clicar em aprovar em report
+        aprovarReportBotao.setOnClickListener(v -> {
+
+        });
+
+        //ao clicar em desaprovar em report
+        desaprovarReportBotao.setOnClickListener(v -> {
+
+        });
+
+        //ao clicar em remover em report
+        removerReportBotao.setOnClickListener(v -> {
+
+        });
+    }
+
     private void requestAdicionar(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
         utils.abrirPopUpCarregando();
         Bitmap imagemComprimida = Utils.comprimirImagem(imagemPreenchida);
         VolleyInterface volleyInterface = new VolleyInterface() {
             @Override
             public void onResponse(String response) {
+                utils.fecharPopUpCarregando();
                 try {
                     JSONObject objeto = new JSONObject(response);
                     String idObjeto = objeto.getString("idObjeto");
                     User.getInstance().adicionarObjetoAdicionado(idObjeto, nomePreenchido);
                     String status = objeto.getString("aprovacao");
 
-                    String imagem = objeto.getString("imagem");
-
                     if (status.equalsIgnoreCase("aprovado")) {
+                        String imagem = objeto.getString("imagem");
                         abrirTelaObjeto(nomePreenchido, categoriaPreenchida, descricaoPreenchida, Double.parseDouble(valorPreenchido), localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, idObjeto, linguaPreenchida, imagem);
                     } else {
                         abrirPopupErro(getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
@@ -312,6 +413,7 @@ public class GerenciarObjeto extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error) {
+                utils.fecharPopUpCarregando();
                 String mensagemErro = error.getMessage();
 
                 if (error instanceof NetworkError || error instanceof TimeoutError) {
@@ -468,7 +570,17 @@ public class GerenciarObjeto extends AppCompatActivity {
         //valores do bundle
         setupValoresOriginaisValores();
 
+        //valores do verificar
+        if (acao.equalsIgnoreCase("verAdd")) {
+            setupValoresVerAdd();
+        } else if (acao.equalsIgnoreCase("verReport")) {
+            setupValoresVerReport();
+        } else {
+            setupValoresVerEdit();
+        }
+
         //define os listeners
+        setupListenersVerificar();
     }
 
     private void mudarLingua(int lingua) {

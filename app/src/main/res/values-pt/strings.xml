@@ -52,7 +52,7 @@
     <string name="apptrimonioSupport">Suporte - Apptrimônio</string>
     <string name="scanCode">Escanear um código</string>
     <string name="addObj">Adicionar um objeto</string>
-    <string name="aprObj">Aprovar objetos</string>
+    <string name="aprObj">Verificar objetos</string>
     <string name="profile">Perfil</string>
     <string name="reqGer">Requisitar gerenciador</string>
     <string name="invCode">Código inválido</string>
@@ -234,6 +234,11 @@
     <string name="verReportDesc">Caso não houver nenhum erro no objeto original, apenas desaprove o reporte, caso contrário edite e aprove (caso necessário, remova o objeto).</string>
     <string name="verEditDesc">Caso não houver nenhum erro no objeto original, apenas desaprove a edição, caso contrário edite o objeto e o aprove.</string>
     <string name="verAddDesc">Caso não houver nenhum erro no objeto, apenas aprove, caso houver erros passíveis a edição, edite e aprove, se não for possível apenas desaprove a adição.</string>
+    <string name="verNoObjects">Não há nenhum objeto necessitando de verificação no momento! Tente novamente mais tarde.</string>
+    <string name="errTryAgain">Ocorreu um erro inesperado! Por favor, tente novamente mais tarde.</string>
+    ]<string name="verObjects">Foram encontrados %s objetos!</string>
+    <string name="ver">Verificar próximo objeto</string>
+    <string name="cancel">Cancelar</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>

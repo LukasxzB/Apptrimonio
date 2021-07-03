@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/inicio_viewpager2"
         android:layout_width="match_parent"
