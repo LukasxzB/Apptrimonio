@@ -25,6 +25,7 @@ import com.integrador.apptrimonio.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
@@ -199,6 +200,20 @@ public class Utils {
         Snackbar snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_LONG);
         ((TextView) snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setMaxLines(5);
         snackbar.show();
+    }
+
+    public static Bitmap comprimirImagem(Bitmap realImage) {
+        float ratio = Math.min(
+                (float) 1280.0 / realImage.getWidth(),
+                (float) 1280.0 / realImage.getHeight());
+        int width = Math.round(ratio * realImage.getWidth());
+        int height = Math.round(ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, true);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
+        return BitmapFactory.decodeStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
     }
 
 }

@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
@@ -25,7 +24,8 @@
         android:roundIcon="@drawable/logo_apptrimonio_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.apptr">
-        <activity android:name=".Objeto"></activity>
+        <activity android:name=".GerenciarObjeto"></activity>
+        <activity android:name=".Objeto" />
         <activity android:name=".Perfil" />
         <activity android:name=".TextoInformativo" />
         <activity

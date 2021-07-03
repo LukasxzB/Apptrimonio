@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gerenciarObjeto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza2"
+    tools:context=".GerenciarObjeto"
+    tools:ignore="LabelFor">
+
+    <ImageView
+        android:id="@+id/gerenciarObjeto_screenBack"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/screen_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gerenciarObjeto_background"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/gerenciarObjeto_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_transparente"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/verde2"
+        android:contentInsetStart="0dp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/gerenciarObjeto_voltar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/back"
+                android:src="@drawable/ic_back_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/addObj"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/background_branco"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="150dp">
+
+            <RelativeLayout
+                android:id="@+id/gerenciarObjeto_imagem_fundo"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/addimg_borda_cinza">
+
+                <ImageView
+                    android:id="@+id/gerenciarObjeto_imagem"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/addImg"
+                    android:padding="3dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/addimg_ptg" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_report_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/reportReason"
+                android:textAlignment="center"
+                android:textColor="@color/vermelho"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_linear_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="70dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/objLan"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+
+            <LinearLayout
+                android:id="@+id/gerenciarObjeto_linear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/gerenciarObjeto_lingua_pt"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/pt"
+                    android:src="@drawable/flag_pt" />
+
+                <ImageView
+                    android:id="@+id/gerenciarObjeto_lingua_en"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/en"
+                    android:src="@drawable/flag_us" />
+
+                <ImageView
+                    android:id="@+id/gerenciarObjeto_lingua_es"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/es"
+                    android:src="@drawable/flag_es" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_nome_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_nome"
+                android:text="@string/objName"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_nome"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objNameEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_nome_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_descricao_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_descricao"
+                android:text="@string/objDesc"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_descricao"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objDescriptionEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_descricao_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_categoria_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_categoria"
+                android:text="@string/objCat"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_categoria"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objCat"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_categoria_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_data_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_data"
+                android:text="@string/objDate"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_data"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:hint="@string/objDateEx"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_data_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_valor_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_valor"
+                android:text="@string/objValue"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_valor"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objValueEx"
+                android:inputType="numberDecimal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_valor_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_local_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_local"
+                android:text="@string/objPlace"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_local"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objPlaceDesc"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_local_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_descricaoImg_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_descricaoImg"
+                android:text="@string/objImgDesc"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_descricaoImg"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objImgDescEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_descricaoImg_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_valorSentimental_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/regular"
+                android:labelFor="@id/gerenciarObjeto_input_valorSentimental"
+                android:text="@string/objSValue"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/gerenciarObjeto_input_valorSentimental"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@drawable/input_shape"
+                android:ems="10"
+                android:fontFamily="@font/regular"
+                android:hint="@string/objSValueEx"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/preto"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_input_valorSentimental_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textColor="@color/preto60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_warn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/addWarn"
+                android:textAlignment="center"
+                android:textColor="@color/vermelho"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_desc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/verEditDesc"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/gerenciarObjeto_botao"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/add_button"
+                android:contentDescription="@string/add" />
+
+            <LinearLayout
+                android:id="@+id/gerenciarObjeto_botao_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/gerenciarObjeto_botao_report_desaprovar"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/disapprove_button"
+                    android:contentDescription="@string/disapproveObj" />
+
+                <Button
+                    android:id="@+id/gerenciarObjeto_botao_report_remover"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/remove_button"
+                    android:contentDescription="@string/remObj" />
+
+                <Button
+                    android:id="@+id/gerenciarObjeto_botao_report_aprovar"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/approve_button"
+                    android:contentDescription="@string/approveObj" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gerenciarObjeto_botao_addedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/gerenciarObjeto_botao_addedit_desaprovar"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/disapprove_button"
+                    android:contentDescription="@string/disapproveObj" />
+
+                <Button
+                    android:id="@+id/gerenciarObjeto_botao_addedit_aprovar"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/approve_button"
+                    android:contentDescription="@string/approveObj" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,26 +1,22 @@
 package com.integrador.apptrimonio;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.ActivityBase;
-import com.integrador.apptrimonio.Utils.Cache;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.UserInterface;
 import com.integrador.apptrimonio.Utils.Utils;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class Objeto extends ActivityBase {
 
@@ -36,7 +32,7 @@ public class Objeto extends ActivityBase {
 
         //variáveis do objeto
         Bundle bundle = getIntent().getExtras();
-        String imagem = bundle.getString("imagem");
+        String imagem = bundle.getString("imagem", "");
         String descricao = !bundle.getString("descricao").equals("") || bundle.getString("descricao") == null ? bundle.getString("descricao") : getResources().getString(R.string.naoInfo);
         String codigo = !bundle.getString("codigo").equals("") || bundle.getString("codigo") == null ? bundle.getString("codigo") : getResources().getString(R.string.naoInfo);
         String nome = !bundle.getString("nome").equals("") || bundle.getString("nome") == null ? bundle.getString("nome") : getResources().getString(R.string.naoInfo);
@@ -46,23 +42,21 @@ public class Objeto extends ActivityBase {
         String local = !bundle.getString("local").equals("") || bundle.getString("local") == null ? bundle.getString("local") : getResources().getString(R.string.naoInfo);
         String valor = bundle.getDouble("valor") != 0 ? "R$" + bundle.getDouble("valor") : getResources().getString(R.string.naoInfo);
         String valorSentimental = !bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") == null ? bundle.getString("valorSentimental") : getResources().getString(R.string.naoInfo);
-        Bitmap imagemBitmap = Cache.getInstance().getBitmapFromMemCache(imagem);
         idObjeto = codigo;
 
         String dataCompra = getResources().getString(R.string.naoInfo);
         String dataPublicacao = getResources().getString(R.string.naoInfo);
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        df.setTimeZone(TimeZone.getDefault());
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
 
         //caso tiver data de compra
-        if (bundle.getLong("compra") != 0.0) {
+        if (bundle.getLong("compra", 0) != 0.0) {
             Date dateDataCompra = new Date(bundle.getLong("compra"));
             dataCompra = df.format(dateDataCompra);
         }
 
         //caso tiver data de publicacao
-        if (bundle.getLong("dataPublicacao") != 0.0) {
+        if (bundle.getLong("dataPublicacao", 0) != 0.0) {
             Date dateDataPublicacao = new Date(bundle.getLong("dataPublicacao"));
             dataPublicacao = df.format(dateDataPublicacao);
         }
@@ -75,17 +69,17 @@ public class Objeto extends ActivityBase {
         ImageView reportar = findViewById(R.id.objeto_reportar);
         reportar.setOnClickListener(v -> reportarObjeto());
         ImageView editar = findViewById(R.id.objeto_editar);
-        editar.setOnClickListener(v -> editarObjeto());
+        editar.setOnClickListener(v -> editarObjeto(bundle));
         ImageView excluir = findViewById(R.id.objeto_remover);
         excluir.setOnClickListener(v -> removerObjeto());
 
         //define as variáveis na tela
-        setObjeto(imagemBitmap, nome, lingua, categoria, descricaoImagem, local, valor, valorSentimental, dataCompra, dataPublicacao, descricao);
+        setObjeto(imagem, nome, lingua, categoria, descricaoImagem, local, valor, valorSentimental, dataCompra, dataPublicacao, descricao);
 
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void setObjeto(Bitmap imagem, String nome, String lingua, String categoria, String descricaoImagem, String local, String valor, String valorSentimental, String dataCompra, String dataPublicacao, String descricao) {
+    private void setObjeto(String imagem, String nome, String lingua, String categoria, String descricaoImagem, String local, String valor, String valorSentimental, String dataCompra, String dataPublicacao, String descricao) {
         //define as variáveis do objeto na tela
         ((TextView) findViewById(R.id.objeto_titulo)).setText(nome);
         ((TextView) findViewById(R.id.objeto_descricao)).setText(descricao);
@@ -101,10 +95,10 @@ public class Objeto extends ActivityBase {
 
         ImageView imageView = findViewById(R.id.objeto_imagem);
         //define a imagem
-        if (imagem == null) {
+        if (imagem.equals("")) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.semimagem));
         } else {
-            imageView.setImageBitmap(imagem);
+            Glide.with(this).load(imagem).into(imageView);
         }
 
         //define a lingua
@@ -136,18 +130,18 @@ public class Objeto extends ActivityBase {
         }
     }
 
-    private void editarObjeto() { //ao clicar no icone de editar
+    private void editarObjeto(Bundle bundle) { //ao clicar no icone de editar
         if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não tiver usuário logado
             Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_objeto));
-        } else if (User.getInstance().isPermissaoGerenciador()) { //caso o usuário não possua permissão de editar objeto
+        } else if (!User.getInstance().isPermissaoEditar()) { //caso o usuário não possua permissão de editar objeto
             Utils.makeSnackbar(getResources().getString(R.string.editObjError), findViewById(R.id.activity_objeto));
         } else { //caso possua
 
+            bundle.putString("acao", "edit");
+            Intent intent = new Intent(this, GerenciarObjeto.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
-    }
-
-    private void abrirTelaEditar() {
-
     }
 
     private void reportarObjeto() { //ao clicar no icone de reportar

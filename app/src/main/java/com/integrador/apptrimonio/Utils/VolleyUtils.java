@@ -131,7 +131,7 @@ public class VolleyUtils {
     public void adicionarObjeto(VolleyInterface volleyInterface, String nome, String categoria, String descricao, Date dataCompra, double valor, String local, String descricaoImagem, String valorSentimental, Bitmap imagem, String lingua) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
+        String imagemFinal = imagem == null ? "" : Utils.getStringImage(imagem);
 
         Map<String, String> params = new HashMap<>();
         params.put("imagem", imagemFinal);

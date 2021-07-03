@@ -223,10 +223,23 @@
     <string name="remErrorCheck">Você precisa selecionar ao menos um motivo para reportar!</string>
     <string name="remSuccess">Você removeu o objeto com sucesso! Obrigado pela contribuição s2</string>
     <string name="remError">Ocorreu um erro ao remover o objeto! Por favor, tente novamente.</string>
+    <string name="editObj">Editar objeto</string>
+    <string name="editWarn">Lembre-se: editar um objeto falsamente ou abusar da funcionalidade poderá ocasionar a suspensão da sua conta!</string>
+    <string name="verReport">Verificar reporte</string>
+    <string name="verAdd">Verificar adição</string>
+    <string name="verEdit">Verificar edição</string>
+    <string name="originalValue">Valor original: </string>
+    <string name="verWarn">Lembre-se: verificar um objeto inválido ou abusar da funcionalidade poderá ocasionar a suspensão da sua conta!</string>
+    <string name="reportReason">Motivos do reporte: </string>
+    <string name="verReportDesc">Caso não houver nenhum erro no objeto original, apenas desaprove o reporte, caso contrário edite e aprove (caso necessário, remova o objeto).</string>
+    <string name="verEditDesc">Caso não houver nenhum erro no objeto original, apenas desaprove a edição, caso contrário edite o objeto e o aprove.</string>
+    <string name="verAddDesc">Caso não houver nenhum erro no objeto, apenas aprove, caso houver erros passíveis a edição, edite e aprove, se não for possível apenas desaprove a adição.</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>
     <string name="addImg">Adicionar imagem</string>
     <string name="back">Voltar</string>
     <string name="pass">***********</string>
+    <string name="disapproveObj">Desaprovar objeto</string>
+    <string name="approveObj">Aprovar objeto</string>
 </resources>

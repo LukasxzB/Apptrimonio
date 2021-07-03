@@ -147,7 +147,11 @@ public class MainActivity extends ActivityBase {
 
     private void abrirAdicionarObjeto() { //abre a tela de adicionar objetos
         if (User.getInstance().isPermissaoAdicionar()) {
-            startActivity(new Intent(MainActivity.this, AdicionarObjetos.class));
+            Bundle bundle = new Bundle();
+            bundle.putString("acao", "add");
+            Intent intent = new Intent(this, GerenciarObjeto.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         } else {
             Utils.makeSnackbar(getResources().getString(R.string.addRequired), findViewById(R.id.activity_main));
         }
@@ -155,7 +159,7 @@ public class MainActivity extends ActivityBase {
 
     private void abrirAprovarObjeto() {
         if (User.getInstance().isPermissaoGerenciador()) {
-            startActivity(new Intent(MainActivity.this, AdicionarObjetos.class));
+    
         } else {
             Utils.makeSnackbar(getResources().getString(R.string.managerRequired), findViewById(R.id.activity_main));
         }
