@@ -237,6 +237,10 @@
     <string name="errTryAgain">Ocorreu um erro inesperado! Por favor, tente novamente mais tarde.</string>
     <string name="verObjects">Foram encontrados %s objetos!</string>
     <string name="ver">Verificar próximo objeto</string>
+    <string name="objRem">O objeto foi removido!</string>
+    <string name="verSuccess">O objeto foi verificado com sucesso! Muito obrigado s2!</string>
+    <string name="verFailed">Ocorreu um erro ao verificar o objeto. Por favor, tente novamente!</string>
+    <string name="verRemoved">O objeto foi removido com sucesso! Muito obrigado s2!</string>
     <string name="cancel">Cancelar</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>

@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.NetworkError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.ActivityBase;
@@ -67,9 +68,9 @@ public class MainActivity extends ActivityBase {
         popupObjetosAndamento.setContentView(R.layout.popup_objetosandamento);
         popupObjetosAndamento.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupObjetosAndamento.setCancelable(false);
-        ((ImageView) popupObjetosAndamento.findViewById(R.id.objetosAndamento_fechar)).setOnClickListener(v -> fecharPopupAndamento());
-        ((Button) popupObjetosAndamento.findViewById(R.id.objetosAndamento_cancelar)).setOnClickListener(v -> fecharPopupAndamento());
-        ((Button) popupObjetosAndamento.findViewById(R.id.objetosAndamento_proximo)).setOnClickListener(v -> proximoObjeto());
+        popupObjetosAndamento.findViewById(R.id.objetosAndamento_fechar).setOnClickListener(v -> fecharPopupAndamento());
+        popupObjetosAndamento.findViewById(R.id.objetosAndamento_cancelar).setOnClickListener(v -> fecharPopupAndamento());
+        popupObjetosAndamento.findViewById(R.id.objetosAndamento_proximo).setOnClickListener(v -> proximoObjeto());
         popupObjetosAndamentoDesc = popupObjetosAndamento.findViewById(R.id.objetosAndamento_desc);
 
         //adiciona o menu lateral
@@ -193,6 +194,7 @@ public class MainActivity extends ActivityBase {
             VolleyInterface volleyInterface = new VolleyInterface() {
                 @Override
                 public void onResponse(String response) {
+                    utils.fecharPopUpCarregando();
                     if (response.equalsIgnoreCase("There are no objects available.")) {
                         Utils.makeSnackbar(getResources().getString(R.string.verNoObjects), findViewById(R.id.activity_main));
                     } else {
@@ -213,11 +215,11 @@ public class MainActivity extends ActivityBase {
                             Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
                         }
                     }
-                    utils.fecharPopUpCarregando();
                 }
 
                 @Override
                 public void onError(VolleyError error) {
+                    utils.fecharPopUpCarregando();
                     String erro = error.getMessage();
                     assert erro != null;
                     if (erro.equalsIgnoreCase("Bad request.") || erro.equalsIgnoreCase("Unauthorized.")) {
@@ -227,7 +229,6 @@ public class MainActivity extends ActivityBase {
                     } else {
                         Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
                     }
-                    utils.fecharPopUpCarregando();
                 }
             };
 
@@ -270,6 +271,7 @@ public class MainActivity extends ActivityBase {
     }
 
     private void proximoObjeto() {
+        final boolean[] deuErro = {false};
         try {
 
             Bundle bundle = new Bundle();
@@ -352,12 +354,78 @@ public class MainActivity extends ActivityBase {
                 }
 
                 //requisitar o objeto original
+                utils.abrirPopUpCarregando();
+                VolleyInterface volleyInterface = new VolleyInterface() {
+                    @Override
+                    public void onResponse(String response) {
+                        utils.fecharPopUpCarregando();
 
+                        //adicionar no bundle
+                        try {
+                            //recebe o objeto da response e seta no bundle
+                            JSONObject objeto = new JSONObject(response);
 
-                //adicionar no bundle
+                            //pega os valores do objeto original
+                            bundle.putString("nome", objeto.has("nome") ? objeto.getString("nome").trim() : "");
+                            bundle.putString("descricao", objeto.has("descricao") ? objeto.getString("descricao").trim() : "");
+                            bundle.putString("imagem", objeto.has("imagem") ? objeto.getString("imagem") : "");
+                            bundle.putString("lingua", objeto.has("lingua") ? objeto.getString("lingua") : "");
+                            bundle.putString("categoria", objeto.has("categoria") ? objeto.getString("categoria") : "");
+                            bundle.putString("descricaoImagem", objeto.has("descricaoImagem") ? objeto.getString("descricaoImagem") : "");
+                            bundle.putString("local", objeto.has("local") ? objeto.getString("local").trim() : "");
+                            bundle.putDouble("valor", objeto.has("valor") ? objeto.getDouble("valor") : 0);
+                            bundle.putString("valorSentimental", objeto.has("valorSentimental") ? objeto.getString("valorSentimental") : "");
 
-                //verifica se tem data de compra em ambos
+                            //verifica se tem data de compra
+                            try {
+                                JSONObject dataCompra = objeto.has("compra") ? new JSONObject(objeto.getString("compra")) : null;
+                                assert dataCompra != null;
+                                long compraLong = Long.parseLong(dataCompra.getString("_seconds"));
+                                bundle.putLong("compra", compraLong * 1000);
+                            } catch (Exception e) {
+                                Log.d("ERROR", e.getMessage());
+                            }
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("ERROR", "" + e.getMessage());
+                            Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            objetosAndamento.removerObjeto();
+                            deuErro[0] = true;
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        utils.fecharPopUpCarregando();
+                        deuErro[0] = true;
+                        String mensagemErro = error.getMessage();
+                        try {
+                            assert mensagemErro != null;
+                            JSONObject object = new JSONObject(mensagemErro);
+                            String status = objeto.getString("status");
+                            if (status.equalsIgnoreCase("excluido")) {
+                                Utils.makeSnackbar(getResources().getString(R.string.objRem), findViewById(R.id.activity_main));
+                            } else if (error instanceof NetworkError || error instanceof TimeoutError) {
+                                Utils.makeSnackbar(getResources().getString(R.string.intCodeDesc), findViewById(R.id.activity_main));
+                            } else {
+                                Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            }
+
+                            objetosAndamento.removerObjeto();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("ERROR getobj", e.getMessage());
+                            Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            objetosAndamento.removerObjeto();
+                        }
+
+                    }
+                };
+
+                volleyUtils.requisitarObjeto(volleyInterface, idObjeto, null);
 
             } else if (tipo.equalsIgnoreCase("report")) {
 
@@ -371,21 +439,24 @@ public class MainActivity extends ActivityBase {
 
             }
 
-            //enviar dados pra tela de gerenciar objeto
-            Intent intent = new Intent(this, GerenciarObjeto.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+            //caso não deu erro
+            if (!deuErro[0]) {
+                //enviar dados pra tela de gerenciar objeto
+                Intent intent = new Intent(this, GerenciarObjeto.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
-            //ao voltar remover objeto da lista de objetos em andamento
-            objetosAndamento.removerObjeto();
+                //ao voltar remover objeto da lista de objetos em andamento
+                objetosAndamento.removerObjeto();
 
-            //ao voltar atualizar textview
-            int novaQuantidade = objetosAndamento.getLength();
-            popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(novaQuantidade)));
+                //ao voltar atualizar textview
+                int novaQuantidade = objetosAndamento.getLength();
+                popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(novaQuantidade)));
 
-            //caso tiver 0 objetos restantes fechar popup
-            if (novaQuantidade == 0) {
-                fecharPopupAndamento();
+                //caso tiver 0 objetos restantes fechar popup
+                if (novaQuantidade == 0) {
+                    fecharPopupAndamento();
+                }
             }
 
         } catch (Exception e) {

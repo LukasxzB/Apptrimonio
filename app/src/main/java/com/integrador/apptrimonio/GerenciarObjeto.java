@@ -1,5 +1,6 @@
 package com.integrador.apptrimonio;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +32,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
@@ -72,12 +76,14 @@ public class GerenciarObjeto extends AppCompatActivity {
     private String idObjeto;
 
     private String imagemOriginal, descricaoOriginal, codigoOriginal, nomeOriginal, linguaOriginal, categoriaOriginal, descricaoImagemOriginal, localOriginal, valorOriginal, valorSentimentalOriginal;
-    private Date dataCompraOriginal;
+    private Date dataCompraOriginal, dataCompraEditada;
     private String imagemEditada, descricaoEditada, codigoEditado, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorEditado, valorSentimentalEditado;
 
     private Dialog popupErro;
 
     private String idAndamento;
+
+    private Bitmap imagemOriginalBitmap, imagemEditadaBitmap;
 
 
     @Override
@@ -210,20 +216,31 @@ public class GerenciarObjeto extends AppCompatActivity {
     }
 
     private void setupValoresOriginaisValores() {
-        imagemOriginal = bundle.getString("imagem");
-        descricaoOriginal = bundle.getString("descricao").equals("") || bundle.getString("descricao") != null ? bundle.getString("descricao").trim() : "";
-        codigoOriginal = bundle.getString("codigo").equals("") || bundle.getString("codigo") != null ? bundle.getString("codigo").trim() : "";
-        nomeOriginal = bundle.getString("nome").equals("") || bundle.getString("nome") != null ? bundle.getString("nome").trim() : "";
-        linguaOriginal = bundle.getString("lingua").equals("") || bundle.getString("lingua") != null ? bundle.getString("lingua").trim() : "";
-        categoriaOriginal = bundle.getString("categoria").equals("") || bundle.getString("categoria") != null ? bundle.getString("categoria").trim() : "";
-        descricaoImagemOriginal = bundle.getString("descricaoImagem").equals("") || bundle.getString("descricaoImagem") != null ? bundle.getString("descricaoImagem").trim() : "";
-        localOriginal = bundle.getString("local").equals("") || bundle.getString("local") != null ? bundle.getString("local").trim() : getResources().getString(R.string.naoInfo);
-        valorOriginal = bundle.getDouble("valor") != 0 ? String.valueOf(bundle.getDouble("valor")) : "";
-        valorSentimentalOriginal = bundle.getString("valorSentimental").equals("") || bundle.getString("valorSentimental") != null ? bundle.getString("valorSentimental").trim() : "";
+        imagemOriginal = bundle.getString("imagem", "");
+        descricaoOriginal = bundle.getString("descricao", "").trim();
+        codigoOriginal = bundle.getString("codigo", "").trim();
+        nomeOriginal = bundle.getString("nome", "").trim();
+        linguaOriginal = bundle.getString("lingua", "").trim();
+        categoriaOriginal = bundle.getString("categoria", "").trim();
+        descricaoImagemOriginal = bundle.getString("descricaoImagem", "").trim();
+        localOriginal = bundle.getString("local", "").equals("") || bundle.getString("local") != null ? bundle.getString("local").trim() : getResources().getString(R.string.naoInfo);
+        valorOriginal = String.valueOf(bundle.getDouble("valor", 0));
+        valorSentimentalOriginal = bundle.getString("valorSentimental", "").trim();
         idObjeto = codigoOriginal;
 
         //define a imagem do objeto
         if (!imagemOriginal.equals("")) {
+            Glide.with(this).asBitmap().load(imagemOriginal).into(new CustomTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Bitmap> transition) {
+                    imagemOriginalBitmap = resource;
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+
+                }
+            });
             Glide.with(this).load(imagemOriginal).transform(new CircleCrop()).into(imagemView);
         }
 
@@ -259,6 +276,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         //caso tiver data de compra
         if (bundle.getLong("compra", 0) != 0.0) {
             Date dateDataCompra = new Date(bundle.getLong("compra"));
+            dataCompraOriginal = dateDataCompra;
             dataCompraTxt = df.format(dateDataCompra);
         }
 
@@ -308,6 +326,17 @@ public class GerenciarObjeto extends AppCompatActivity {
 
         //define a imagem do objeto
         if (!imagemEditada.equals("")) {
+            Glide.with(this).asBitmap().load(imagemEditada).into(new CustomTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Bitmap> transition) {
+                    imagemEditadaBitmap = resource;
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+
+                }
+            });
             Glide.with(this).load(imagemEditada).transform(new CircleCrop()).into(imagemView);
         }
 
@@ -334,6 +363,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         //caso tiver data de compra
         if (bundle.getLong("compra", 0) != 0.0) {
             Date dateDataCompra = new Date(bundle.getLong("compra"));
+            dataCompraEditada = dateDataCompra;
             dataCompraTxt = df.format(dateDataCompra);
         }
 
@@ -355,32 +385,86 @@ public class GerenciarObjeto extends AppCompatActivity {
     }
 
     private void setupListenersVerificar() {
+
         //ao clicar em aprovar em add ou edit
-        aprovarAddEditBotao.setOnClickListener(v -> {
-            //adicionar callback do volley
-            //fazer chamada
-            //mudar pra "" caso o valor nao mudou
-        });
+        aprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(true));
 
         //ao clicar em desaprovar em add ou edit
-        desaprovarAddEditBotao.setOnClickListener(v -> {
-
-        });
+        desaprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(false));
 
         //ao clicar em aprovar em report
-        aprovarReportBotao.setOnClickListener(v -> {
-
-        });
+        aprovarReportBotao.setOnClickListener(v -> requestVerReport(true));
 
         //ao clicar em desaprovar em report
-        desaprovarReportBotao.setOnClickListener(v -> {
-
-        });
+        desaprovarReportBotao.setOnClickListener(v -> requestVerReport(false));
 
         //ao clicar em remover em report
-        removerReportBotao.setOnClickListener(v -> {
+        removerReportBotao.setOnClickListener(v -> requestVerReportRemove());
+    }
 
-        });
+    private void requestVerAddEdit(boolean status) {
+
+        String motivo = "";
+        //caso for reprovar abre popup pra escolher motivo
+
+        //valores preenchidos
+        Bitmap imagemPreenchida = imagemBitmap != null ? imagemBitmap : imagemEditadaBitmap != null ? imagemEditadaBitmap : imagemOriginalBitmap;
+        String nomePreenchido = nomeView.getText().toString().trim();
+        String descricaoPreenchida = descricaoView.getText().toString().trim();
+        String categoriaPreenchida = categoriaView.getText().toString().trim();
+        String valorPreenchido = valorView.getText().toString().trim();
+        String localPreenchido = localView.getText().toString().trim();
+        String descricaoImagemPreenchida = descricaoImagemView.getText().toString().trim();
+        String valorSentimentalPreenchido = valorSentimentalView.getText().toString().trim();
+        String linguaPreenchida = linguaSelecionada == 1 ? "pt" : linguaSelecionada == 2 ? "es" :
+                "en";
+
+        //verifica se os campos necessários foram preenchidos
+        boolean preenchidos = isPreenchido(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
+
+        //adicionar callback do volley
+        VolleyInterface volleyInterface = new VolleyInterface() {
+            @Override
+            public void onResponse(String response) {
+                utils.fecharPopUpCarregando();
+                Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.verSuccess), Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                utils.fecharPopUpCarregando();
+                Utils.makeSnackbar(getResources().getString(R.string.verFailed), findViewById(R.id.activity_gerenciarObjeto));
+                error.printStackTrace();
+                Log.e("ERROR apr", error.getMessage());
+            }
+        };
+
+        //fazer chamada
+        if (preenchidos) {
+            utils.abrirPopUpCarregando();
+            Bitmap imagemFinal = imagemPreenchida == imagemOriginalBitmap ? null : imagemPreenchida;
+            String nomeFinal = nomePreenchido.equals(nomeOriginal) ? "" : nomePreenchido;
+            String descricaoFinal = descricaoPreenchida.equals(descricaoOriginal) ? "" : descricaoPreenchida;
+            String categoriaFinal = categoriaPreenchida.equals(categoriaOriginal) ? "" : categoriaPreenchida;
+            String valorFinal = valorPreenchido.equals(valorOriginal) ? "0" : valorPreenchido;
+            String localFinal = localPreenchido.equals(localOriginal) ? "" : localPreenchido;
+            String descricaoImagemFinal = descricaoImagemPreenchida.equals(descricaoImagemOriginal) ? "" : descricaoImagemPreenchida;
+            String valorSentimentalFinal = valorSentimentalPreenchido.equals(valorSentimentalOriginal) ? "" : valorSentimentalPreenchido;
+            String linguaFinal = linguaPreenchida.equals(linguaOriginal) ? "" : nomePreenchido;
+            Date dataCompraFinal = dataCompraV == dataCompraOriginal ? null : dataCompraV;
+
+            volleyUtils.aprovacaoObjeto(volleyInterface, status, idAndamento, descricaoFinal, motivo, imagemFinal, categoriaFinal, dataCompraFinal, descricaoImagemFinal, localFinal, nomeFinal, Double.parseDouble(valorFinal), valorSentimentalFinal, linguaFinal);
+        }
+
+    }
+
+    private void requestVerReport(boolean status) {
+
+    }
+
+    private void requestVerReportRemove() {
+
     }
 
     private void requestAdicionar(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
@@ -451,6 +535,8 @@ public class GerenciarObjeto extends AppCompatActivity {
             bundle.putString("local", local);
             bundle.putDouble("valor", valor);
             bundle.putString("valorSentimental", senValor);
+            bundle.putLong("dataPublicacao", Calendar.getInstance().getTime().getTime());
+            bundle.putLong("compra", dataCompraV == null ? 0 : dataCompraV.getTime());
 
             utils.fecharPopUpCarregando();
             intent.putExtras(bundle);
@@ -467,7 +553,7 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     private boolean isPreenchido(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
         //verifica se todos os campos necessários foram preenchidos
-        boolean preenchido = (imagemPreenchida != null || imagemOriginal != null) && !nomePreenchido.equals("") && !descricaoPreenchida.equals("") && !categoriaPreenchida.equals("") && !valorPreenchido.equals("") && !localPreenchido.equals("") && !descricaoImagemPreenchida.equals("") && !valorSentimentalPreenchido.equals("") && !linguaPreenchida.equals("");
+        boolean preenchido = imagemPreenchida != null && !nomePreenchido.equals("") && !descricaoPreenchida.equals("") && !categoriaPreenchida.equals("") && !valorPreenchido.equals("") && !localPreenchido.equals("") && !descricaoImagemPreenchida.equals("") && !valorSentimentalPreenchido.equals("") && !linguaPreenchida.equals("");
 
         //muda as cores
         imagemBackgroundView.setBackground(ResourcesCompat.getDrawable(getResources(), imagemPreenchida != null || imagemOriginal != null ? R.drawable.addimg_borda_verde : R.drawable.addimg_borda_vermelha, null));
@@ -487,7 +573,7 @@ public class GerenciarObjeto extends AppCompatActivity {
             Utils.makeSnackbar(getResources().getString(R.string.needCategory), findViewById(R.id.activity_gerenciarObjeto));
         } else if (valorPreenchido.equals("")) {
             Utils.makeSnackbar(getResources().getString(R.string.needValue), findViewById(R.id.activity_gerenciarObjeto));
-        } else if (imagemPreenchida != null && imagemOriginal != null) {
+        } else if (imagemPreenchida == null) {
             Utils.makeSnackbar(getResources().getString(R.string.needImage), findViewById(R.id.activity_gerenciarObjeto));
         } else if (localPreenchido.equals("")) {
             Utils.makeSnackbar(getResources().getString(R.string.needPlace), findViewById(R.id.activity_gerenciarObjeto));

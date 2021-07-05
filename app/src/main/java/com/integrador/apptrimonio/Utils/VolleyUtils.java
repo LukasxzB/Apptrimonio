@@ -194,13 +194,13 @@ public class VolleyUtils {
     public void aprovacaoObjeto(VolleyInterface volleyInterface, boolean status, String idAndamento, String descricao, String motivo, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental, String lingua) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
+        String imagemFinal = imagem == null ? "" : Utils.getStringImage(imagem);
 
         JSONObject object = new JSONObject();
         try {
             object.put("imagem", imagemFinal);
             object.put("categoria", categoria);
-            object.put("compra", Long.toString(dataCompra.getTime()));
+            object.put("compra", Long.toString(dataCompra == null ? 0 : dataCompra.getTime()));
             object.put("descricaoImagem", descricaoImagem);
             object.put("local", local);
             object.put("descricao", descricao);
