@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +44,10 @@ public class VolleyUtils {
                 if (task.isSuccessful()) { //caso deu certo
 
                     String idToken = Objects.requireNonNull(task.getResult()).getToken(); //idToken do usuário
+                    Log.d("TOKEN", idToken);
 
                     //faz o request
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, volleyInterface::onError) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, error -> volleyInterface.onError(getVolleyErrorMessage(error))) {
                         @Override
                         protected Map<String, String> getParams() {
                             params.put("token", idToken);
@@ -73,7 +78,7 @@ public class VolleyUtils {
         lingua = lingua == null ? Utils.getLanguage() : lingua;
         //faz o request
         String finalLingua = lingua;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, volleyInterface::onError) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, error -> volleyInterface.onError(getVolleyErrorMessage(error))) {
             @Override
             protected Map<String, String> getParams() {
                 params.put("lingua", finalLingua);
@@ -133,6 +138,8 @@ public class VolleyUtils {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String imagemFinal = imagem == null ? "" : Utils.getStringImage(imagem);
 
+        Log.e("DATArr", dataCompra == null ? "NULL" : dataCompra.getTime() + "");
+
         Map<String, String> params = new HashMap<>();
         params.put("imagem", imagemFinal);
         params.put("nome", nome);
@@ -149,7 +156,7 @@ public class VolleyUtils {
 
     public void editarObjeto(VolleyInterface volleyInterface, String idObjeto, String descricao, Bitmap imagem, String categoria, Date dataCompra, String descricaoImagem, String local, String nome, double valor, String valorSentimental, String lingua) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String imagemFinal = imagem == null ? null : Utils.getStringImage(imagem);
+        String imagemFinal = imagem == null ? "" : Utils.getStringImage(imagem);
 
         Map<String, String> params = new HashMap<>();
         params.put("idObjeto", idObjeto);
@@ -157,7 +164,7 @@ public class VolleyUtils {
         params.put("nome", nome);
         params.put("descricao", descricao);
         params.put("categoria", categoria);
-        params.put("dataCompra", Long.toString(dataCompra.getTime()));
+        params.put("compra", dataCompra == null ? "0" : Long.toString(dataCompra.getTime()));
         params.put("valor", Double.toString(valor));
         params.put("local", local);
         params.put("descricaoImagem", descricaoImagem);
@@ -230,6 +237,21 @@ public class VolleyUtils {
         params.put("motivo", motivo);
 
         fazerRequest(volleyInterface, "reportarObjeto", user, params, null);
+    }
+
+    private String getVolleyErrorMessage(VolleyError error) {
+
+        if (error instanceof NetworkError || error instanceof TimeoutError) {
+            return "network";
+        }
+
+        try {
+            return new String(error.networkResponse.data, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("ERR volerr", e.getMessage() + "");
+            return "";
+        }
     }
 
 }

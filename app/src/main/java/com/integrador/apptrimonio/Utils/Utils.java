@@ -55,6 +55,10 @@ public class Utils {
     }
 
     public static String getStringImage(Bitmap bitmap) { //transforma o bitmap em string
+        if (bitmap == null) {
+            return "";
+        }
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
@@ -170,7 +174,7 @@ public class Utils {
             }
 
             @Override
-            public void onError(VolleyError error) { //salva o gerenciador e estudante como false e fecha o popup
+            public void onError(String erro) { //salva o gerenciador e estudante como false e fecha o popup
                 fecharPopUpCarregando();
                 callback.callback(false);
             }
@@ -197,12 +201,41 @@ public class Utils {
     }
 
     public static void makeSnackbar(String mensagem, View view) {
-        Snackbar snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_LONG);
+
+        boolean email = view.getContext().getResources().getString(R.string.emailRequired).equalsIgnoreCase(mensagem);
+
+        Snackbar snackbar = Snackbar.make(view, mensagem, email ? Snackbar.LENGTH_INDEFINITE : Snackbar.LENGTH_LONG);
         ((TextView) snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setMaxLines(5);
+
+        //caso precisar de confirmação de email adicionar botão
+        if (email) {
+            snackbar.setAction(R.string.confirm, v -> {
+                snackbar.dismiss();
+                VolleyInterface volleyInterface = new VolleyInterface() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(view.getContext(), view.getContext().getResources().getString(R.string.confirmSuccess), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(view.getContext(), view.getContext().getResources().getString(R.string.confirmError), Toast.LENGTH_LONG).show();
+                    }
+                };
+
+                new VolleyUtils(view.getContext()).enviarEmailConfirmacao(volleyInterface);
+            });
+        }
+
         snackbar.show();
     }
 
     public static Bitmap comprimirImagem(Bitmap realImage) {
+
+        if (realImage == null) {
+            return null;
+        }
+
         float ratio = Math.min(
                 (float) 1280.0 / realImage.getWidth(),
                 (float) 1280.0 / realImage.getHeight());

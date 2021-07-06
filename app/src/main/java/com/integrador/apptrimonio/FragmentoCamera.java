@@ -40,7 +40,7 @@ public class FragmentoCamera extends Fragment {
 
     private final VolleyUtils volleyUtils;
     private final Dialog popupCarregando;
-    private final Dialog popupCodigoInvalido;
+    private PopupCodigoInvalido popupCodigoInvalido;
 
     public FragmentoCamera(Context context) {
         this.context = context;
@@ -49,12 +49,8 @@ public class FragmentoCamera extends Fragment {
         popupCarregando.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupCarregando.setCancelable(false);
 
-        popupCodigoInvalido = new Dialog(context);
-        popupCodigoInvalido.setContentView(R.layout.popup_codigoinvalido);
-        popupCodigoInvalido.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupCodigoInvalido.setCancelable(false);
-
         volleyUtils = new VolleyUtils(context);
+        popupCodigoInvalido = new PopupCodigoInvalido(context);
     }
 
 
@@ -97,7 +93,7 @@ public class FragmentoCamera extends Fragment {
 
                 //caso o código não for válido abre o popup de código não válido
                 if (!valido) {
-                    abrirPopupCodigoInvalido(getResources().getString(R.string.invCode), getResources().getString(R.string.invCodeDesc), getResources().getString(R.string.tryAgain));
+                    abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.invCode), getResources().getString(R.string.invCodeDesc), getResources().getString(R.string.tryAgain));
                 } else { //caso for válido requisita o objeto
                     requisitarObjeto(codigo);
                 }
@@ -131,42 +127,42 @@ public class FragmentoCamera extends Fragment {
                 } catch (Exception e) {
                     //caso der erro mostra o popup de erro
                     Log.e("ERROR", "" + e.getMessage());
-                    abrirPopupCodigoInvalido(getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgainLater));
+                    abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgainLater));
                 }
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String erro) {
                 fecharPopupCarregando();
 
                 //verifica se foi erro de internet
-                if (error instanceof NetworkError || error instanceof TimeoutError) {
-                    abrirPopupCodigoInvalido(getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater));
+                if (erro.equalsIgnoreCase("network")) {
+                    abrirPopupCodigoInvalido(R.raw.internet, false, getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater));
                 } else {
                     //caso não for internet
                     try {
-                        JSONObject mensagemErro = new JSONObject("" + error.getMessage());
+                        JSONObject mensagemErro = new JSONObject(erro);
                         String status = mensagemErro.getString("status");
 
                         if (status.equalsIgnoreCase("Object not found!")) {
-                            abrirPopupCodigoInvalido(getResources().getString(R.string.invCode), getResources().getString(R.string.invCodeDesc), getResources().getString(R.string.tryAgain));
+                            abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.invCode), getResources().getString(R.string.invCodeDesc), getResources().getString(R.string.tryAgain));
                         } else if (status.equalsIgnoreCase("desaprovado")) {
-                            abrirPopupCodigoInvalido(getResources().getString(R.string.disCode), getResources().getString(R.string.disCodeDesc), getResources().getString(R.string.tryAgainLater));
+                            abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.disCode), getResources().getString(R.string.disCodeDesc), getResources().getString(R.string.tryAgainLater));
                         } else if (status.equalsIgnoreCase("andamento")) {
-                            abrirPopupCodigoInvalido(getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.tryAgainLater));
+                            abrirPopupCodigoInvalido(R.raw.analyzing, true, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.tryAgainLater));
                         } else if (status.equalsIgnoreCase("excluido")) {
 
                             String motivo = mensagemErro.getString("motivo");
                             motivo = motivo.replaceAll("a", getResources().getString(R.string.repDoesNotExists)).replaceAll("b", getResources().getString(R.string.repSpam)).replaceAll("c", getResources().getString(R.string.other));
 
-                            abrirPopupCodigoInvalido(getResources().getString(R.string.remCode), getResources().getString(R.string.remCodeDesc) + motivo, getResources().getString(R.string.tryAgainLater));
+                            abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.remCode), getResources().getString(R.string.remCodeDesc) + motivo, getResources().getString(R.string.tryAgainLater));
                         } else {
-                            abrirPopupCodigoInvalido(getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgain));
+                            abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgain));
                         }
 
                     } catch (Exception e) {
                         Log.e("ERROR", e.getMessage());
-                        abrirPopupCodigoInvalido(getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgain));
+                        abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgain));
                     }
                 }
             }
@@ -207,7 +203,7 @@ public class FragmentoCamera extends Fragment {
                 assert dataCompra != null;
                 long compraLong = Long.parseLong(dataCompra.getString("_seconds"));
                 bundle.putLong("compra", compraLong * 1000);
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.d("ERROR", e.getMessage());
             }
 
@@ -216,8 +212,8 @@ public class FragmentoCamera extends Fragment {
                 JSONObject dataPub = objeto.has("_aprovadoEm") ? new JSONObject(objeto.getString("_aprovadoEm")) : null;
                 assert dataPub != null;
                 long publicacaoLong = Long.parseLong(dataPub.getString("_seconds"));
-                bundle.putLong("dataPublicacao", publicacaoLong*1000);
-            }catch (Exception e){
+                bundle.putLong("dataPublicacao", publicacaoLong * 1000);
+            } catch (Exception e) {
                 Log.d("ERROR", e.getMessage());
             }
 
@@ -227,28 +223,18 @@ public class FragmentoCamera extends Fragment {
 
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
-            abrirPopupCodigoInvalido(getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgainLater));
+            abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgainLater));
         }
     }
 
-    private void abrirPopupCodigoInvalido(String titulo, String descricao, String tenteNovamente) {
-        //muda as variáveis do dialog
-        TextView tituloText, descricaoText, tenteNovamenteText;
-        tituloText = popupCodigoInvalido.findViewById(R.id.codigoinvalido_titulo);
-        descricaoText = popupCodigoInvalido.findViewById(R.id.codigoinvalido_desc);
-        tenteNovamenteText = popupCodigoInvalido.findViewById(R.id.codigoinvalido_tentenovamente);
-        tituloText.setText(titulo);
-        descricaoText.setText(descricao);
-        tenteNovamenteText.setText(tenteNovamente);
+    private void abrirPopupCodigoInvalido(int rawRes, boolean loop, String titulo, String descricao, String tenteNovamente) {
 
-        popupCodigoInvalido.findViewById(R.id.codigoinvalido_fechar).setOnClickListener(v -> fecharPopupCodigoInvalido());
-        popupCodigoInvalido.show();
-
+        View.OnClickListener listener = v -> fecharPopupErro();
+        popupCodigoInvalido.abrirPopupCodigoInvalido(rawRes, loop, titulo, descricao, tenteNovamente, listener);
     }
 
-    private void fecharPopupCodigoInvalido() {
-        popupCodigoInvalido.dismiss();
-        carregandoCodigo = false;
+    private void fecharPopupErro() {
+        popupCodigoInvalido.fecharPopupCodigoInvalido();
     }
 
     @Override

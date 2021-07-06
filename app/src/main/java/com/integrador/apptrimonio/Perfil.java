@@ -164,7 +164,7 @@ public class Perfil extends ActivityBase {
                 }
 
                 @Override
-                public void onError(VolleyError error) {
+                public void onError(String error) {
                     utils.fecharPopUpCarregando();
                     Utils.makeSnackbar(receberEmails ? getResources().getString(R.string.receiveEmailsOnError) : getResources().getString(R.string.receiveEmailsOffError), findViewById(R.id.activity_perfil));
                 }

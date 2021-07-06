@@ -23,15 +23,17 @@
             app:layout_constraintTop_toTopOf="@+id/codigoinvalido_titulo"
             app:srcCompat="@drawable/fechar" />
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/codigoinvalido_icon"
             android:layout_width="165dp"
             android:layout_height="165dp"
             android:layout_marginTop="25dp"
-            android:src="@drawable/error_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/codigoinvalido_titulo" />
+            app:layout_constraintTop_toBottomOf="@+id/codigoinvalido_titulo"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/error" />
 
         <TextView
             android:id="@+id/codigoinvalido_titulo"

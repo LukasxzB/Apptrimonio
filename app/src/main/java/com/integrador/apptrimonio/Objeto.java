@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -141,6 +142,7 @@ public class Objeto extends ActivityBase {
             Intent intent = new Intent(this, GerenciarObjeto.class);
             intent.putExtras(bundle);
             startActivity(intent);
+            Utils.makeSnackbar(getResources().getString(R.string.scanAgain), findViewById(R.id.activity_objeto));
         }
     }
 

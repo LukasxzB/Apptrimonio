@@ -55,6 +55,7 @@ public class GerenciarObjeto extends AppCompatActivity {
     private Bundle bundle;
     private Utils utils;
     private VolleyUtils volleyUtils;
+    private PopupGerenciar popupGerenciar;
 
     private ImageView imagemView;
     private RelativeLayout imagemBackgroundView;
@@ -74,16 +75,17 @@ public class GerenciarObjeto extends AppCompatActivity {
     private Date dataCompraV;
     private Bitmap imagemBitmap;
     private String idObjeto;
+    private String acao;
 
     private String imagemOriginal, descricaoOriginal, codigoOriginal, nomeOriginal, linguaOriginal, categoriaOriginal, descricaoImagemOriginal, localOriginal, valorOriginal, valorSentimentalOriginal;
     private Date dataCompraOriginal, dataCompraEditada;
     private String imagemEditada, descricaoEditada, codigoEditado, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorEditado, valorSentimentalEditado;
 
-    private Dialog popupErro;
-
     private String idAndamento;
 
     private Bitmap imagemOriginalBitmap, imagemEditadaBitmap;
+
+    private PopupCodigoInvalido popupCodigoInvalido;
 
 
     @Override
@@ -94,12 +96,8 @@ public class GerenciarObjeto extends AppCompatActivity {
         bundle = getIntent().getExtras();
         utils = new Utils(this);
         volleyUtils = new VolleyUtils(this);
-
-        //popup
-        popupErro = new Dialog(this);
-        popupErro.setContentView(R.layout.popup_codigoinvalido);
-        popupErro.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupErro.setCancelable(true);
+        popupGerenciar = new PopupGerenciar(this);
+        popupCodigoInvalido = new PopupCodigoInvalido(this);
 
         //setup gadgets da tela
         setupGadgets();
@@ -108,7 +106,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         setupDatePickerLog();
 
         //seleciona a ação que irá executar
-        String acao = bundle.getString("acao", "add");
+        acao = bundle.getString("acao", "add");
         if (acao.equalsIgnoreCase("add")) {
             mudarTelaAdicionar();
         } else if (acao.equalsIgnoreCase("edit")) {
@@ -285,10 +283,13 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     }
 
-    private void setupListenersAdicionar() {
+    private void setupListenersAdicionarEditar(String acao) {
         //ao clicar em adicionar
         botaoTela.setOnClickListener(v -> {
             Bitmap imagemPreenchida = imagemBitmap;
+            if (!acao.equalsIgnoreCase("add")) {
+                imagemPreenchida = imagemBitmap != null ? imagemBitmap : imagemOriginalBitmap;
+            }
             String nomePreenchido = nomeView.getText().toString().trim();
             String descricaoPreenchida = descricaoView.getText().toString().trim();
             String categoriaPreenchida = categoriaView.getText().toString().trim();
@@ -304,7 +305,11 @@ public class GerenciarObjeto extends AppCompatActivity {
 
             //caso estiver tudo preenchido faz o request
             if (preenchidos) {
-                requestAdicionar(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
+                if (acao.equalsIgnoreCase("add")) {
+                    requestAdicionar(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
+                } else {
+                    requestEditar(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
+                }
             }
         });
     }
@@ -387,10 +392,16 @@ public class GerenciarObjeto extends AppCompatActivity {
     private void setupListenersVerificar() {
 
         //ao clicar em aprovar em add ou edit
-        aprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(true));
+        aprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(true, ""));
 
         //ao clicar em desaprovar em add ou edit
-        desaprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(false));
+        desaprovarAddEditBotao.setOnClickListener(v -> {
+            if (acao.equalsIgnoreCase("verAdd")) { //caso clicar em desaprovar adição irá abrir o popup para selecionar o motivo
+                abrirPopupMotivo("add");
+            } else {
+                requestVerAddEdit(false, ""); //caso não for apenas envia a request
+            }
+        });
 
         //ao clicar em aprovar em report
         aprovarReportBotao.setOnClickListener(v -> requestVerReport(true));
@@ -399,13 +410,12 @@ public class GerenciarObjeto extends AppCompatActivity {
         desaprovarReportBotao.setOnClickListener(v -> requestVerReport(false));
 
         //ao clicar em remover em report
-        removerReportBotao.setOnClickListener(v -> requestVerReportRemove());
+        removerReportBotao.setOnClickListener(v -> {
+            abrirPopupMotivo("rem");
+        });
     }
 
-    private void requestVerAddEdit(boolean status) {
-
-        String motivo = "";
-        //caso for reprovar abre popup pra escolher motivo
+    private void requestVerAddEdit(boolean status, String motivo) {
 
         //valores preenchidos
         Bitmap imagemPreenchida = imagemBitmap != null ? imagemBitmap : imagemEditadaBitmap != null ? imagemEditadaBitmap : imagemOriginalBitmap;
@@ -420,7 +430,7 @@ public class GerenciarObjeto extends AppCompatActivity {
                 "en";
 
         //verifica se os campos necessários foram preenchidos
-        boolean preenchidos = isPreenchido(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
+        boolean preenchidos = !status || isPreenchido(imagemPreenchida, nomePreenchido, descricaoPreenchida, categoriaPreenchida, valorPreenchido, localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, linguaPreenchida);
 
         //adicionar callback do volley
         VolleyInterface volleyInterface = new VolleyInterface() {
@@ -432,11 +442,23 @@ public class GerenciarObjeto extends AppCompatActivity {
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String erro) {
                 utils.fecharPopUpCarregando();
-                Utils.makeSnackbar(getResources().getString(R.string.verFailed), findViewById(R.id.activity_gerenciarObjeto));
-                error.printStackTrace();
-                Log.e("ERROR apr", error.getMessage());
+
+                if (erro.equalsIgnoreCase("network")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater), false);
+                } else if (erro.equalsIgnoreCase("Unauthorized.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.permRequired), getResources().getString(R.string.managerRequired), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("Email not verified.")) {
+                    Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_gerenciarObjeto));
+                } else if (erro.equalsIgnoreCase("Object not found!")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.objNotFound), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("The object has been deleted.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.objRem), getResources().getString(R.string.objRem), getResources().getString(R.string.tryAgainLater), true);
+                } else {
+                    Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_gerenciarObjeto));
+                }
+
             }
         };
 
@@ -463,8 +485,68 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     }
 
-    private void requestVerReportRemove() {
+    private void requestVerReportRemove(String motivos) {
 
+    }
+
+    private void requestEditar(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
+        Bitmap imagemFinal = imagemPreenchida == imagemOriginalBitmap ? null : imagemPreenchida;
+        String nomeFinal = nomePreenchido.equals(nomeOriginal) ? "" : nomePreenchido;
+        String descricaoFinal = descricaoPreenchida.equals(descricaoOriginal) ? "" : descricaoPreenchida;
+        String categoriaFinal = categoriaPreenchida.equals(categoriaOriginal) ? "" : categoriaPreenchida;
+        String valorFinal = valorPreenchido.equals(valorOriginal) ? "0" : valorPreenchido;
+        String localFinal = localPreenchido.equals(localOriginal) ? "" : localPreenchido;
+        String descricaoImagemFinal = descricaoImagemPreenchida.equals(descricaoImagemOriginal) ? "" : descricaoImagemPreenchida;
+        String valorSentimentalFinal = valorSentimentalPreenchido.equals(valorSentimentalOriginal) ? "" : valorSentimentalPreenchido;
+        String linguaFinal = linguaPreenchida.equals(linguaOriginal) ? "" : nomePreenchido;
+        Date dataCompraFinal = dataCompraV == dataCompraOriginal ? null : dataCompraV;
+
+        utils.abrirPopUpCarregando();
+        Bitmap imagemComprimida = Utils.comprimirImagem(imagemFinal);
+
+        VolleyInterface volleyInterface = new VolleyInterface() {
+            @Override
+            public void onResponse(String response) {
+                utils.fecharPopUpCarregando();
+                try {
+                    JSONObject objeto = new JSONObject(response);
+                    String status = objeto.getString("status");
+
+                    if (status.equalsIgnoreCase("aprovado")) {
+                        Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.editSuccess), Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        abrirPopupErro(R.raw.error, false, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("ERROR", e.getMessage());
+                    Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.editObjError), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(String erro) {
+                utils.fecharPopUpCarregando();
+
+                if (erro.equalsIgnoreCase("network")) {
+                    abrirPopupErro(R.raw.internet, false, getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater), false);
+                } else if (erro.equalsIgnoreCase("Unauthorized.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.permRequired), getResources().getString(R.string.editRequired), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("Email not verified.")) {
+                    Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_gerenciarObjeto));
+                } else if (erro.equalsIgnoreCase("Object not found!")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.objNotFound), getResources().getString(R.string.tryAgainLater), true);
+                } else {
+                    Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_gerenciarObjeto));
+                }
+
+            }
+        };
+
+        volleyUtils.editarObjeto(volleyInterface, idObjeto, descricaoFinal, imagemComprimida, categoriaFinal, dataCompraFinal, descricaoImagemFinal, localFinal, nomeFinal, Double.parseDouble(valorFinal), valorSentimentalFinal, linguaFinal);
     }
 
     private void requestAdicionar(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
@@ -484,7 +566,7 @@ public class GerenciarObjeto extends AppCompatActivity {
                         String imagem = objeto.getString("imagem");
                         abrirTelaObjeto(nomePreenchido, categoriaPreenchida, descricaoPreenchida, Double.parseDouble(valorPreenchido), localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, idObjeto, linguaPreenchida, imagem);
                     } else {
-                        abrirPopupErro(getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
+                        abrirPopupErro(R.raw.analyzing, false, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
                     }
 
                 } catch (Exception e) {
@@ -496,24 +578,19 @@ public class GerenciarObjeto extends AppCompatActivity {
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String erro) {
                 utils.fecharPopUpCarregando();
-                String mensagemErro = error.getMessage();
 
-                if (error instanceof NetworkError || error instanceof TimeoutError) {
-                    abrirPopupErro(getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater), false);
+                if (erro.equalsIgnoreCase("network")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater), false);
+                } else if (erro.equalsIgnoreCase("Unauthorized.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.permRequired), getResources().getString(R.string.editRequired), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("Email not verified.")) {
+                    Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_gerenciarObjeto));
                 } else {
-                    assert mensagemErro != null;
-                    if (mensagemErro.equalsIgnoreCase("Bad request.")) {
-                        abrirPopupErro(getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgain), false);
-                    } else if (mensagemErro.equalsIgnoreCase("Unauthorized.")) {
-                        abrirPopupErro(getResources().getString(R.string.permRequired), getResources().getString(R.string.addRequired), getResources().getString(R.string.tryAgainLater), false);
-                    } else if (mensagemErro.equalsIgnoreCase("Email not verified.")) {
-                        abrirPopupErro(getResources().getString(R.string.verified), getResources().getString(R.string.emailRequired), getResources().getString(R.string.tryAgainLater), false);
-                    } else {
-                        abrirPopupErro(getResources().getString(R.string.errCode), getResources().getString(R.string.errCodeDesc), getResources().getString(R.string.tryAgainLater), false);
-                    }
+                    Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_gerenciarObjeto));
                 }
+
             }
         };
 
@@ -604,7 +681,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         setupValoresOriginais(View.GONE);
 
         //define os listeners
-        setupListenersAdicionar();
+        setupListenersAdicionarEditar("add");
     }
 
     private void mudarTelaEditar() {
@@ -631,6 +708,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         setupValoresOriginaisValores();
 
         //define os listeners
+        setupListenersAdicionarEditar("edit");
     }
 
     private void mudarTelaVerificar(String acao) {
@@ -688,29 +766,47 @@ public class GerenciarObjeto extends AppCompatActivity {
         }
     }
 
-    private void abrirPopupErro(String titulo, String descricao, String tenteNovamente, boolean finish) {
+    private void abrirPopupErro(int rawRes, boolean loop, String titulo, String descricao, String tenteNovamente, boolean finish) {
 
-        utils.fecharPopUpCarregando();
-
-        //muda as variáveis do dialog
-        TextView tituloText, descricaoText, tenteNovamenteText;
-        tituloText = popupErro.findViewById(R.id.codigoinvalido_titulo);
-        descricaoText = popupErro.findViewById(R.id.codigoinvalido_desc);
-        tenteNovamenteText = popupErro.findViewById(R.id.codigoinvalido_tentenovamente);
-        tituloText.setText(titulo);
-        descricaoText.setText(descricao);
-        tenteNovamenteText.setText(tenteNovamente);
-
-        popupErro.findViewById(R.id.codigoinvalido_fechar).setOnClickListener(v -> fecharPopupErro(finish));
-        popupErro.show();
-
+        View.OnClickListener listener = v -> fecharPopupErro(finish);
+        popupCodigoInvalido.abrirPopupCodigoInvalido(rawRes, loop, titulo, descricao, tenteNovamente, listener);
     }
 
     private void fecharPopupErro(boolean finish) {
-        popupErro.dismiss();
+        popupCodigoInvalido.fecharPopupCodigoInvalido();
         if (finish) {
             finish();
         }
+    }
+
+    private void abrirPopupMotivo(String acao) {
+        //a ação pode ser adicionar ou remover
+        View.OnClickListener addListener = v -> {
+            if (popupGerenciar.isDone()) {
+                fecharPopupMotivo();
+                String motivos = popupGerenciar.getMotivos();
+                requestVerAddEdit(false, motivos);
+            }
+        };
+
+        View.OnClickListener remListener = v -> {
+            if (popupGerenciar.isDone()) {
+                fecharPopupMotivo();
+                String motivos = popupGerenciar.getMotivos();
+                requestVerReportRemove(motivos);
+            }
+        };
+
+        popupGerenciar.setButtonListener(acao.equalsIgnoreCase("add") ? addListener : remListener);
+        popupGerenciar.setText(acao.equalsIgnoreCase("add") ? getResources().getString(R.string.disapproveObj) : getResources().getString(R.string.remObj),
+                acao.equalsIgnoreCase("add") ? getResources().getString(R.string.verDesc) : getResources().getString(R.string.remDesc),
+                acao.equalsIgnoreCase("add") ? getResources().getString(R.string.disapproveObjWarn) : getResources().getString(R.string.remWarning));
+        popupGerenciar.abrirPopup();
+
+    }
+
+    private void fecharPopupMotivo() {
+        popupGerenciar.fecharPopup();
     }
 
     @Override

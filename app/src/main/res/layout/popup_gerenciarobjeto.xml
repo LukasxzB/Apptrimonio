@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginVertical="100dp"
+    android:background="@drawable/background_branco"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/gerenciar_titulo"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="@string/remObj"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/gerenciar_fechar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/gerenciar_titulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gerenciar_titulo"
+            app:layout_constraintTop_toTopOf="@+id/gerenciar_titulo"
+            app:srcCompat="@drawable/fechar" />
+
+        <ScrollView
+            android:id="@+id/gerenciar_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/gerenciar_titulo"
+            tools:layout_editor_absoluteX="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="50dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/gerenciar_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/remDesc"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/gerenciar_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/gerenciar_desc">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/gerenciar_1_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/gerenciar_1_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/gerenciar_1_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/gerenciar_1_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/gerenciar_1_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/gerenciar_1_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repDoesNotExists"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/gerenciar_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/gerenciar_1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/gerenciar_2_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/gerenciar_2_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/gerenciar_2_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/gerenciar_2_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/gerenciar_2_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/gerenciar_2_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/repSpam"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/gerenciar_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/gerenciar_2">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/linha"
+                            app:layout_constraintBottom_toTopOf="@+id/gerenciar_3_titulo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/gerenciar_3_check"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginVertical="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/gerenciar_3_titulo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/gerenciar_3_titulo"
+                            app:layout_constraintTop_toTopOf="@+id/gerenciar_3_titulo"
+                            app:lottie_rawRes="@raw/check" />
+
+                        <TextView
+                            android:id="@+id/gerenciar_3_titulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="50dp"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/other"
+                            android:textColor="@color/preto"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/gerenciar_warning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/remWarning"
+                        android:textAlignment="center"
+                        android:textColor="@color/vermelho"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/gerenciar_3" />
+
+                    <Button
+                        android:id="@+id/gerenciar_botao"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/report_button"
+                        android:contentDescription="@string/disapproveObj"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/gerenciar_warning" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

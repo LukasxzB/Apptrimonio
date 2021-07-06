@@ -176,7 +176,9 @@ public class MainActivity extends ActivityBase {
     }
 
     private void abrirAdicionarObjeto() { //abre a tela de adicionar objetos
-        if (User.getInstance().isPermissaoAdicionar()) {
+        if (!User.getInstance().isEmailVerificado()) {
+            Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_main));
+        } else if (User.getInstance().isPermissaoAdicionar()) {
             Bundle bundle = new Bundle();
             bundle.putString("acao", "add");
             Intent intent = new Intent(this, GerenciarObjeto.class);
@@ -188,7 +190,9 @@ public class MainActivity extends ActivityBase {
     }
 
     private void abrirAprovarObjeto() {
-        if (User.getInstance().isPermissaoGerenciador()) {
+        if (!User.getInstance().isEmailVerificado()) {
+            Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_main));
+        } else if (User.getInstance().isPermissaoGerenciador()) {
             utils.abrirPopUpCarregando();
             //faz requesição ao servidor de objetos a serem aprovados
             VolleyInterface volleyInterface = new VolleyInterface() {
@@ -218,12 +222,10 @@ public class MainActivity extends ActivityBase {
                 }
 
                 @Override
-                public void onError(VolleyError error) {
+                public void onError(String erro) {
                     utils.fecharPopUpCarregando();
-                    String erro = error.getMessage();
-                    assert erro != null;
-                    if (erro.equalsIgnoreCase("Bad request.") || erro.equalsIgnoreCase("Unauthorized.")) {
-                        Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_main));
+                    if (erro.equalsIgnoreCase("Unauthorized.")) {
+                        Utils.makeSnackbar(getResources().getString(R.string.managerRequired), findViewById(R.id.activity_main));
                     } else if (erro.equalsIgnoreCase("Email not verified.")) {
                         Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_main));
                     } else {
@@ -262,7 +264,6 @@ public class MainActivity extends ActivityBase {
 
         int quantidade = objetosAndamento.getLength();
         popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(quantidade)));
-
         popupObjetosAndamento.show();
     }
 
@@ -397,17 +398,15 @@ public class MainActivity extends ActivityBase {
                     }
 
                     @Override
-                    public void onError(VolleyError error) {
+                    public void onError(String erro) {
                         utils.fecharPopUpCarregando();
                         deuErro[0] = true;
-                        String mensagemErro = error.getMessage();
                         try {
-                            assert mensagemErro != null;
-                            JSONObject object = new JSONObject(mensagemErro);
+                            JSONObject object = new JSONObject(erro);
                             String status = objeto.getString("status");
                             if (status.equalsIgnoreCase("excluido")) {
                                 Utils.makeSnackbar(getResources().getString(R.string.objRem), findViewById(R.id.activity_main));
-                            } else if (error instanceof NetworkError || error instanceof TimeoutError) {
+                            } else if (erro.equalsIgnoreCase("network")) {
                                 Utils.makeSnackbar(getResources().getString(R.string.intCodeDesc), findViewById(R.id.activity_main));
                             } else {
                                 Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
@@ -446,15 +445,13 @@ public class MainActivity extends ActivityBase {
                 intent.putExtras(bundle);
                 startActivity(intent);
 
-                //ao voltar remover objeto da lista de objetos em andamento
-                objetosAndamento.removerObjeto();
-
                 //ao voltar atualizar textview
-                int novaQuantidade = objetosAndamento.getLength();
+                int novaQuantidade = objetosAndamento.getLength() - 1;
+                objetosAndamento.removerObjeto();
                 popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(novaQuantidade)));
 
                 //caso tiver 0 objetos restantes fechar popup
-                if (novaQuantidade == 0) {
+                if (novaQuantidade <= 0) {
                     fecharPopupAndamento();
                 }
             }

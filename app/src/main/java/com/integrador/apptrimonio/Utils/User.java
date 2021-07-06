@@ -125,6 +125,9 @@ public class User {
     }
 
     public JSONArray getCodigos() {
+        if (codigos == null) {
+            return new JSONArray();
+        }
         return codigos;
     }
 
@@ -133,6 +136,9 @@ public class User {
     }
 
     public JSONArray getObjetosAdicionados() {
+        if (objetosAdicionados == null) {
+            return new JSONArray();
+        }
         return objetosAdicionados;
     }
 
@@ -141,6 +147,9 @@ public class User {
     }
 
     public JSONArray getObjetosVerificados() {
+        if (objetosVerificados == null) {
+            return new JSONArray();
+        }
         return objetosVerificados;
     }
 

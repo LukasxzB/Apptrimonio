@@ -88,12 +88,8 @@ public class PopupRemover {
                 }
 
                 @Override
-                public void onError(VolleyError error) {
-                    String erro = error.getMessage();
-
-                    Log.e("ERROR", error.getMessage());
-
-                    assert erro != null;
+                public void onError(String erro) {
+                    
                     if (erro.equalsIgnoreCase("Email not verified.")) {
                         Toast.makeText(context, context.getResources().getString(R.string.emailRequired), Toast.LENGTH_LONG).show();
                     } else if (erro.equalsIgnoreCase("Object not found!")) {
