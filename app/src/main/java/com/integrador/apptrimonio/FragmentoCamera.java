@@ -152,8 +152,10 @@ public class FragmentoCamera extends Fragment {
                             abrirPopupCodigoInvalido(R.raw.analyzing, true, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.tryAgainLater));
                         } else if (status.equalsIgnoreCase("excluido")) {
 
+                            //infelizmente tive que colocar % nas letras pq esqueci e agora ja ta pronto fazer oq né
                             String motivo = mensagemErro.getString("motivo");
-                            motivo = motivo.replaceAll("a", getResources().getString(R.string.repDoesNotExists)).replaceAll("b", getResources().getString(R.string.repSpam)).replaceAll("c", getResources().getString(R.string.other));
+                            motivo = motivo.replaceAll("a", "%a%").replaceAll("b", "%b%").replaceAll("c", "%c%");
+                            motivo = motivo.replaceAll("%a%", getResources().getString(R.string.repDoesNotExists)).replaceAll("%b%", getResources().getString(R.string.repSpam)).replaceAll("%c%", getResources().getString(R.string.other));
 
                             abrirPopupCodigoInvalido(R.raw.error, false, getResources().getString(R.string.remCode), getResources().getString(R.string.remCodeDesc) + motivo, getResources().getString(R.string.tryAgainLater));
                         } else {
@@ -234,6 +236,7 @@ public class FragmentoCamera extends Fragment {
     }
 
     private void fecharPopupErro() {
+        carregandoCodigo = false;
         popupCodigoInvalido.fecharPopupCodigoInvalido();
     }
 

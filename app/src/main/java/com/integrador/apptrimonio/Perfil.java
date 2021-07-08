@@ -1,37 +1,51 @@
 package com.integrador.apptrimonio;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.ActivityBase;
+import com.integrador.apptrimonio.Utils.GerenciarObjetoAdicionadoItem;
+import com.integrador.apptrimonio.Utils.GerenciarObjetoAdicionadoItemAdapter;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
 import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.skydoves.progressview.ProgressView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Perfil extends ActivityBase {
 
     private int xp, xpNecessario, xpAtual, level;
-    private boolean receberEmails, acessibilidade;
-    private SharedPreferences sharedPreferences;
+    private boolean receberEmails;
 
     private Utils utils;
     private VolleyUtils volleyUtils;
 
-    private LottieAnimationView acessibilidadeLottie, mudarEmailLottie;
+    private LottieAnimationView mudarEmailLottie;
+
+    private ArrayList<GerenciarObjetoAdicionadoItem> itensObjetosAdicionados;
+    private ConstraintLayout layoutItensObjetosAdicionados;
+    private RecyclerView listViewObjetosAdicionados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +54,25 @@ public class Perfil extends ActivityBase {
 
         utils = new Utils(this);
         volleyUtils = new VolleyUtils(this);
+        itensObjetosAdicionados = new ArrayList<>();
+        layoutItensObjetosAdicionados = findViewById(R.id.perfil_recyclerview_constraint);
+        listViewObjetosAdicionados = findViewById(R.id.perfil_recyclerview);
+
+        //define os itens adicionados
+        setupItensObjetosAdicionados();
 
         User user = User.getInstance();
         xp = user.getXp();
         xpAtual = user.getXpNextLevelXP();
         xpNecessario = user.getNextLevelXP();
 
-        sharedPreferences = getSharedPreferences(getResources().getString(R.string.app_name), MODE_PRIVATE);
-        acessibilidade = sharedPreferences.getBoolean("acessibilidade", false);
         receberEmails = user.isReceberEmails();
 
         //widgets
         ProgressView xpProgress = findViewById(R.id.perfil_progress);
         xpProgress.setLabelText(xpAtual + "/" + xpNecessario);
         xpProgress.setProgress((float) (xpAtual * 100 / xpNecessario));
+        ((ImageView) findViewById(R.id.perfil_voltar)).setOnClickListener(v -> finish());
 
         //badges
         ColorMatrix matrix = new ColorMatrix();
@@ -89,21 +108,14 @@ public class Perfil extends ActivityBase {
         TextView escaneados = findViewById(R.id.perfil_escaneados);
         TextView adicionados = findViewById(R.id.perfil_adicionados);
         TextView verificados = findViewById(R.id.perfil_verificados);
-        ConstraintLayout acessibilidadeConstraint = findViewById(R.id.perfil_constraint_acessibilidade);
         ConstraintLayout receberEmailsConstraint = findViewById(R.id.perfil_constraint_receberemails);
-        acessibilidadeLottie = findViewById(R.id.perfil_acessibilidade_botao);
         mudarEmailLottie = findViewById(R.id.perfil_receberemails_botao);
 
-        if (acessibilidade) {
-            acessibilidadeLottie.setSpeed(1);
-            acessibilidadeLottie.playAnimation();
-        }
         if (receberEmails) {
             mudarEmailLottie.setSpeed(1);
             mudarEmailLottie.playAnimation();
         }
 
-        acessibilidadeConstraint.setOnClickListener(v -> mudarAcessibilidade());
         receberEmailsConstraint.setOnClickListener(v -> mudarReceberEmails());
 
         String emailTxt = user.getEmail() == null ? getResources().getString(R.string.naoInfo) : user.getEmail();
@@ -122,16 +134,30 @@ public class Perfil extends ActivityBase {
         verificados.setText(verificadosTxt);
     }
 
-    private void aoClicarBadge(String mensagem) {
-        Utils.makeSnackbar(mensagem, findViewById(R.id.activity_perfil));
+    private void setupItensObjetosAdicionados() {
+        try {
+            JSONArray itens = User.getInstance().getObjetosAdicionados();
+
+            for (int i = 0; i < itens.length(); i++) {
+                JSONObject objeto = itens.getJSONObject(i);
+                itensObjetosAdicionados.add(new GerenciarObjetoAdicionadoItem(objeto.getString("id"), objeto.getString("nome"), (i + 1), itens.length() - 1 == i));
+            }
+
+            layoutItensObjetosAdicionados.setVisibility(itensObjetosAdicionados.size() > 0 ? View.VISIBLE : View.GONE);
+
+            GerenciarObjetoAdicionadoItemAdapter adapter = new GerenciarObjetoAdicionadoItemAdapter(itensObjetosAdicionados, Perfil.this);
+            listViewObjetosAdicionados.setAdapter(adapter);
+            listViewObjetosAdicionados.setLayoutManager(new LinearLayoutManager(this));
+        } catch (Exception e) {
+            Toast.makeText(this, getResources().getString(R.string.profileAddedObjError), Toast.LENGTH_SHORT).show();
+            Log.e("ERR perfilobjadd", e.getMessage());
+            e.printStackTrace();
+            layoutItensObjetosAdicionados.setVisibility(View.GONE);
+        }
     }
 
-    private void mudarAcessibilidade() {
-        acessibilidade = !acessibilidade;
-        sharedPreferences.edit().putBoolean("acessbilidade", acessibilidade).apply();
-        acessibilidadeLottie.setSpeed(acessibilidade ? 1 : -1);
-        acessibilidadeLottie.playAnimation();
-        Utils.makeSnackbar(acessibilidade ? getResources().getString(R.string.acessibilityOn) : getResources().getString(R.string.acessibilityOff), findViewById(R.id.activity_perfil));
+    private void aoClicarBadge(String mensagem) {
+        Utils.makeSnackbar(mensagem, findViewById(R.id.activity_perfil));
     }
 
     private void mudarReceberEmails() {

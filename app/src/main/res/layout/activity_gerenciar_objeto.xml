@@ -117,6 +117,19 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/gerenciarObjeto_imagem_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/clickOpenImage"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/gerenciarObjeto_report_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,6 +187,20 @@
                     android:src="@drawable/flag_es" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/gerenciarObjeto_lingua_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/originalValue"
+                android:textAlignment="center"
+                android:textColor="@color/preto60"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
 
             <TextView
                 android:id="@+id/gerenciarObjeto_input_nome_top"

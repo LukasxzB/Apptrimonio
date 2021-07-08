@@ -162,6 +162,8 @@ public class Utils {
                         xp = objeto.getInt("xp");
                         codigos = objeto.getJSONArray("codigos");
                         receberEmails = objeto.getBoolean("receberEmails");
+                        objetosAdicionados = objeto.getJSONArray("objetosAdicionados");
+                        objetosVerificados = objeto.getJSONArray("objetosVerificados");
                         salvarDados(gerenciador, editar, adicionar, xp, objetosAdicionados, objetosVerificados, codigos, receberEmails);
                     } catch (Exception e) { //caso não recebeu um JSON do servidor por algum motivo
                         e.printStackTrace();

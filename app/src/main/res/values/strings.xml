@@ -252,6 +252,8 @@
     <string name="confirmError">Ocorreu um erro ao enviar o e-mail de confirmação!</string>
     <string name="scanAgain">Escaneie o código novamente para atualizar as informações!</string>
     <string name="cancel">Cancelar</string>
+    <string name="clickOpenImage">Clique aqui para abrir a imagem original do objeto.</string>
+    <string name="profileAddedObjError">Ocorreu um erro ao exibir os objetos adicionados!</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>

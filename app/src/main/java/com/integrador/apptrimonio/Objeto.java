@@ -142,7 +142,6 @@ public class Objeto extends ActivityBase {
             Intent intent = new Intent(this, GerenciarObjeto.class);
             intent.putExtras(bundle);
             startActivity(intent);
-            Utils.makeSnackbar(getResources().getString(R.string.scanAgain), findViewById(R.id.activity_objeto));
         }
     }
 

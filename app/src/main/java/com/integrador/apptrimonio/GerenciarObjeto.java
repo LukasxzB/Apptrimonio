@@ -1,18 +1,10 @@
 package com.integrador.apptrimonio;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,9 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -66,7 +60,7 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     private TextView nomeTop, descricaoTop, categoriaTop, dataTop, valorTop, localTop, descricaoImagemTop, valorSentimentalTop, dataView;
     private EditText nomeView, descricaoView, categoriaView, valorView, localView, descricaoImagemView, valorSentimentalView;
-    private TextView nomeDesc, descricaoDesc, categoriaDesc, dataDesc, valorDesc, localDesc, descricaoImagemDesc, valorSentimentalDesc;
+    private TextView nomeDesc, descricaoDesc, categoriaDesc, dataDesc, valorDesc, localDesc, descricaoImagemDesc, valorSentimentalDesc, imagemDesc, linguaDesc;
     private TextView motivoReporteView;
     private LinearLayout layoutBotoesReport, layoutBotoesAddEdit;
     private Button aprovarReportBotao, desaprovarReportBotao, removerReportBotao, aprovarAddEditBotao, desaprovarAddEditBotao;
@@ -79,9 +73,11 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     private String imagemOriginal, descricaoOriginal, codigoOriginal, nomeOriginal, linguaOriginal, categoriaOriginal, descricaoImagemOriginal, localOriginal, valorOriginal, valorSentimentalOriginal;
     private Date dataCompraOriginal, dataCompraEditada;
-    private String imagemEditada, descricaoEditada, codigoEditado, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorEditado, valorSentimentalEditado;
+    private String imagemEditada, descricaoEditada, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorSentimentalEditado;
+    private Double valorEditado;
 
     private String idAndamento;
+    private String reportMotivos;
 
     private Bitmap imagemOriginalBitmap, imagemEditadaBitmap;
 
@@ -113,7 +109,30 @@ public class GerenciarObjeto extends AppCompatActivity {
             mudarTelaEditar();
         } else if (acao.equalsIgnoreCase("verReport") || acao.equalsIgnoreCase("verEdit") || acao.equalsIgnoreCase("verAdd")) {
             mudarTelaVerificar(acao);
+        } else {
+            finish();
         }
+    }
+
+    private void setupDatePickerLog() {
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
+            //pega a data que o usuário selecionou, formata e coloca no textview
+            dataCompraV = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.YEAR, year);
+            dataCompraV = calendar.getTime();
+            String dataTxt = android.text.format.DateFormat.getDateFormat(this).format(dataCompraV.getTime());
+            dataView.setText(dataTxt);
+        };
+
+        Calendar calendar = Calendar.getInstance();
+        int ano = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, ano, mes, dia);
     }
 
     private void setupGadgets() {
@@ -152,11 +171,13 @@ public class GerenciarObjeto extends AppCompatActivity {
         nomeDesc = findViewById(R.id.gerenciarObjeto_input_nome_desc);
         descricaoDesc = findViewById(R.id.gerenciarObjeto_input_descricao_desc);
         categoriaDesc = findViewById(R.id.gerenciarObjeto_input_categoria_desc);
+        imagemDesc = findViewById(R.id.gerenciarObjeto_imagem_desc);
         dataDesc = findViewById(R.id.gerenciarObjeto_input_data_desc);
         valorDesc = findViewById(R.id.gerenciarObjeto_input_valor_desc);
         localDesc = findViewById(R.id.gerenciarObjeto_input_local_desc);
         descricaoImagemDesc = findViewById(R.id.gerenciarObjeto_input_descricaoImg_desc);
         valorSentimentalDesc = findViewById(R.id.gerenciarObjeto_input_valorSentimental_desc);
+        linguaDesc = findViewById(R.id.gerenciarObjeto_lingua_desc);
         motivoReporteView = findViewById(R.id.gerenciarObjeto_report_desc);
         layoutBotoesReport = findViewById(R.id.gerenciarObjeto_botao_report);
         layoutBotoesAddEdit = findViewById(R.id.gerenciarObjeto_botao_addedit);
@@ -181,25 +202,19 @@ public class GerenciarObjeto extends AppCompatActivity {
         dataView.setOnClickListener(v -> datePickerDialog.show());
     }
 
-    private void setupDatePickerLog() {
-        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
-            //pega a data que o usuário selecionou, formata e coloca no textview
-            dataCompraV = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.YEAR, year);
-            dataCompraV = calendar.getTime();
-            String dataTxt = android.text.format.DateFormat.getDateFormat(this).format(dataCompraV.getTime());
-            dataView.setText(dataTxt);
-        };
+    private void setupValoresOriginaisVer() {
+        if (imagemEditada != null) {
+            imagemDesc.setVisibility(View.VISIBLE);
+            imagemDesc.setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(imagemEditada));
+                startActivity(browserIntent);
+            });
+        }
 
-        Calendar calendar = Calendar.getInstance();
-        int ano = calendar.get(Calendar.YEAR);
-        int mes = calendar.get(Calendar.MONTH);
-        int dia = calendar.get(Calendar.DAY_OF_MONTH);
-
-        datePickerDialog = new DatePickerDialog(this, dateSetListener, ano, mes, dia);
+        if (linguaOriginal != null) {
+            linguaDesc.setVisibility(View.VISIBLE);
+            linguaDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), linguaOriginal));
+        }
     }
 
     private void setupValoresOriginais(int visibility) {
@@ -221,7 +236,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         linguaOriginal = bundle.getString("lingua", "").trim();
         categoriaOriginal = bundle.getString("categoria", "").trim();
         descricaoImagemOriginal = bundle.getString("descricaoImagem", "").trim();
-        localOriginal = bundle.getString("local", "").equals("") || bundle.getString("local") != null ? bundle.getString("local").trim() : getResources().getString(R.string.naoInfo);
+        localOriginal = bundle.getString("local", "").equals("") || bundle.getString("local") != null ? bundle.getString("local", "").trim() : getResources().getString(R.string.naoInfo);
         valorOriginal = String.valueOf(bundle.getDouble("valor", 0));
         valorSentimentalOriginal = bundle.getString("valorSentimental", "").trim();
         idObjeto = codigoOriginal;
@@ -272,7 +287,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
 
         //caso tiver data de compra
-        if (bundle.getLong("compra", 0) != 0.0) {
+        if (bundle.getLong("compra", 0) != 0) {
             Date dateDataCompra = new Date(bundle.getLong("compra"));
             dataCompraOriginal = dateDataCompra;
             dataCompraTxt = df.format(dateDataCompra);
@@ -281,6 +296,105 @@ public class GerenciarObjeto extends AppCompatActivity {
         dataView.setText(dataCompraTxt.equalsIgnoreCase(getResources().getString(R.string.naoInfo)) ? "" : dataCompraTxt);
         dataDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), dataCompraTxt));
 
+    }
+
+    private void setupValoresVerEdit() {
+        //define os valores do ver edit
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+
+        imagemEditada = bundle.getString("editImagem", "");
+        nomeEditado = bundle.getString("editNome", "");
+        linguaEditada = bundle.getString("editLingua", "");
+        categoriaEditada = bundle.getString("editCategoria", "");
+        descricaoImagemEditada = bundle.getString("editDescricaoImagem", "");
+        descricaoEditada = bundle.getString("editDescricao", "");
+        localEditado = bundle.getString("editLocal", "");
+        valorEditado = bundle.getDouble("editValor", 0);
+        valorSentimentalEditado = bundle.getString("editValorSentimental", "");
+
+        //define a imagem do objeto
+        if (!imagemEditada.equals("")) {
+            Glide.with(this).asBitmap().load(imagemEditada).into(new CustomTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Bitmap> transition) {
+                    imagemEditadaBitmap = resource;
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+
+                }
+            });
+            Glide.with(this).load(imagemEditada).transform(new CircleCrop()).into(imagemView);
+        }
+
+        //define a lingua do objeto
+        int linguaFinal = linguaEditada.equalsIgnoreCase("pt") ? 1 : linguaOriginal.equalsIgnoreCase("es") ? 2 : 1;
+        if (!linguaEditada.equalsIgnoreCase("")) {
+            mudarLingua(linguaFinal);
+        }
+
+        //define o valor dos inputs
+        nomeView.setText(!nomeEditado.equals(nomeOriginal) && !nomeEditado.equals("") ? nomeEditado : nomeOriginal);
+        descricaoView.setText(!descricaoEditada.equals(descricaoOriginal) && !descricaoEditada.equals("") ? descricaoEditada : descricaoOriginal);
+        categoriaView.setText(!categoriaEditada.equals(categoriaOriginal) && !categoriaEditada.equals("") ? categoriaEditada : categoriaOriginal);
+        valorView.setText(String.valueOf(valorEditado != 0 && !String.valueOf(valorEditado).equals(valorOriginal) ? valorEditado : valorOriginal));
+        localView.setText(!localEditado.equals(localOriginal) && !localEditado.equals("") ? localEditado : localOriginal);
+        descricaoImagemView.setText(!descricaoImagemEditada.equals(descricaoImagemOriginal) && !descricaoImagemEditada.equals("") ? descricaoImagemEditada : descricaoImagemOriginal);
+        valorSentimentalView.setText(!valorSentimentalEditado.equals(valorSentimentalOriginal) && !valorSentimentalEditado.equals("") ? valorSentimentalEditado : valorSentimentalOriginal);
+
+        //define o valor da data de compra caso houver
+        String dataCompraTxt = "";
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        String dataCompraOriginal2 = dataCompraOriginal != null ? df.format(dataCompraOriginal) : "";
+        //caso tiver data de compra
+        if (bundle.getLong("editCompra", 0) != 0.0) {
+            Date dateDataCompra = new Date(bundle.getLong("editCompra"));
+            dataCompraEditada = dateDataCompra;
+            dataCompraTxt = df.format(dateDataCompra);
+        }
+
+        dataView.setText(!dataCompraTxt.equals("") && !dataCompraTxt.equalsIgnoreCase(dataCompraOriginal2) ? dataCompraTxt : dataCompraOriginal2);
+
+    }
+
+    private void setupValoresVerAdd() {
+        //define os valores do ver add
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+    }
+
+    private void setupValoresVerReport() {
+
+        if (imagemEditada != null) {
+            imagemDesc.setVisibility(View.VISIBLE);
+            imagemDesc.setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(imagemEditada));
+                startActivity(browserIntent);
+            });
+        }
+
+        //define os valores do ver report
+        idAndamento = bundle.getString("idAndamento", "");
+        idObjeto = bundle.getString("codigo", "");
+        reportMotivos = bundle.getString("motivo", "");
+
+        //infelizmente tive que colocar % nas letras pq esqueci e agora ja ta pronto fazer oq né
+        reportMotivos = reportMotivos.replaceAll("a", "%a%").replaceAll("b", "%b%").replaceAll("c", "%c%").replaceAll("d", "%d%").replaceAll("e", "%e%")
+                .replaceAll("f", "%f%").replaceAll("g", "%g%").replaceAll("h", "%h%").replaceAll("i", "%i%").replaceAll("j", "%j%")
+                .replaceAll("k", "%k%").replaceAll("l", "%l%").replaceAll("m", "%m%");
+        reportMotivos = reportMotivos.replace("%a%", getResources().getString(R.string.repDoesNotExists)).replace("%b%", getResources().getString(R.string.repSpam)).replace("%c%", getResources().getString(R.string.repLanguage))
+                .replace("%d%", getResources().getString(R.string.repImage)).replace("%e%", getResources().getString(R.string.repImageDesc)).replace("%f%", getResources().getString(R.string.repName))
+                .replace("%g%", getResources().getString(R.string.repDesc)).replace("%h%", getResources().getString(R.string.repValue)).replace("%i%", getResources().getString(R.string.repCategory))
+                .replace("%j%", getResources().getString(R.string.repLocal)).replace("%k%", getResources().getString(R.string.repDate)).replace("%l%", getResources().getString(R.string.repSenValue))
+                .replace("%m%", getResources().getString(R.string.other));
+
+        String motivosText = getResources().getString(R.string.reportReason) + " " + reportMotivos;
+
+        motivoReporteView.setVisibility(View.VISIBLE);
+        motivoReporteView.setText(motivosText);
     }
 
     private void setupListenersAdicionarEditar(String acao) {
@@ -314,108 +428,31 @@ public class GerenciarObjeto extends AppCompatActivity {
         });
     }
 
-    private void setupValoresVerEdit() {
-        //define os valores do ver edit
-        idAndamento = bundle.getString("idAndamento", "");
-        idObjeto = bundle.getString("codigo", "");
-
-        imagemEditada = bundle.getString("editImagem", "");
-        nomeEditado = bundle.getString("editNome", "");
-        linguaEditada = bundle.getString("editLingua", "");
-        categoriaEditada = bundle.getString("editCategoria", "");
-        descricaoImagemEditada = bundle.getString("editDescricaoImagem", "");
-        descricaoEditada = bundle.getString("editDescricao", "");
-        localEditado = bundle.getString("editLocal", "");
-        valorEditado = bundle.getString("editValor", "");
-        valorSentimentalEditado = bundle.getString("editValorSentimental", "");
-
-        //define a imagem do objeto
-        if (!imagemEditada.equals("")) {
-            Glide.with(this).asBitmap().load(imagemEditada).into(new CustomTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Bitmap> transition) {
-                    imagemEditadaBitmap = resource;
-                }
-
-                @Override
-                public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
-
-                }
-            });
-            Glide.with(this).load(imagemEditada).transform(new CircleCrop()).into(imagemView);
-        }
-
-        //define a lingua do objeto
-        int linguaFinal = linguaEditada.equalsIgnoreCase("pt") ? 1 : linguaOriginal.equalsIgnoreCase("es") ? 2 : 1;
-        if (!linguaEditada.equalsIgnoreCase("")) {
-            mudarLingua(linguaFinal);
-        }
-
-        //define o valor dos inputs
-        nomeView.setText(nomeEditado);
-        descricaoView.setText(descricaoEditada);
-        categoriaView.setText(categoriaEditada);
-        valorView.setText(valorEditado);
-        localView.setText(localEditado);
-        descricaoImagemView.setText(descricaoImagemEditada);
-        valorSentimentalView.setText(valorSentimentalEditado);
-
-        //define o valor da data de compra caso houver
-        String dataCompraTxt = getResources().getString(R.string.naoInfo);
-
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
-
-        //caso tiver data de compra
-        if (bundle.getLong("compra", 0) != 0.0) {
-            Date dateDataCompra = new Date(bundle.getLong("compra"));
-            dataCompraEditada = dateDataCompra;
-            dataCompraTxt = df.format(dateDataCompra);
-        }
-
-        dataView.setText(dataCompraTxt.equalsIgnoreCase(getResources().getString(R.string.naoInfo)) ? "" : dataCompraTxt);
-        dataDesc.setText(String.format("%s %s", getResources().getString(R.string.originalValue), dataCompraTxt));
-
-    }
-
-    private void setupValoresVerAdd() {
-        //define os valores do ver add
-        idAndamento = bundle.getString("idAndamento", "");
-        idObjeto = bundle.getString("codigo", "");
-    }
-
-    private void setupValoresVerReport() {
-        //define os valores do ver report
-        idAndamento = bundle.getString("idAndamento", "");
-        idObjeto = bundle.getString("codigo", "");
-    }
-
     private void setupListenersVerificar() {
 
         //ao clicar em aprovar em add ou edit
-        aprovarAddEditBotao.setOnClickListener(v -> requestVerAddEdit(true, ""));
+        aprovarAddEditBotao.setOnClickListener(v -> requestVer(true, ""));
 
         //ao clicar em desaprovar em add ou edit
         desaprovarAddEditBotao.setOnClickListener(v -> {
             if (acao.equalsIgnoreCase("verAdd")) { //caso clicar em desaprovar adição irá abrir o popup para selecionar o motivo
                 abrirPopupMotivo("add");
             } else {
-                requestVerAddEdit(false, ""); //caso não for apenas envia a request
+                requestVer(false, ""); //caso não for apenas envia a request
             }
         });
 
         //ao clicar em aprovar em report
-        aprovarReportBotao.setOnClickListener(v -> requestVerReport(true));
+        aprovarReportBotao.setOnClickListener(v -> requestVer(true, ""));
 
         //ao clicar em desaprovar em report
-        desaprovarReportBotao.setOnClickListener(v -> requestVerReport(false));
+        desaprovarReportBotao.setOnClickListener(v -> requestVer(false, ""));
 
         //ao clicar em remover em report
-        removerReportBotao.setOnClickListener(v -> {
-            abrirPopupMotivo("rem");
-        });
+        removerReportBotao.setOnClickListener(v -> abrirPopupMotivo("rem"));
     }
 
-    private void requestVerAddEdit(boolean status, String motivo) {
+    private void requestVer(boolean status, String motivo) {
 
         //valores preenchidos
         Bitmap imagemPreenchida = imagemBitmap != null ? imagemBitmap : imagemEditadaBitmap != null ? imagemEditadaBitmap : imagemOriginalBitmap;
@@ -474,20 +511,50 @@ public class GerenciarObjeto extends AppCompatActivity {
             String descricaoImagemFinal = descricaoImagemPreenchida.equals(descricaoImagemOriginal) ? "" : descricaoImagemPreenchida;
             String valorSentimentalFinal = valorSentimentalPreenchido.equals(valorSentimentalOriginal) ? "" : valorSentimentalPreenchido;
             String linguaFinal = linguaPreenchida.equals(linguaOriginal) ? "" : nomePreenchido;
-            Date dataCompraFinal = dataCompraV == dataCompraOriginal ? null : dataCompraV;
+            Date dataCompraFinal = dataCompraV != null ? dataCompraV : dataCompraEditada != null ? dataCompraEditada : null;
 
             volleyUtils.aprovacaoObjeto(volleyInterface, status, idAndamento, descricaoFinal, motivo, imagemFinal, categoriaFinal, dataCompraFinal, descricaoImagemFinal, localFinal, nomeFinal, Double.parseDouble(valorFinal), valorSentimentalFinal, linguaFinal);
         }
 
     }
 
-    private void requestVerReport(boolean status) {
-
-    }
-
     private void requestVerReportRemove(String motivos) {
+        //adicionar callback do volley
+        VolleyInterface volleyInterface = new VolleyInterface() {
+            @Override
+            public void onResponse(String response) {
+                utils.fecharPopUpCarregando();
+                Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.remSuccess), Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+            @Override
+            public void onError(String erro) {
+                utils.fecharPopUpCarregando();
+
+                if (erro.equalsIgnoreCase("network")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.intCode), getResources().getString(R.string.intCodeDesc), getResources().getString(R.string.tryAgainLater), false);
+                } else if (erro.equalsIgnoreCase("Unauthorized.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.permRequired), getResources().getString(R.string.managerRequired), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("Email not verified.")) {
+                    Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_gerenciarObjeto));
+                } else if (erro.equalsIgnoreCase("Object not found!")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.errCode), getResources().getString(R.string.objNotFound), getResources().getString(R.string.tryAgainLater), true);
+                } else if (erro.equalsIgnoreCase("The object has been deleted.")) {
+                    abrirPopupErro(R.raw.error, false, getResources().getString(R.string.objRem), getResources().getString(R.string.objRem), getResources().getString(R.string.tryAgainLater), true);
+                } else {
+                    Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_gerenciarObjeto));
+                }
+
+            }
+        };
+
+        //fazer chamada
+        utils.abrirPopUpCarregando();
+        volleyUtils.removerObjeto(volleyInterface, idAndamento, idObjeto, motivos);
 
     }
+
 
     private void requestEditar(Bitmap imagemPreenchida, String nomePreenchido, String descricaoPreenchida, String categoriaPreenchida, String valorPreenchido, String localPreenchido, String descricaoImagemPreenchida, String valorSentimentalPreenchido, String linguaPreenchida) {
         Bitmap imagemFinal = imagemPreenchida == imagemOriginalBitmap ? null : imagemPreenchida;
@@ -514,9 +581,10 @@ public class GerenciarObjeto extends AppCompatActivity {
 
                     if (status.equalsIgnoreCase("aprovado")) {
                         Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.editSuccess), Toast.LENGTH_LONG).show();
+                        Toast.makeText(GerenciarObjeto.this, getResources().getString(R.string.scanAgain), Toast.LENGTH_LONG).show();
                         finish();
                     } else {
-                        abrirPopupErro(R.raw.error, false, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
+                        abrirPopupErro(R.raw.analyzing, true, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
                     }
 
                 } catch (Exception e) {
@@ -566,7 +634,7 @@ public class GerenciarObjeto extends AppCompatActivity {
                         String imagem = objeto.getString("imagem");
                         abrirTelaObjeto(nomePreenchido, categoriaPreenchida, descricaoPreenchida, Double.parseDouble(valorPreenchido), localPreenchido, descricaoImagemPreenchida, valorSentimentalPreenchido, idObjeto, linguaPreenchida, imagem);
                     } else {
-                        abrirPopupErro(R.raw.analyzing, false, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
+                        abrirPopupErro(R.raw.analyzing, true, getResources().getString(R.string.andCode), getResources().getString(R.string.andCodeDesc), getResources().getString(R.string.objAndDesc), true);
                     }
 
                 } catch (Exception e) {
@@ -724,7 +792,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         motivoReporteView.setVisibility(acao.equalsIgnoreCase("verReport") ? View.VISIBLE : View.GONE);
 
         //muda a lingua do objeto para a original caso houver
-        String linguaTxt = bundle.getString("lingua");
+        String linguaTxt = bundle.getString("lingua", "");
         String linguaFinal = linguaTxt.equalsIgnoreCase("") ? Locale.getDefault().getLanguage() : linguaTxt;
         mudarLingua(linguaFinal.equalsIgnoreCase("pt") ? 1 : linguaFinal.equalsIgnoreCase("es") ? 2 : 0);
 
@@ -733,6 +801,9 @@ public class GerenciarObjeto extends AppCompatActivity {
 
         //valores do bundle
         setupValoresOriginaisValores();
+
+        //valores originais ver
+        setupValoresOriginaisVer();
 
         //valores do verificar
         if (acao.equalsIgnoreCase("verAdd")) {
@@ -785,7 +856,7 @@ public class GerenciarObjeto extends AppCompatActivity {
             if (popupGerenciar.isDone()) {
                 fecharPopupMotivo();
                 String motivos = popupGerenciar.getMotivos();
-                requestVerAddEdit(false, motivos);
+                requestVer(false, motivos);
             }
         };
 

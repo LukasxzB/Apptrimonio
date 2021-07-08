@@ -319,38 +319,6 @@
                     android:textSize="22sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/perfil_constraint_acessibilidade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:id="@+id/perfil_acessibilidade"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="50dp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/accessibility"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/preto85"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/perfil_acessibilidade_botao"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/perfil_acessibilidade"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/perfil_acessibilidade"
-                        app:layout_constraintTop_toTopOf="@+id/perfil_acessibilidade"
-                        app:lottie_rawRes="@raw/toggle" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/perfil_constraint_receberemails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -382,6 +350,46 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/perfil_recyclerview_constraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_verde"
+                android:paddingHorizontal="25dp"
+                android:paddingBottom="15dp"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/perfil_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/perfil_objetosadicionados" />
+
+                <TextView
+                    android:id="@+id/perfil_objetosadicionados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/addedObjects"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="22sp"
+                    app:layout_constraintLeft_toRightOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
 
         </LinearLayout>
     </ScrollView>

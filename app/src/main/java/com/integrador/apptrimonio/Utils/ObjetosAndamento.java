@@ -21,6 +21,11 @@ public class ObjetosAndamento {
     }
 
     public int getLength() {
+
+        if (objetos == null) {
+            return 0;
+        }
+
         return objetos.length();
     }
 

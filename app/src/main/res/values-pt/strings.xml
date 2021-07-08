@@ -240,7 +240,6 @@
     <string name="errTryAgain">Ocorreu um erro inesperado! Por favor, tente novamente mais tarde.</string>
     <string name="verObjects">Foram encontrados %s objeto(s)!</string>
     <string name="ver">Verificar próximo objeto</string>
-    <string name="cancel">Cancelar</string>
     <string name="objRem">O objeto foi removido!</string>
     <string name="verSuccess">O objeto foi verificado com sucesso! Muito obrigado s2!</string>
     <string name="verFailed">Ocorreu um erro ao verificar o objeto. Por favor, tente novamente!</string>
@@ -253,6 +252,9 @@
     <string name="confirmSuccess">E-mail de confirmação enviado com sucesso!</string>
     <string name="confirmError">Ocorreu um erro ao enviar o e-mail de confirmação!</string>
     <string name="scanAgain">Escaneie o código novamente para atualizar as informações!</string>
+    <string name="cancel">Cancelar</string>
+    <string name="clickOpenImage">Clique aqui para abrir a imagem original do objeto.</string>
+    <string name="profileAddedObjError">Ocorreu um erro ao exibir os objetos adicionados!</string>
     <string name="pt">Português</string>
     <string name="en">Inglês</string>
     <string name="es">Espanhol</string>

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.NetworkError;
@@ -272,7 +273,6 @@ public class MainActivity extends ActivityBase {
     }
 
     private void proximoObjeto() {
-        final boolean[] deuErro = {false};
         try {
 
             Bundle bundle = new Bundle();
@@ -319,6 +319,9 @@ public class MainActivity extends ActivityBase {
                     Log.d("ERROR", e.getMessage());
                 }
 
+                //abre a tela
+                abrirGerenciar(bundle);
+
             } else if (tipo.equalsIgnoreCase("edit")) {
 
                 //setar variaveis a serem editados (não originais)
@@ -333,7 +336,7 @@ public class MainActivity extends ActivityBase {
                 String editDescricao = objeto.getString("editDescricao");
 
                 //adiciona no bundle os valores a serem editados (não originais)
-                bundle.putString("acao", "verAdd");
+                bundle.putString("acao", "verEdit");
                 bundle.putString("editImagem", editImagem);
                 bundle.putString("editNome", editNome);
                 bundle.putString("editLingua", editLingua);
@@ -364,35 +367,37 @@ public class MainActivity extends ActivityBase {
                         //adicionar no bundle
                         try {
                             //recebe o objeto da response e seta no bundle
-                            JSONObject objeto = new JSONObject(response);
+                            JSONObject objeto2 = new JSONObject(response);
 
                             //pega os valores do objeto original
-                            bundle.putString("nome", objeto.has("nome") ? objeto.getString("nome").trim() : "");
-                            bundle.putString("descricao", objeto.has("descricao") ? objeto.getString("descricao").trim() : "");
-                            bundle.putString("imagem", objeto.has("imagem") ? objeto.getString("imagem") : "");
-                            bundle.putString("lingua", objeto.has("lingua") ? objeto.getString("lingua") : "");
-                            bundle.putString("categoria", objeto.has("categoria") ? objeto.getString("categoria") : "");
-                            bundle.putString("descricaoImagem", objeto.has("descricaoImagem") ? objeto.getString("descricaoImagem") : "");
-                            bundle.putString("local", objeto.has("local") ? objeto.getString("local").trim() : "");
-                            bundle.putDouble("valor", objeto.has("valor") ? objeto.getDouble("valor") : 0);
-                            bundle.putString("valorSentimental", objeto.has("valorSentimental") ? objeto.getString("valorSentimental") : "");
+                            bundle.putString("nome", objeto2.has("nome") ? objeto2.getString("nome").trim() : "");
+                            bundle.putString("descricao", objeto2.has("descricao") ? objeto2.getString("descricao").trim() : "");
+                            bundle.putString("imagem", objeto2.has("imagem") ? objeto2.getString("imagem") : "");
+                            bundle.putString("lingua", objeto2.has("lingua") ? objeto2.getString("lingua") : "");
+                            bundle.putString("categoria", objeto2.has("categoria") ? objeto2.getString("categoria") : "");
+                            bundle.putString("descricaoImagem", objeto2.has("descricaoImagem") ? objeto2.getString("descricaoImagem") : "");
+                            bundle.putString("local", objeto2.has("local") ? objeto2.getString("local").trim() : "");
+                            bundle.putDouble("valor", objeto2.has("valor") ? objeto2.getDouble("valor") : 0);
+                            bundle.putString("valorSentimental", objeto2.has("valorSentimental") ? objeto2.getString("valorSentimental") : "");
 
                             //verifica se tem data de compra
                             try {
-                                JSONObject dataCompra = objeto.has("compra") ? new JSONObject(objeto.getString("compra")) : null;
+                                JSONObject dataCompra = objeto2.has("compra") ? new JSONObject(objeto2.getString("compra")) : null;
                                 assert dataCompra != null;
                                 long compraLong = Long.parseLong(dataCompra.getString("_seconds"));
                                 bundle.putLong("compra", compraLong * 1000);
                             } catch (Exception e) {
-                                Log.d("ERROR", e.getMessage());
+                                Log.e("ERROR", e.getMessage());
                             }
+
+                            //abre a tela
+                            abrirGerenciar(bundle);
 
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e("ERROR", "" + e.getMessage());
                             Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
                             objetosAndamento.removerObjeto();
-                            deuErro[0] = true;
                         }
 
                     }
@@ -400,10 +405,9 @@ public class MainActivity extends ActivityBase {
                     @Override
                     public void onError(String erro) {
                         utils.fecharPopUpCarregando();
-                        deuErro[0] = true;
                         try {
                             JSONObject object = new JSONObject(erro);
-                            String status = objeto.getString("status");
+                            String status = object.getString("status");
                             if (status.equalsIgnoreCase("excluido")) {
                                 Utils.makeSnackbar(getResources().getString(R.string.objRem), findViewById(R.id.activity_main));
                             } else if (erro.equalsIgnoreCase("network")) {
@@ -428,32 +432,86 @@ public class MainActivity extends ActivityBase {
 
             } else if (tipo.equalsIgnoreCase("report")) {
 
-                //setar variaveis a serem editadas
+                //setar variaveis reportadas (não originais)
+                String reportMotivo = objeto.getString("motivo");
+
+                //adiciona no bundle os valores a serem editados (não originais)
+                bundle.putString("acao", "verReport");
+                bundle.putString("motivo", reportMotivo);
 
                 //requisitar o objeto original
+                utils.abrirPopUpCarregando();
+                VolleyInterface volleyInterface = new VolleyInterface() {
+                    @Override
+                    public void onResponse(String response) {
+                        utils.fecharPopUpCarregando();
 
-                //adicionar no bundle
+                        //adicionar no bundle
+                        try {
+                            //recebe o objeto da response e seta no bundle
+                            JSONObject objeto2 = new JSONObject(response);
 
-                //verifica se tem data de compra em ambos
+                            //pega os valores do objeto original
+                            bundle.putString("nome", objeto2.has("nome") ? objeto2.getString("nome").trim() : "");
+                            bundle.putString("descricao", objeto2.has("descricao") ? objeto2.getString("descricao").trim() : "");
+                            bundle.putString("imagem", objeto2.has("imagem") ? objeto2.getString("imagem") : "");
+                            bundle.putString("lingua", objeto2.has("lingua") ? objeto2.getString("lingua") : "");
+                            bundle.putString("categoria", objeto2.has("categoria") ? objeto2.getString("categoria") : "");
+                            bundle.putString("descricaoImagem", objeto2.has("descricaoImagem") ? objeto2.getString("descricaoImagem") : "");
+                            bundle.putString("local", objeto2.has("local") ? objeto2.getString("local").trim() : "");
+                            bundle.putDouble("valor", objeto2.has("valor") ? objeto2.getDouble("valor") : 0);
+                            bundle.putString("valorSentimental", objeto2.has("valorSentimental") ? objeto2.getString("valorSentimental") : "");
 
-            }
+                            //verifica se tem data de compra
+                            try {
+                                JSONObject dataCompra = objeto2.has("compra") ? new JSONObject(objeto2.getString("compra")) : null;
+                                assert dataCompra != null;
+                                long compraLong = Long.parseLong(dataCompra.getString("_seconds"));
+                                bundle.putLong("compra", compraLong * 1000);
+                            } catch (Exception e) {
+                                Log.d("ERROR", e.getMessage());
+                            }
 
-            //caso não deu erro
-            if (!deuErro[0]) {
-                //enviar dados pra tela de gerenciar objeto
-                Intent intent = new Intent(this, GerenciarObjeto.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                            //abre a tela
+                            abrirGerenciar(bundle);
 
-                //ao voltar atualizar textview
-                int novaQuantidade = objetosAndamento.getLength() - 1;
-                objetosAndamento.removerObjeto();
-                popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(novaQuantidade)));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("ERROR", "" + e.getMessage());
+                            Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            objetosAndamento.removerObjeto();
+                        }
 
-                //caso tiver 0 objetos restantes fechar popup
-                if (novaQuantidade <= 0) {
-                    fecharPopupAndamento();
-                }
+                    }
+
+                    @Override
+                    public void onError(String erro) {
+                        utils.fecharPopUpCarregando();
+                        try {
+                            JSONObject object = new JSONObject(erro);
+                            String status = object.getString("status");
+                            if (status.equalsIgnoreCase("excluido")) {
+                                Utils.makeSnackbar(getResources().getString(R.string.objRem), findViewById(R.id.activity_main));
+                            } else if (erro.equalsIgnoreCase("network")) {
+                                Utils.makeSnackbar(getResources().getString(R.string.intCodeDesc), findViewById(R.id.activity_main));
+                            } else {
+                                Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            }
+
+                            objetosAndamento.removerObjeto();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("ERROR getobj", e.getMessage());
+                            Utils.makeSnackbar(getResources().getString(R.string.errTryAgain), findViewById(R.id.activity_main));
+                            objetosAndamento.removerObjeto();
+                        }
+
+                    }
+                };
+
+                volleyUtils.requisitarObjeto(volleyInterface, idObjeto, null);
+
             }
 
         } catch (Exception e) {
@@ -464,23 +522,39 @@ public class MainActivity extends ActivityBase {
         }
     }
 
+    private void abrirGerenciar(Bundle bundle) {
+        //enviar dados pra tela de gerenciar objeto
+        Intent intent = new Intent(this, GerenciarObjeto.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        //ao voltar atualizar textview
+        int novaQuantidade = objetosAndamento.getLength() - 1;
+        objetosAndamento.removerObjeto();
+        popupObjetosAndamentoDesc.setText(getResources().getString(R.string.verObjects).replace("%s", String.valueOf(novaQuantidade)));
+
+        //caso tiver 0 objetos restantes fechar popup
+        if (novaQuantidade <= 0) {
+            fecharPopupAndamento();
+        }
+    }
+
     private void atualizarBotoes() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) { //caso não houver usuário logado
-            menulateralBotaoEntrar.setText(getResources().getString(R.string.login)); //muda o nome pra entrar
-            menulateralBotaoEntrar.setBackground(getResources().getDrawable(R.drawable.button_verde_escuro)); //muda a cor pra verde
-            menulateralBotaoEntrar.setOnClickListener(v -> {
-                startActivity(new Intent(MainActivity.this, Autenticar.class)); //abre a tela de autenticar
-            });
-        } else { //caso houver
-            menulateralBotaoEntrar.setText(getResources().getString(R.string.logoff)); //muda o nome pra sair
-            menulateralBotaoEntrar.setBackground(getResources().getDrawable(R.drawable.button_vermelho_escuro)); //muda a cor pra vermelha
-            menulateralBotaoEntrar.setOnClickListener(v -> {
+        boolean usuarioLogado = FirebaseAuth.getInstance().getCurrentUser() != null;
+
+        menulateralBotaoEntrar.setText(!usuarioLogado ? getResources().getString(R.string.login) : getResources().getString(R.string.logoff)); //texto do botão
+        menulateralBotaoEntrar.setBackground(ResourcesCompat.getDrawable(getResources(), !usuarioLogado ? R.drawable.button_verde_escuro : R.drawable.button_vermelho_escuro, null));
+
+        menulateralBotaoEntrar.setOnClickListener(v -> {
+            if (!usuarioLogado) {
+                startActivity(new Intent(MainActivity.this, Autenticar.class));
+            } else {
                 FirebaseAuth.getInstance().signOut(); //faz logout do firebase
                 utils.verificarConta(login -> {
                 });
                 Utils.makeSnackbar(getResources().getString(R.string.madeLogoff), findViewById(R.id.activity_main));
                 atualizarBotoes();
-            });
-        }
+            }
+        });
     }
 }

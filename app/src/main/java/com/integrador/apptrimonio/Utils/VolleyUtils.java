@@ -43,8 +43,7 @@ public class VolleyUtils {
             user.getIdToken(false).addOnCompleteListener(task -> { //pega o idToken do usuário
                 if (task.isSuccessful()) { //caso deu certo
 
-                    String idToken = Objects.requireNonNull(task.getResult()).getToken(); //idToken do usuário
-                    Log.d("TOKEN", idToken);
+                    String idToken = Objects.requireNonNull(task.getResult()).getToken(); //idToken do usuáris
 
                     //faz o request
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFirebase + url, volleyInterface::onResponse, error -> volleyInterface.onError(getVolleyErrorMessage(error))) {
@@ -63,7 +62,7 @@ public class VolleyUtils {
                         }
                     };
                     stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                            (int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            (int) TimeUnit.SECONDS.toMillis(61), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     queue.add(stringRequest);
                 } else { //caso deu erro ao pegar o token
                     volleyInterface.onResponse("ERROR");
@@ -94,7 +93,7 @@ public class VolleyUtils {
             }
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                (int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                (int) TimeUnit.SECONDS.toMillis(61), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }
 
