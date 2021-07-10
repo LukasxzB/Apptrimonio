@@ -33,14 +33,12 @@ public class FragmentoLogin extends Fragment {
     private TextView inputEmailTop, inputSenhaTop;
 
     private FirebaseAuth mAuth;
-    private final Context context;
     private final Utils utils;
 
     private Dialog dialogEsqueceuSenha;
 
     public FragmentoLogin(ViewPager2 vp, Context context) {
         viewPager2 = vp;
-        this.context = context;
         utils = new Utils(context);
     }
 

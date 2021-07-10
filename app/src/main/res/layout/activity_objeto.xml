@@ -17,14 +17,16 @@
         android:src="@drawable/screen_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/objeto_background" />
+        app:layout_constraintTop_toTopOf="@+id/objeto_background"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/objeto_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_transparente"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
     <Toolbar
         android:id="@+id/objeto_toolbar"
@@ -48,6 +50,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
+                android:contentDescription="@string/back"
                 android:src="@drawable/ic_back_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +60,8 @@
                 android:id="@+id/objeto_qrcode"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:contentDescription="@string/seeQrcode"
                 android:src="@drawable/icon_qrcode"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +146,8 @@
                         android:src="@drawable/linha"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/objeto_valor" />
+                        app:layout_constraintTop_toBottomOf="@+id/objeto_valor"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/objeto_nome_top"
@@ -208,7 +213,8 @@
                         android:src="@drawable/linha"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/objeto_descricao" />
+                        app:layout_constraintTop_toBottomOf="@+id/objeto_descricao"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/objeto_detalhes"
@@ -315,6 +321,7 @@
                     android:layout_width="275dp"
                     android:layout_height="160dp"
                     android:background="@drawable/objeto_bordas"
+                    android:contentDescription="@string/objImg"
                     android:padding="1dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/semimagem"
@@ -327,6 +334,7 @@
                     android:id="@+id/objeto_lingua"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:contentDescription="@string/objLan"
                     android:src="@drawable/flag_us"
                     app:layout_constraintBottom_toBottomOf="@+id/objeto_imagem"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -338,6 +346,7 @@
                     android:id="@+id/objeto_logo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/logo_apptrimonio_round"
                     app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
@@ -349,6 +358,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="20dp"
+                    android:contentDescription="@string/report"
                     android:src="@drawable/icon_reportar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -359,6 +369,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="25dp"
+                    android:contentDescription="@string/editObj"
                     android:src="@drawable/icon_editar"
                     app:layout_constraintEnd_toStartOf="@id/objeto_reportar"
                     app:layout_constraintTop_toTopOf="@id/objeto_reportar" />
@@ -368,6 +379,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="25dp"
+                    android:contentDescription="@string/remObj"
                     android:src="@drawable/icon_remover"
                     app:layout_constraintStart_toEndOf="@id/objeto_reportar"
                     app:layout_constraintTop_toTopOf="@id/objeto_reportar" />

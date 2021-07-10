@@ -30,13 +30,11 @@ public class FragmentoCadastro extends Fragment {
 
     private EditText inputEmail, inputSenha;
     private TextView inputEmailTop;
-    private final Context context;
     private TextView inputSenhaTop;
 
 
     public FragmentoCadastro(ViewPager2 vp, Context context) {
         viewPager2 = vp;
-        this.context = context;
         utils = new Utils(context);
     }
 

@@ -40,6 +40,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:contentDescription="@string/back"
             app:layout_constraintBottom_toBottomOf="@+id/gerenciar_titulo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/gerenciar_titulo"
@@ -94,7 +95,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/gerenciar_1_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/gerenciar_1_check"
@@ -136,7 +138,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/gerenciar_2_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/gerenciar_2_check"
@@ -178,7 +181,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/gerenciar_3_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/gerenciar_3_check"

@@ -1,26 +1,32 @@
 package com.integrador.apptrimonio;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.airbnb.lottie.LottieAnimationView;
-import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.integrador.apptrimonio.Utils.ActivityBase;
 import com.integrador.apptrimonio.Utils.GerenciarObjetoAdicionadoItem;
 import com.integrador.apptrimonio.Utils.GerenciarObjetoAdicionadoItemAdapter;
+import com.integrador.apptrimonio.Utils.PerfilConquistaItem;
+import com.integrador.apptrimonio.Utils.PerfilConquistaItemAdapter;
 import com.integrador.apptrimonio.Utils.User;
 import com.integrador.apptrimonio.Utils.Utils;
 import com.integrador.apptrimonio.Utils.VolleyInterface;
@@ -28,14 +34,12 @@ import com.integrador.apptrimonio.Utils.VolleyUtils;
 import com.skydoves.progressview.ProgressView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class Perfil extends ActivityBase {
 
-    private int xp, xpNecessario, xpAtual, level;
     private boolean receberEmails;
 
     private Utils utils;
@@ -44,8 +48,9 @@ public class Perfil extends ActivityBase {
     private LottieAnimationView mudarEmailLottie;
 
     private ArrayList<GerenciarObjetoAdicionadoItem> itensObjetosAdicionados;
+    private ArrayList<PerfilConquistaItem> itensPerfilConquista;
     private ConstraintLayout layoutItensObjetosAdicionados;
-    private RecyclerView listViewObjetosAdicionados;
+    private RecyclerView listViewObjetosAdicionados, listViewConquistas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +60,20 @@ public class Perfil extends ActivityBase {
         utils = new Utils(this);
         volleyUtils = new VolleyUtils(this);
         itensObjetosAdicionados = new ArrayList<>();
+        itensPerfilConquista = new ArrayList<>();
         layoutItensObjetosAdicionados = findViewById(R.id.perfil_recyclerview_constraint);
         listViewObjetosAdicionados = findViewById(R.id.perfil_recyclerview);
+        listViewConquistas = findViewById(R.id.perfil_recyclerview_conquistas);
 
         //define os itens adicionados
         setupItensObjetosAdicionados();
 
+        //define as conquistas
+        setupItensConquistas();
+
         User user = User.getInstance();
-        xp = user.getXp();
-        xpAtual = user.getXpNextLevelXP();
-        xpNecessario = user.getNextLevelXP();
+        int xpAtual = user.getXpNextLevelXP();
+        int xpNecessario = user.getNextLevelXP();
 
         receberEmails = user.isReceberEmails();
 
@@ -72,7 +81,7 @@ public class Perfil extends ActivityBase {
         ProgressView xpProgress = findViewById(R.id.perfil_progress);
         xpProgress.setLabelText(xpAtual + "/" + xpNecessario);
         xpProgress.setProgress((float) (xpAtual * 100 / xpNecessario));
-        ((ImageView) findViewById(R.id.perfil_voltar)).setOnClickListener(v -> finish());
+        findViewById(R.id.perfil_voltar).setOnClickListener(v -> finish());
 
         //badges
         ColorMatrix matrix = new ColorMatrix();
@@ -134,6 +143,193 @@ public class Perfil extends ActivityBase {
         verificados.setText(verificadosTxt);
     }
 
+    private void setupItensConquistas() {
+        //array de nomes, descrições, imagens e desbloqueado
+        String[] nomes = {
+                getString(R.string.beginner), //iniciante
+                getString(R.string.verified), //verificado
+                getString(R.string.editor), //editor
+                getString(R.string.adder), //adicionador
+                getString(R.string.manager), //gerenciador
+                getString(R.string.apptriloveri), //apptrilover i
+                getString(R.string.apptriloverii), //apptrilover ii
+                getString(R.string.apptriloveriii), //apptrilover iii
+                getString(R.string.apptriloveriv), //apptrilover iv
+                getString(R.string.apptriloverv), //apptrilover v
+                getString(R.string.apptrilovervi), //apptrilover vi
+                getString(R.string.exploreri), //explorador i
+                getString(R.string.explorerii), //explorador ii
+                getString(R.string.exploreriii), //explorador iii
+                getString(R.string.exploreriv), //explorador iv
+                getString(R.string.explorerv), //explorador v
+                getString(R.string.explorervi), //explorador vi
+                getString(R.string.helperi), //ajudante i
+                getString(R.string.helperii), //ajudante ii
+                getString(R.string.helperiii), //ajudante iii
+                getString(R.string.helperiv), //ajudante iv
+                getString(R.string.judgei), //juiz i
+                getString(R.string.judgeii), //juiz ii
+                getString(R.string.judgeiii), //juiz iii
+                getString(R.string.judgeiv), //juiz iv
+                getString(R.string.judgev), //juiz v
+                getString(R.string.judgevi) //juiz vi
+        };
+
+        String[] descs = {
+                getString(R.string.begginerDesc), //inciante
+                getString(R.string.verifiedDesc), //verificado
+                getString(R.string.editorDesc), //editor
+                getString(R.string.adderDesc), //adicionador
+                getString(R.string.managerDesc), //gerenciador
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "5"), //apptrilover i
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "10"), //apptrilover ii
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "20"), //apptrilover iii
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "30"), //apptrilover iv
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "50"), //apptrilover v
+                getString(R.string.apptriloverDesc).replaceAll("%LEVEL%", "100"), //apptrilover vi
+                getString(R.string.explorer1Desc), //explorador i
+                getString(R.string.explorer2Desc).replaceAll("%N%", "10"), //explorador ii
+                getString(R.string.explorer2Desc).replaceAll("%N%", "25"), //explorador iii
+                getString(R.string.explorer2Desc).replaceAll("%N%", "50"), //explorador iv
+                getString(R.string.explorer2Desc).replaceAll("%N%", "100"), //explorador v
+                getString(R.string.explorer2Desc).replaceAll("%N%", "500"), //explorador vi
+                getString(R.string.helper1Desc), //ajudante i
+                getString(R.string.helper2Desc).replaceAll("%N%", "10"), //ajudante ii
+                getString(R.string.helper2Desc).replaceAll("%N%", "50"), //ajudante iii
+                getString(R.string.helper2Desc).replaceAll("%N%", "100"), //ajudante iv
+                getString(R.string.judge1Desc), //juiz i
+                getString(R.string.judge2SDesc).replaceAll("%N%", "10"), //juiz ii
+                getString(R.string.judge2SDesc).replaceAll("%N%", "25"), //juiz iii
+                getString(R.string.judge2SDesc).replaceAll("%N%", "50"), //juiz iv
+                getString(R.string.judge2SDesc).replaceAll("%N%", "100"), //juiz v
+                getString(R.string.judge2SDesc).replaceAll("%N%", "500") //juiz vi
+        };
+
+        Drawable[] imgs = {
+                utils.getDrawable(R.drawable.add_button), //iniciante
+                utils.getDrawable(R.drawable.add_button), //verificado
+                utils.getDrawable(R.drawable.add_button), //editor
+                utils.getDrawable(R.drawable.add_button), //adicionador
+                utils.getDrawable(R.drawable.add_button), //gerenciador
+                utils.getDrawable(R.drawable.add_button), //apptrilover i
+                utils.getDrawable(R.drawable.add_button), //apptrilover ii
+                utils.getDrawable(R.drawable.add_button), //apptrilover iii
+                utils.getDrawable(R.drawable.add_button), //apptrilvoer iv
+                utils.getDrawable(R.drawable.add_button), //apptrilvoer v
+                utils.getDrawable(R.drawable.add_button), //apptrilover vi
+                utils.getDrawable(R.drawable.add_button), //explorador i
+                utils.getDrawable(R.drawable.add_button), //explorador ii
+                utils.getDrawable(R.drawable.add_button), //explorador iii
+                utils.getDrawable(R.drawable.add_button), //explorador iv
+                utils.getDrawable(R.drawable.add_button), //explorador v
+                utils.getDrawable(R.drawable.add_button), //explorador vi
+                utils.getDrawable(R.drawable.add_button), //ajudante i
+                utils.getDrawable(R.drawable.add_button), //ajudante ii
+                utils.getDrawable(R.drawable.add_button), //ajudante iii
+                utils.getDrawable(R.drawable.add_button), //ajudante iv
+                utils.getDrawable(R.drawable.add_button), //juiz i
+                utils.getDrawable(R.drawable.add_button), //juiz ii
+                utils.getDrawable(R.drawable.add_button), //juiz iii
+                utils.getDrawable(R.drawable.add_button), //juiz iv
+                utils.getDrawable(R.drawable.add_button), //juiz v
+                utils.getDrawable(R.drawable.add_button) //juiz vi
+        };
+
+        String[] cores = {
+                "#bfffec", //iniciante
+                "#ccff99", //verificado
+                "#c4f9ff", //editor
+                "#b0e0e6", //adicionador
+                "#ffb394", //gerenciador
+                "#EDB8C8", //apptrilover i
+                "#EDB7CC", //apptrilover ii
+                "#EDB7CE", //apptrilover iii
+                "#E3B8D0", //apptrilover iv
+                "#E0B5D0", //apptrilover v
+                "#DAB1D1", //apptrilover vi
+                "#ABD4C2", //explorador i
+                "#AAD4BC", //explorador ii
+                "#ACD2B9", //explorador iii
+                "#B3D6B8", //explorador iv
+                "#BBD8B9", //explorador v
+                "#C2DCB9", //explorador vi
+                "#F5EDBE", //ajudante i
+                "#F4E8BE", //ajudante ii
+                "#F2E4B7", //ajudante iii
+                "#F1DEB3", //ajudante iv
+                "#ECB6AA", //juiz i
+                "#EDB7AD", //juiz ii
+                "#EEB6B5", //juiz iii
+                "#EEB6B7", //juiz iv
+                "#EEB7BC", //juiz v
+                "#EDB7C4" //juiz vi
+        };
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        int level = User.getInstance().getLevel();
+        boolean emailVerificado = User.getInstance().isEmailVerificado();
+        boolean editor = User.getInstance().isPermissaoEditar();
+        boolean addder = User.getInstance().isPermissaoAdicionar();
+        boolean gerenciador = User.getInstance().isPermissaoGerenciador();
+        int objetosAdicionados = User.getInstance().getObjetosAdicionados().length();
+        int objetosVerificados = User.getInstance().getObjetosVerificados().length();
+        int objetosEscaneados = User.getInstance().getCodigos().length();
+
+        boolean[] desbl = {
+                user != null, //iniciante
+                emailVerificado, //verificado
+                editor, //editor
+                addder, //adicionador
+                gerenciador, //gerenciador
+                level >= 5, //apptrilover i
+                level >= 10, //apptrilover ii
+                level >= 20, //apptrilover iii
+                level >= 30, //apptrilover iv
+                level >= 50, //apptrilover v
+                level >= 100, //apptrilover vi
+                objetosEscaneados >= 1, //explorador i
+                objetosEscaneados >= 10, //explorador ii
+                objetosEscaneados >= 25, //explorador iii
+                objetosEscaneados >= 50, //explorador iv
+                objetosEscaneados >= 100, //explorador v
+                objetosEscaneados >= 500, //explorador vi
+                objetosAdicionados >= 1, //ajudante i
+                objetosAdicionados >= 10, //ajudante ii
+                objetosAdicionados >= 50, //ajudante iii
+                objetosAdicionados >= 100, //ajudante iv
+                objetosVerificados >= 1, //juiz i
+                objetosVerificados >= 10, //juiz ii
+                objetosVerificados >= 25, //juiz iii
+                objetosVerificados >= 50, //juiz iv
+                objetosVerificados >= 100, //juiz v
+                objetosVerificados >= 500 //juiz vi
+        };
+
+        for (int i = 0; i < nomes.length; i++) {
+            Drawable fundoItem = utils.getDrawable(R.drawable.background_branco);
+            fundoItem.mutate().setColorFilter(Color.parseColor(cores[i]), PorterDuff.Mode.MULTIPLY);
+            PerfilConquistaItem item = new PerfilConquistaItem(nomes[i], descs[i], fundoItem, imgs[i], desbl[i]);
+            itensPerfilConquista.add(item);
+        }
+
+        PerfilConquistaItemAdapter adapter = new PerfilConquistaItemAdapter(itensPerfilConquista, this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        listViewConquistas.setLayoutManager(gridLayoutManager);
+        listViewConquistas.setAdapter(adapter);
+        listViewConquistas.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                int gap = 10;
+                int position = parent.getChildLayoutPosition(view);
+                outRect.left = position % 2 == 0 ? 0 : gap;
+                outRect.right = position % 2 == 0 ? gap : 0;
+                outRect.bottom = gap;
+                outRect.top = gap;
+            }
+        });
+
+    }
+
     private void setupItensObjetosAdicionados() {
         try {
             JSONArray itens = User.getInstance().getObjetosAdicionados();
@@ -148,6 +344,7 @@ public class Perfil extends ActivityBase {
             GerenciarObjetoAdicionadoItemAdapter adapter = new GerenciarObjetoAdicionadoItemAdapter(itensObjetosAdicionados, Perfil.this);
             listViewObjetosAdicionados.setAdapter(adapter);
             listViewObjetosAdicionados.setLayoutManager(new LinearLayoutManager(this));
+
         } catch (Exception e) {
             Toast.makeText(this, getResources().getString(R.string.profileAddedObjError), Toast.LENGTH_SHORT).show();
             Log.e("ERR perfilobjadd", e.getMessage());

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import com.android.volley.VolleyError;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.R;
@@ -63,16 +63,6 @@ public class Utils {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
-
-    public static Bitmap getBitmapImage(String image) { //transforma a string em bitmap
-        try {
-            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        } catch (Exception e) {
-            Log.e("BITMAP ERROR", e.getMessage());
-            return null;
-        }
     }
 
     public static String getLanguage() { //retorna a lingua, 0 INGLES, 1 PORTUGUES, 2 ESPANHOL
@@ -148,8 +138,8 @@ public class Utils {
 
                 boolean gerenciador, editar, adicionar, receberEmails;
                 int xp;
-                JSONArray objetosAdicionados = new JSONArray(), objetosVerificados = new JSONArray();
-                JSONArray codigos = new JSONArray();
+                JSONArray objetosAdicionados, objetosVerificados;
+                JSONArray codigos;
 
                 if (response.equals("NO USER")) { //caso não tiver usuário logado
                     salvarDados(false, false, false, 0, new JSONArray(), new JSONArray(), new JSONArray(), false);
@@ -249,6 +239,10 @@ public class Utils {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         newBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
         return BitmapFactory.decodeStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+    }
+
+    public Drawable getDrawable(int drawable) {
+        return ResourcesCompat.getDrawable(context.getResources(), drawable, null);
     }
 
 }

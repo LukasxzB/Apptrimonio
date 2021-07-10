@@ -11,6 +11,7 @@
 
     <ImageView
         android:id="@+id/boasvindas_imagem"
+        android:contentDescription="@string/wWelcome"
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:layout_margin="15dp"

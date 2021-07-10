@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.util.Log;
-import android.widget.EditText;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

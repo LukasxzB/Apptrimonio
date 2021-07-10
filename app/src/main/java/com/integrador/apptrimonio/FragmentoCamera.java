@@ -11,13 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.android.volley.NetworkError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.ResultPoint;
@@ -40,7 +37,7 @@ public class FragmentoCamera extends Fragment {
 
     private final VolleyUtils volleyUtils;
     private final Dialog popupCarregando;
-    private PopupCodigoInvalido popupCodigoInvalido;
+    private final PopupCodigoInvalido popupCodigoInvalido;
 
     public FragmentoCamera(Context context) {
         this.context = context;
@@ -64,6 +61,12 @@ public class FragmentoCamera extends Fragment {
         scannerView.getChildAt(2).setVisibility(View.INVISIBLE); //remove o texto orginal
 
         ImageView swipeUp = view.findViewById(R.id.camera_swipe);
+        swipeUp.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getFragmentManager();
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            }
+        });
         Glide.with(this).load(R.drawable.swipeup).into(swipeUp);
         swipeUp.setRotationX(180f);
 

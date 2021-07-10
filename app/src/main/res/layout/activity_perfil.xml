@@ -30,6 +30,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
+                android:contentDescription="@string/back"
                 android:src="@drawable/ic_back_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
 
     </Toolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -104,7 +105,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/perfil_progress"
                     app:layout_constraintEnd_toStartOf="@+id/perfil_progress"
                     app:layout_constraintStart_toStartOf="@+id/perfil_progress"
-                    app:layout_constraintTop_toTopOf="@+id/perfil_progress" />
+                    app:layout_constraintTop_toTopOf="@+id/perfil_progress"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -121,6 +123,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/badgeVerified"
                     android:src="@drawable/badge_verified" />
 
                 <ImageView
@@ -128,6 +131,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/badgeEdit"
                     android:src="@drawable/badge_edit" />
 
                 <ImageView
@@ -135,6 +139,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/badgeAdd"
                     android:src="@drawable/badge_add" />
 
                 <ImageView
@@ -142,6 +147,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/badgeManager"
                     android:src="@drawable/badge_gerenciador" />
 
             </LinearLayout>
@@ -367,6 +373,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/perfil_objetosadicionados" />
@@ -387,11 +394,50 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/perfil_recyclerview_constraint_conquistas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_verde"
+                android:paddingHorizontal="25dp"
+                android:paddingBottom="15dp"
+                android:visibility="visible">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/perfil_recyclerview_conquistas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/perfil_objetosadicionados_conquistas" />
+
+                <TextView
+                    android:id="@+id/perfil_objetosadicionados_conquistas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/achievements"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="22sp"
+                    app:layout_constraintLeft_toRightOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="120dp" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

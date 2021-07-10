@@ -39,6 +39,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:contentDescription="@string/back"
             app:layout_constraintBottom_toBottomOf="@+id/reportar_titulo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/reportar_titulo"
@@ -93,7 +94,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_1_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_1_check"
@@ -135,7 +137,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_2_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_2_check"
@@ -177,7 +180,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_3_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_3_check"
@@ -219,7 +223,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_4_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_4_check"
@@ -261,7 +266,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_5_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_5_check"
@@ -303,7 +309,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_6_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_6_check"
@@ -345,7 +352,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_7_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_7_check"
@@ -387,7 +395,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_8_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_8_check"
@@ -429,7 +438,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_9_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_9_check"
@@ -471,7 +481,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_10_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_10_check"
@@ -513,7 +524,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_11_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_11_check"
@@ -555,7 +567,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_12_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_12_check"
@@ -597,7 +610,8 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/linha"
                             app:layout_constraintBottom_toTopOf="@+id/reportar_13_titulo"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/reportar_13_check"
@@ -646,6 +660,7 @@
                         android:layout_height="75dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/report_button"
+                        android:contentDescription="@string/report"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/reportar_warning" />

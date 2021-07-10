@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_autenticar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/branco"
-    android:id="@+id/activity_autenticar"
     tools:context=".Autenticar">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autenticar_viewpager2">
+        app:layout_constraintTop_toBottomOf="@+id/autenticar_viewpager2"
+        tools:ignore="ContentDescription">
 
         <ImageView
             android:id="@+id/autenticar_divisor"

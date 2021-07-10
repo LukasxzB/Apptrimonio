@@ -12,12 +12,10 @@ import com.airbnb.lottie.LottieDrawable;
 
 public class PopupCodigoInvalido {
 
-    private Dialog dialog;
-    private LottieAnimationView lottieAnimationView;
-    private Context context;
+    private final Dialog dialog;
+    private final LottieAnimationView lottieAnimationView;
 
     public PopupCodigoInvalido(Context context) {
-        this.context = context;
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.popup_codigoinvalido);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

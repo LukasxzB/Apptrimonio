@@ -19,8 +19,6 @@ public class PopupGerenciar {
     private final LottieAnimationView[] checks = new LottieAnimationView[3];
     private final boolean[] ativos = new boolean[3];
 
-    private final Utils utils;
-    private final VolleyUtils volleyUtils;
     private final Context context;
 
     public PopupGerenciar(Context context) {
@@ -31,8 +29,8 @@ public class PopupGerenciar {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
-        utils = new Utils(context);
-        volleyUtils = new VolleyUtils(context);
+        Utils utils = new Utils(context);
+        VolleyUtils volleyUtils = new VolleyUtils(context);
 
         //listener do botão fechar
         ImageView fechar = dialog.findViewById(R.id.gerenciar_fechar);

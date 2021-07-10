@@ -29,10 +29,10 @@
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/logo_apptrimonio_round"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/cadastro_titulo"

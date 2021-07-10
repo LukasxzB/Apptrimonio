@@ -107,7 +107,6 @@
     <string name="text2t">Legislação</string>
     <string name="text3t">Nossos impostos</string>
     <string name="text4t">Importância sentimental</string>
-    <string name="qrcodelink">Aplicativo Apptrimônio - descubra quanto custa seu ensino! Quer descobrir o que tem neste QRCode? Baixe o aplicativo Apptrimônio em: https://bit.ly/apptrimonio - #$apptrimonio-%link%$#</string>
     <string name="invPass">Senha inválida! A sua senha precisa ter no mínimo 8 caracteres!</string>
     <string name="invEmail">E-mail inválido! Insira um e-mail válido!</string>
     <string name="remObjError">Desbloqueie a permissão de gerenciador para remover objetos!</string>
@@ -198,8 +197,6 @@
     <string name="badgeEdit">Ganhe esta badge ao desbloquear a edição!</string>
     <string name="badgeAdd">Ganhe esta badge ao desbloquear a adição!</string>
     <string name="badgeManager">Ganhe esta badge ao tornar-se gerenciador!</string>
-    <string name="acessibilityOn">Você ativou a acessibilidade com sucesso!</string>
-    <string name="acessibilityOff">Você desativou acessibilidade com sucesso!</string>
     <string name="receiveEmailsOff">Você não irá mais receber e-mails nossos :(</string>
     <string name="receiveEmailsOn">Agora, você irá receber e-mails nossos s2</string>
     <string name="receiveEmailsOffError">Ocorreu um erro ao desativar os e-mails, por favor, tente novamente.</string>

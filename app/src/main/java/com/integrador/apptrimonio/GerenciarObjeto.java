@@ -42,7 +42,6 @@ import java.util.Locale;
 
 public class GerenciarObjeto extends AppCompatActivity {
 
-    private ImageView botaoVoltar;
     private TextView tituloTela, warnTela;
     private Button botaoTela;
 
@@ -56,7 +55,7 @@ public class GerenciarObjeto extends AppCompatActivity {
 
     private final ImageView[] linguas = new ImageView[3];
     private int linguaSelecionada = 0; //0 = ingles, 1 portugues 2 espanhol
-    private int selecionarImagem = 28747;
+    private final int selecionarImagem = 28747;
 
     private TextView nomeTop, descricaoTop, categoriaTop, dataTop, valorTop, localTop, descricaoImagemTop, valorSentimentalTop, dataView;
     private EditText nomeView, descricaoView, categoriaView, valorView, localView, descricaoImagemView, valorSentimentalView;
@@ -71,13 +70,19 @@ public class GerenciarObjeto extends AppCompatActivity {
     private String idObjeto;
     private String acao;
 
-    private String imagemOriginal, descricaoOriginal, codigoOriginal, nomeOriginal, linguaOriginal, categoriaOriginal, descricaoImagemOriginal, localOriginal, valorOriginal, valorSentimentalOriginal;
+    private String imagemOriginal;
+    private String descricaoOriginal;
+    private String nomeOriginal;
+    private String linguaOriginal;
+    private String categoriaOriginal;
+    private String descricaoImagemOriginal;
+    private String localOriginal;
+    private String valorOriginal;
+    private String valorSentimentalOriginal;
     private Date dataCompraOriginal, dataCompraEditada;
-    private String imagemEditada, descricaoEditada, nomeEditado, linguaEditada, categoriaEditada, descricaoImagemEditada, localEditado, valorSentimentalEditado;
-    private Double valorEditado;
+    private String imagemEditada;
 
     private String idAndamento;
-    private String reportMotivos;
 
     private Bitmap imagemOriginalBitmap, imagemEditadaBitmap;
 
@@ -136,7 +141,7 @@ public class GerenciarObjeto extends AppCompatActivity {
     }
 
     private void setupGadgets() {
-        botaoVoltar = findViewById(R.id.gerenciarObjeto_voltar); //botao de voltar
+        ImageView botaoVoltar = findViewById(R.id.gerenciarObjeto_voltar); //botao de voltar
         botaoVoltar.setOnClickListener(v -> finish());
         tituloTela = findViewById(R.id.gerenciarObjeto_titulo); //titulo
         warnTela = findViewById(R.id.gerenciarObjeto_warn); //warn
@@ -231,7 +236,7 @@ public class GerenciarObjeto extends AppCompatActivity {
     private void setupValoresOriginaisValores() {
         imagemOriginal = bundle.getString("imagem", "");
         descricaoOriginal = bundle.getString("descricao", "").trim();
-        codigoOriginal = bundle.getString("codigo", "").trim();
+        String codigoOriginal = bundle.getString("codigo", "").trim();
         nomeOriginal = bundle.getString("nome", "").trim();
         linguaOriginal = bundle.getString("lingua", "").trim();
         categoriaOriginal = bundle.getString("categoria", "").trim();
@@ -304,14 +309,14 @@ public class GerenciarObjeto extends AppCompatActivity {
         idObjeto = bundle.getString("codigo", "");
 
         imagemEditada = bundle.getString("editImagem", "");
-        nomeEditado = bundle.getString("editNome", "");
-        linguaEditada = bundle.getString("editLingua", "");
-        categoriaEditada = bundle.getString("editCategoria", "");
-        descricaoImagemEditada = bundle.getString("editDescricaoImagem", "");
-        descricaoEditada = bundle.getString("editDescricao", "");
-        localEditado = bundle.getString("editLocal", "");
-        valorEditado = bundle.getDouble("editValor", 0);
-        valorSentimentalEditado = bundle.getString("editValorSentimental", "");
+        String nomeEditado = bundle.getString("editNome", "");
+        String linguaEditada = bundle.getString("editLingua", "");
+        String categoriaEditada = bundle.getString("editCategoria", "");
+        String descricaoImagemEditada = bundle.getString("editDescricaoImagem", "");
+        String descricaoEditada = bundle.getString("editDescricao", "");
+        String localEditado = bundle.getString("editLocal", "");
+        double valorEditado = bundle.getDouble("editValor", 0);
+        String valorSentimentalEditado = bundle.getString("editValorSentimental", "");
 
         //define a imagem do objeto
         if (!imagemEditada.equals("")) {
@@ -379,7 +384,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         //define os valores do ver report
         idAndamento = bundle.getString("idAndamento", "");
         idObjeto = bundle.getString("codigo", "");
-        reportMotivos = bundle.getString("motivo", "");
+        String reportMotivos = bundle.getString("motivo", "");
 
         //infelizmente tive que colocar % nas letras pq esqueci e agora ja ta pronto fazer oq né
         reportMotivos = reportMotivos.replaceAll("a", "%a%").replaceAll("b", "%b%").replaceAll("c", "%c%").replaceAll("d", "%d%").replaceAll("e", "%e%")

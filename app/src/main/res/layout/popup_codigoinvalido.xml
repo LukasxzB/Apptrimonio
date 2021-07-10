@@ -18,6 +18,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
+            android:contentDescription="@string/back"
             app:layout_constraintBottom_toBottomOf="@+id/codigoinvalido_titulo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/codigoinvalido_titulo"

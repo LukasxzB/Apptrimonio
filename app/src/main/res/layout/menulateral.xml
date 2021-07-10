@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,13 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_transparente" />
+        android:src="@drawable/background_transparente"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/menulateral_logo"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="40dp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@id/menulateral_linear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +85,8 @@
                         android:src="@drawable/icon_perfil"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_perfiltitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_perfiltitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_perfiltitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_perfiltitulo"
@@ -110,7 +114,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_perfil0" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_perfil0"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Textos informativos -->
                 <ImageView
@@ -120,7 +125,8 @@
                     android:src="@drawable/icon_texto"
                     app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo" />
+                    app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/menulateral_textoinfotitulo"
@@ -147,7 +153,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfotitulo"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Patrimônio público escolar -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,7 +172,8 @@
                         android:src="@drawable/icon_texto"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo1" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo1"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_textoinfotitulo1"
@@ -203,7 +211,8 @@
                         android:src="@drawable/icon_texto"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo2" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo2"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_textoinfotitulo2"
@@ -240,7 +249,8 @@
                         android:src="@drawable/icon_texto"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo3"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo3" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo3"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_textoinfotitulo3"
@@ -277,7 +287,8 @@
                         android:src="@drawable/icon_texto"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_textoinfotitulo4"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo4" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_textoinfotitulo4"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_textoinfotitulo4"
@@ -307,7 +318,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfo40" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_textoinfo40"
+                    tools:ignore="ContentDescription" />
 
                 <!-- FAQ Ajuda -->
 
@@ -325,7 +337,8 @@
                         android:src="@drawable/icon_ajuda"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_faqtitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_faqtitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_faqtitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_faqtitulo"
@@ -355,7 +368,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_faq0" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_faq0"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Suporte -->
 
@@ -373,7 +387,8 @@
                         android:src="@drawable/icon_suporte"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_suportetitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_suportetitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_suportetitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_suportetitulo"
@@ -402,7 +417,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_suporte0" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_suporte0"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Escanear um código -->
 
@@ -420,7 +436,8 @@
                         android:src="@drawable/icon_camera"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_escaneartitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_escaneartitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_escaneartitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_escaneartitulo"
@@ -450,7 +467,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_escanear0" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_escanear0"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Adicionar objeto / Tornar-se gerenciador -->
 
@@ -469,7 +487,8 @@
                         android:src="@drawable/icon_adicionar"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_adicionartitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_adicionartitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_adicionartitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_adicionartitulo"
@@ -499,7 +518,8 @@
                     android:src="@drawable/linha"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menulateral_adicionar0" />
+                    app:layout_constraintTop_toBottomOf="@+id/menulateral_adicionar0"
+                    tools:ignore="ContentDescription" />
 
                 <!-- Aprovar objetos -->
 
@@ -518,7 +538,8 @@
                         android:src="@drawable/icon_aprovar"
                         app:layout_constraintBottom_toBottomOf="@+id/menulateral_aprovartitulo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/menulateral_aprovartitulo" />
+                        app:layout_constraintTop_toTopOf="@+id/menulateral_aprovartitulo"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/menulateral_aprovartitulo"
@@ -537,11 +558,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </ScrollView>
     </LinearLayout>
 
