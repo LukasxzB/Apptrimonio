@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -153,11 +154,11 @@ public class MainActivity extends ActivityBase {
     }
 
     private void abrirSuporte() { //abre o aplicativo do email
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("plain/text");
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{Utils.emailApptrimonio}); //email que será usado
         intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.apptrimonioSupport)); //titulo do email
-        startActivity(Intent.createChooser(intent, getResources().getString(R.string.support))); //abre o email
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string.support)));
     }
 
     private void abrirFaq() {

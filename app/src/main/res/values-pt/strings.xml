@@ -260,4 +260,11 @@
     <string name="pass">***********</string>
     <string name="disapproveObj">Desaprovar objeto</string>
     <string name="approveObj">Aprovar objeto</string>
+    <string name="seeQrcode">Ver QRCode</string>
+    <string name="objImg">Imagem do objeto</string>
+    <string name="menu">Menu</string>
+    <string name="swipeDown">Arraste para baixo</string>
+    <string name="swipeUp">Arraste para cima</string>
+    <string name="openObject">Abrir objeto</string>
+    <string name="qrcode">QRCode</string>
 </resources>

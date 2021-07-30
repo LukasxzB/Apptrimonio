@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -34,12 +35,14 @@ public class FragmentoLogin extends Fragment {
 
     private FirebaseAuth mAuth;
     private final Utils utils;
+    private Context context;
 
     private Dialog dialogEsqueceuSenha;
 
     public FragmentoLogin(ViewPager2 vp, Context context) {
         viewPager2 = vp;
         utils = new Utils(context);
+        this.context = context;
     }
 
     @Override

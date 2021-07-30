@@ -159,7 +159,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:alpha="0.5"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/bold"
             android:text="@string/dontHaveAccount"
             android:textAlignment="center"
             android:textColor="@color/preto"

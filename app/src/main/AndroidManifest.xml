@@ -24,13 +24,10 @@
         android:roundIcon="@drawable/logo_apptrimonio_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.apptr">
-        <activity android:name=".GerenciarObjeto"></activity>
+        <activity android:name=".GerenciarObjeto" />
         <activity android:name=".Objeto" />
         <activity android:name=".Perfil" />
         <activity android:name=".TextoInformativo" />
-        <activity
-            android:name=".AdicionarObjetos"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Autenticar"
             android:windowSoftInputMode="adjustPan" />
