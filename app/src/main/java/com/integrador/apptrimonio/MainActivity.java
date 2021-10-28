@@ -178,7 +178,9 @@ public class MainActivity extends ActivityBase {
     }
 
     private void abrirAdicionarObjeto() { //abre a tela de adicionar objetos
-        if (!User.getInstance().isEmailVerificado()) {
+        if (User.getInstance().getEmail() == null) {
+            Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_main));
+        } else if (!User.getInstance().isEmailVerificado()) {
             Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_main));
         } else if (User.getInstance().isPermissaoAdicionar()) {
             Bundle bundle = new Bundle();
@@ -192,7 +194,9 @@ public class MainActivity extends ActivityBase {
     }
 
     private void abrirAprovarObjeto() {
-        if (!User.getInstance().isEmailVerificado()) {
+        if (User.getInstance().getEmail() == null) {
+            Utils.makeSnackbar(getResources().getString(R.string.loginRequired), findViewById(R.id.activity_main));
+        } else if (!User.getInstance().isEmailVerificado()) {
             Utils.makeSnackbar(getResources().getString(R.string.emailRequired), findViewById(R.id.activity_main));
         } else if (User.getInstance().isPermissaoGerenciador()) {
             utils.abrirPopUpCarregando();
