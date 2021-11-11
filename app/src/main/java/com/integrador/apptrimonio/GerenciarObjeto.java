@@ -199,7 +199,7 @@ public class GerenciarObjeto extends AppCompatActivity {
         //ao clicar na imagem pra escolher a imagem
         imagemView.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
+            intent.setType("image/* ");
             startActivityForResult(intent, selecionarImagem);
         });
 

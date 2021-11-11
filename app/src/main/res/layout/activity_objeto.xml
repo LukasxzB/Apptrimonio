@@ -320,7 +320,6 @@
                     android:id="@+id/objeto_imagem"
                     android:layout_width="275dp"
                     android:layout_height="160dp"
-                    android:background="@drawable/objeto_bordas"
                     android:contentDescription="@string/objImg"
                     android:padding="1dp"
                     android:scaleType="fitCenter"

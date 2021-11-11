@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
@@ -234,8 +235,10 @@ public class Utils {
         int width = Math.round(ratio * realImage.getWidth());
         int height = Math.round(ratio * realImage.getHeight());
 
+
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
                 height, true);
+        
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         newBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
         return BitmapFactory.decodeStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));

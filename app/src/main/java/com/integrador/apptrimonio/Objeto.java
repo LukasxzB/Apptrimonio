@@ -7,6 +7,7 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ablanco.zoomy.Zoomy;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.integrador.apptrimonio.Utils.ActivityBase;
@@ -100,6 +101,11 @@ public class Objeto extends ActivityBase {
         } else {
             Glide.with(this).load(imagem).into(imageView);
         }
+
+        //adiciona o zoomy
+        Zoomy.Builder builder = new Zoomy.Builder(this).target(imageView);
+        builder.register();
+
 
         //define a lingua
         ImageView linguaView = findViewById(R.id.objeto_lingua);
