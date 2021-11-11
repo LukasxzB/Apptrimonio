@@ -206,11 +206,11 @@ public class Perfil extends ActivityBase {
         };
 
         Drawable[] imgs = {
-                utils.getDrawable(R.drawable.badge_iniciante), //iniciante
+                utils.getDrawable(R.drawable.badge_novato), //iniciante
                 utils.getDrawable(R.drawable.badge_verificado), //verificado
                 utils.getDrawable(R.drawable.badge_editor), //editor
                 utils.getDrawable(R.drawable.badge_adicionador), //adicionador
-                utils.getDrawable(R.drawable.badge_gerenciador), //gerenciador
+                utils.getDrawable(R.drawable.badge_gerenciadoricon), //gerenciador
                 utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover i
                 utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover ii
                 utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover iii
