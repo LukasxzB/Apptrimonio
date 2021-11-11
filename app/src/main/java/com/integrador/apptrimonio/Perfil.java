@@ -206,33 +206,33 @@ public class Perfil extends ActivityBase {
         };
 
         Drawable[] imgs = {
-                utils.getDrawable(R.drawable.add_button), //iniciante
-                utils.getDrawable(R.drawable.add_button), //verificado
-                utils.getDrawable(R.drawable.add_button), //editor
-                utils.getDrawable(R.drawable.add_button), //adicionador
-                utils.getDrawable(R.drawable.add_button), //gerenciador
-                utils.getDrawable(R.drawable.add_button), //apptrilover i
-                utils.getDrawable(R.drawable.add_button), //apptrilover ii
-                utils.getDrawable(R.drawable.add_button), //apptrilover iii
-                utils.getDrawable(R.drawable.add_button), //apptrilvoer iv
-                utils.getDrawable(R.drawable.add_button), //apptrilvoer v
-                utils.getDrawable(R.drawable.add_button), //apptrilover vi
-                utils.getDrawable(R.drawable.add_button), //explorador i
-                utils.getDrawable(R.drawable.add_button), //explorador ii
-                utils.getDrawable(R.drawable.add_button), //explorador iii
-                utils.getDrawable(R.drawable.add_button), //explorador iv
-                utils.getDrawable(R.drawable.add_button), //explorador v
-                utils.getDrawable(R.drawable.add_button), //explorador vi
-                utils.getDrawable(R.drawable.add_button), //ajudante i
-                utils.getDrawable(R.drawable.add_button), //ajudante ii
-                utils.getDrawable(R.drawable.add_button), //ajudante iii
-                utils.getDrawable(R.drawable.add_button), //ajudante iv
-                utils.getDrawable(R.drawable.add_button), //juiz i
-                utils.getDrawable(R.drawable.add_button), //juiz ii
-                utils.getDrawable(R.drawable.add_button), //juiz iii
-                utils.getDrawable(R.drawable.add_button), //juiz iv
-                utils.getDrawable(R.drawable.add_button), //juiz v
-                utils.getDrawable(R.drawable.add_button) //juiz vi
+                utils.getDrawable(R.drawable.badge_iniciante), //iniciante
+                utils.getDrawable(R.drawable.badge_verificado), //verificado
+                utils.getDrawable(R.drawable.badge_editor), //editor
+                utils.getDrawable(R.drawable.badge_adicionador), //adicionador
+                utils.getDrawable(R.drawable.badge_gerenciador), //gerenciador
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover i
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover ii
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover iii
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilvoer iv
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilvoer v
+                utils.getDrawable(R.drawable.badge_apptrilover), //apptrilover vi
+                utils.getDrawable(R.drawable.badge_explorador), //explorador i
+                utils.getDrawable(R.drawable.badge_explorador), //explorador ii
+                utils.getDrawable(R.drawable.badge_explorador), //explorador iii
+                utils.getDrawable(R.drawable.badge_explorador), //explorador iv
+                utils.getDrawable(R.drawable.badge_explorador), //explorador v
+                utils.getDrawable(R.drawable.badge_explorador), //explorador vi
+                utils.getDrawable(R.drawable.badge_ajudante), //ajudante i
+                utils.getDrawable(R.drawable.badge_ajudante), //ajudante ii
+                utils.getDrawable(R.drawable.badge_ajudante), //ajudante iii
+                utils.getDrawable(R.drawable.badge_ajudante), //ajudante iv
+                utils.getDrawable(R.drawable.badge_juiz), //juiz i
+                utils.getDrawable(R.drawable.badge_juiz), //juiz ii
+                utils.getDrawable(R.drawable.badge_juiz), //juiz iii
+                utils.getDrawable(R.drawable.badge_juiz), //juiz iv
+                utils.getDrawable(R.drawable.badge_juiz), //juiz v
+                utils.getDrawable(R.drawable.badge_juiz) //juiz vi
         };
 
         String[] cores = {
